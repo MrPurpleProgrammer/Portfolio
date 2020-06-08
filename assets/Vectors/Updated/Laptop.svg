@@ -1,0 +1,101 @@
+<svg id="Laptop" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1121.72 1021">
+  <defs>
+    <linearGradient id="linear-gradient" x1="141.66" y1="3402.05" x2="870.21" y2="3402.05" gradientTransform="matrix(1, 0, 0, -1, 0, 4170)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bc82ff"/>
+      <stop offset="0.12" stop-color="#b782ff"/>
+      <stop offset="0.22" stop-color="#a980ff"/>
+      <stop offset="0.34" stop-color="#917eff"/>
+      <stop offset="0.46" stop-color="#707aff"/>
+      <stop offset="1" stop-color="#5778ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-211.42" y1="-3452.05" x2="306.33" y2="-3452.05" gradientTransform="translate(39.75 3814.82) rotate(4.85)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c0d6ff"/>
+      <stop offset="0.3" stop-color="#c5dbff"/>
+      <stop offset="0.65" stop-color="#d3e9ff"/>
+      <stop offset="1" stop-color="#e9ffff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="-211.46" y1="-3318.75" x2="-122.42" y2="-3318.75" gradientTransform="translate(39.75 3814.82) rotate(4.85)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5778ff"/>
+      <stop offset="0.18" stop-color="#5c7dff"/>
+      <stop offset="0.39" stop-color="#6a8aff"/>
+      <stop offset="0.61" stop-color="#82a0ff"/>
+      <stop offset="0.85" stop-color="#a3beff"/>
+      <stop offset="1" stop-color="#bcd5ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="-142.1" y1="-3168.63" x2="589.24" y2="-3168.63" xlink:href="#linear-gradient-3"/>
+    <linearGradient id="linear-gradient-5" x1="103.72" y1="-3193.14" x2="835.33" y2="-3193.14" xlink:href="#linear-gradient-2"/>
+    <linearGradient id="linear-gradient-6" x1="227.62" y1="-3151.52" x2="414.75" y2="-3151.52" xlink:href="#linear-gradient-2"/>
+    <clipPath id="clip-path" transform="translate(101.22 -0.5)">
+      <polygon points="598.34 114.98 146.74 327.96 173.42 648.8 624.65 435.82 598.34 114.98" fill="none"/>
+    </clipPath>
+    <linearGradient id="linear-gradient-7" x1="-175.86" y1="-3356.38" x2="555.77" y2="-3356.38" xlink:href="#linear-gradient-2"/>
+    <linearGradient id="linear-gradient-8" x1="-223.91" y1="-3410.36" x2="-36.78" y2="-3410.36" xlink:href="#linear-gradient-2"/>
+  </defs>
+  <title>Laptop</title>
+  <rect x="100.72" width="1021" height="1021" fill="none"/>
+  <path id="Laptop_Wire_Path" data-name="Laptop Wire Path" d="M212.58,846.4l-64.75-49a12.94,12.94,0,0,1,2.87-21.72L615.8,561.11a13.11,13.11,0,0,1,13.11,1.23L863.3,732.45a13,13,0,0,1-2,22.34L402.3,974.7a13.08,13.08,0,0,1-13.11-1L213.6,847.43A4.8,4.8,0,0,0,212.58,846.4Z" transform="translate(101.22 -0.5)" fill="none" stroke-miterlimit="10" stroke-width="3" stroke="url(#linear-gradient)"/>
+  <path id="Laptop_Shadow_Path" data-name="Laptop Shadow Path" d="M256.24,831.36l-55.37-40a10.34,10.34,0,0,1,2.45-17.75L601.09,598.32a11.64,11.64,0,0,1,11.22,1l200.46,139A10.41,10.41,0,0,1,811,756.52L418.5,936.16a11.62,11.62,0,0,1-11.21-.83L257.12,832.2A3.68,3.68,0,0,0,256.24,831.36Z" transform="translate(101.22 -0.5)" fill="#242993" opacity="0.5"/>
+  <g id="Laptop_Device">
+    <g id="Laptop_Screen" data-name="Laptop Screen">
+      <path d="M634,433.26,606.2,95.42,610.76,94l-6.39-4.39h0c-1.28-.92-3.11-1.1-5.3,0L130.84,310.41c-3.84,1.83-7.13,6.95-6.76,11L152,662a4.55,4.55,0,0,0,2,3.65h0l6.21,4.39,1.65-6h-.37L627.21,444.23C631.05,442.4,634.34,437.1,634,433.26Z" transform="translate(101.22 -0.5)" fill="url(#linear-gradient-2)"/>
+      <path d="M132.48,319.73l-7.12-3.83a10.69,10.69,0,0,0-1.47,5.48l28,340.59a4.55,4.55,0,0,0,2,3.65h0l6.21,4.39,1.64-6h-.36l23.58-11.15Z" transform="translate(101.22 -0.5)" fill="url(#linear-gradient-3)"/>
+      <path d="M634,448.8l-468.41,221c-3.65,1.64-6.39.36-6.76-3.29L130.84,326c-.37-3.84,2.92-9.14,6.76-11L606,94c3.66-1.65,6.4-.37,6.76,3.29l28,340.58C640.92,441.86,637.81,447,634,448.8Z" transform="translate(101.22 -0.5)" fill="#242993"/>
+      <polygon points="699.55 114.48 247.96 327.46 274.64 648.3 725.87 435.32 699.55 114.48" fill="#4553c7"/>
+    </g>
+    <g id="Laptop_Base" data-name="Laptop Base">
+      <path d="M901.17,631.62l-25.4,10.79L643.3,479.88c-3.84-2.74-11-3.11-16.09-.73L185.12,687.74c-3.84-2.56-21.57-13-21.57-13l6.95,24.14h0a4.83,4.83,0,0,0,2.19,2.92L417.4,873.12c3.84,2.74,11,3.11,16.09.73L885.82,660.32a8.54,8.54,0,0,0,4-3.47h0Z" transform="translate(101.22 -0.5)" fill="url(#linear-gradient-4)"/>
+      <path d="M897.15,635.46,433.49,854.29c-5.12,2.38-12.43,2-16.45-.73L166.11,678.06c-4-2.75-3.11-6.95,2-9.33L631.78,449.9c5.12-2.38,12.43-2,16.45.73L899.16,626.14C903,628.88,902.08,633.08,897.15,635.46Z" transform="translate(101.22 -0.5)" fill="url(#linear-gradient-5)"/>
+      <path d="M304.83,787.38l.36-4.94c0-.55.37-.73.73-.36l16.27,11.33a1.44,1.44,0,0,1,.55,1.28l-.37,4.94c0,.55-.37.73-.73.36l-16.27-11.33A2,2,0,0,1,304.83,787.38Z" transform="translate(101.22 -0.5)" fill="#2859cb"/>
+      <path d="M329.13,804.38l.37-4.93c0-.55.36-.74.73-.37l16.26,11.33a1.43,1.43,0,0,1,.55,1.28l-.36,4.94c0,.55-.37.73-.73.37l-16.27-11.34A2,2,0,0,1,329.13,804.38Z" transform="translate(101.22 -0.5)" fill="#2859cb"/>
+      <path d="M236.11,669.46,621.36,487.74a7.61,7.61,0,0,1,7.86.73l124.46,87.21a2.83,2.83,0,0,1-.36,4.93L368.24,762.33a7.59,7.59,0,0,1-7.86-.73l-124.64-87A3,3,0,0,1,236.11,669.46Z" transform="translate(101.22 -0.5)" fill="#adc8ff"/>
+      <path d="M235.74,674.4l1.28.91L621,494.14a7.61,7.61,0,0,1,7.86.73L752,581.16l1.46-.73a2.84,2.84,0,0,0,.36-4.93L629.41,488.29a8.08,8.08,0,0,0-7.86-.73L236.29,669.28A3,3,0,0,0,235.74,674.4Z" transform="translate(101.22 -0.5)" fill="#91afff"/>
+      <g>
+        <polygon points="738.85 507.9 404.21 665.86 390.69 656.35 725.32 498.58 738.85 507.9" fill="#242993"/>
+        <polygon points="771.92 531.12 457.94 679.2 444.42 669.69 758.4 521.61 771.92 531.12" fill="#242993"/>
+        <polygon points="793.49 546.11 423.77 720.52 410.25 711.19 779.97 536.79 793.49 546.11" fill="#242993"/>
+        <polygon points="815.06 561.28 445.33 735.69 431.81 726.18 801.53 551.78 815.06 561.28" fill="#242993"/>
+        <polygon points="836.44 576.27 466.9 750.68 453.38 741.17 823.1 566.95 836.44 576.27" fill="#242993"/>
+        <polygon points="383.93 675.36 368.94 682.49 355.6 672.99 370.4 666.04 383.93 675.36" fill="#242993"/>
+        <polygon points="432.91 690.9 402.02 705.53 388.68 696.2 419.57 681.58 432.91 690.9" fill="#242993"/>
+      </g>
+      <path d="M613.32,753.56l103.81-49c4-1.82,4.39-5.48.73-8l-64.33-45.16c-3.65-2.56-9.87-3.1-14.07-1.28l-103.81,49c-4,1.83-4.39,5.48-.73,8l64.33,45.16C602.91,754.84,609.12,755.39,613.32,753.56Z" transform="translate(101.22 -0.5)" fill="url(#linear-gradient-6)"/>
+      <path d="M535.28,702.55l103.81-49c4-1.83,10.42-1.46,14.07,1.28L717.5,700a5.79,5.79,0,0,1,2.19,2.56c1.28-1.83.55-4.2-2-5.85l-64.33-45.15c-3.66-2.56-9.87-3.11-14.08-1.28l-103.8,49c-2.74,1.28-3.84,3.48-2.93,5.49A5.68,5.68,0,0,1,535.28,702.55Z" transform="translate(101.22 -0.5)" fill="#91afff"/>
+    </g>
+    <g id="Screen_Shadow" data-name="Screen Shadow" opacity="0.11" style="isolation: isolate">
+      <g>
+        <g clip-path="url(#clip-path)">
+          <g>
+            <path d="M632.33,449.35,168.67,668c-5.12,2.38-12.43,2-16.45-.73L-98.71,491.77c-4-2.75-3.1-6.95,2-9.33L367,263.61c5.12-2.38,12.43-2,16.45.73L634.34,439.85C638.18,442.77,637.26,447,632.33,449.35Z" transform="translate(101.22 -0.5)" fill="url(#linear-gradient-7)"/>
+            <path d="M185.12,457.4l103.81-49c4-1.83,4.38-5.48.73-8L225.33,355.2c-3.66-2.56-9.87-3.11-14.08-1.28l-103.8,49c-4,1.82-4.39,5.48-.74,8l64.34,45.16A14.86,14.86,0,0,0,185.12,457.4Z" transform="translate(101.22 -0.5)" fill="url(#linear-gradient-8)"/>
+            <path d="M107.08,406.39l103.81-49c4-1.83,10.41-1.47,14.07,1.27l64.33,45a5.62,5.62,0,0,1,2.19,2.56c1.28-1.83.55-4.21-2-5.85L225.14,355.2c-3.65-2.56-9.87-3.11-14.07-1.28l-103.81,49c-2.74,1.28-3.84,3.47-2.92,5.48A8.85,8.85,0,0,1,107.08,406.39Z" transform="translate(101.22 -0.5)" fill="#91afff"/>
+            <g>
+              <path d="M52.25,536.56,437.51,354.84a7.59,7.59,0,0,1,7.86.73l124.46,87.2a2.85,2.85,0,0,1-.37,4.94L184.39,629.43a7.59,7.59,0,0,1-7.86-.74l-124.64-87A3,3,0,0,1,52.25,536.56Z" transform="translate(101.22 -0.5)" fill="#adc8ff"/>
+              <path d="M51.89,541.49l1.28.92,384-181.18A7.59,7.59,0,0,1,445,362l123.18,86.28,1.46-.73a2.84,2.84,0,0,0,.37-4.93L445.55,355.38a8.11,8.11,0,0,0-7.86-.73L52.43,536.37A3,3,0,0,0,51.89,541.49Z" transform="translate(101.22 -0.5)" fill="#91afff"/>
+            </g>
+          </g>
+        </g>
+        <g clip-path="url(#clip-path)">
+          <polygon points="637.23 434.04 301.5 592.36 313.56 600.96 649.29 442.45 637.23 434.04" fill="#242993"/>
+        </g>
+        <g clip-path="url(#clip-path)">
+          <polygon points="605.25 411.74 286.15 562.2 298.21 570.61 617.13 420.15 605.25 411.74" fill="#242993"/>
+        </g>
+        <g clip-path="url(#clip-path)">
+          <polygon points="262.21 573.35 232.42 587.43 244.48 595.84 274.27 581.76 262.21 573.35" fill="#242993"/>
+        </g>
+        <g clip-path="url(#clip-path)">
+          <polygon points="285.24 600.04 264.59 609.91 276.65 618.32 297.3 608.63 285.24 600.04" fill="#242993"/>
+        </g>
+        <g clip-path="url(#clip-path)">
+          <polygon points="585.14 397.66 212.5 573.35 224.38 581.76 597.21 406.07 585.14 397.66" fill="#242993"/>
+        </g>
+        <g clip-path="url(#clip-path)">
+          <polygon points="565.04 383.59 192.4 559.27 204.46 567.87 577.1 392 565.04 383.59" fill="#242993"/>
+        </g>
+        <g clip-path="url(#clip-path)">
+          <polygon points="544.94 369.51 172.29 545.38 184.35 553.79 557 377.92 544.94 369.51" fill="#242993"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

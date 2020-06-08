@@ -1,0 +1,16 @@
+Fonts:- 
+
+Titles - Montserrat(BOLD)
+Text   - Montserrat(Reguler)
+
+Logo  -  Fonarto(Reguler)
+
+
+
+Color Codes:-
+
+Background Color   - #171f34
+
+Logo & Title color - #c00d47
+
+Text Color         - #BD3E67

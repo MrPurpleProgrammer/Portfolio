@@ -1,0 +1,85 @@
+.particlebg,
+.iconsbg {
+    position: absolute;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    will-change: transfrm;
+}
+
+.particlebg {
+    width: 100vw;
+    height: 98vh;
+    /* background-image: url(client/src/assets/SVG/Particlebg.svg); */
+}
+
+.iconsbg {
+    width: 100vw;
+    height: 98vh;
+    /* background-image: url(client/src/assets/SVG/Iconsbg.svg); */
+    top: 24%;
+}
+
+@keyframes dotsAnimation {
+    0% {
+        transform: translate(0px, 0px);
+    }
+
+    13% {
+        transform: translate(5px, 5px);
+    }
+
+    25% {
+        transform: translate(10px, 10px);
+    }
+
+    38% {
+        transform: translate(5px, 15px);
+    }
+
+    50% {
+        transform: translate(0px, 20px);
+    }
+
+    63% {
+        transform: translate(-5px, 15px);
+    }
+
+    75% {
+        transform: translate(-10px, 10px);
+    }
+
+    88% {
+        transform: translate(-5px, 5px);
+    }
+
+    100% {
+        transform: translate(-0px, 0px);
+    }
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+
+}
+
+.title {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    width: 858px;
+    margin: auto;
+    height: 150px;
+}
+
+.container>#SvgOne {
+    width: 613px;
+    position: absolute;
+    right: 27.2em;
+    z-index: -1;
+    top: -22px;
+}
