@@ -1,4 +1,4 @@
-pragma solidity ^0.5.3;
+pragma solidity >=0.5.3;
 
 import "../Models.sol";
 import "../Artisan.sol";
@@ -14,8 +14,7 @@ contract DMCT is Models, Artisan {
     event ReturnTestBoolData(bool Boolean);
     event ReturnTestArrayData(uint[] Number);
     uint i = 0; //loop counter
-    function () external payable {
-    }
+
     //Create Functions
     function createLicense(uint certificateID, address licenseOwner) public onlyCertificateOwner(certificateID) returns (uint licenseID) {
         licenseID = generateLicenseID(certificateID, CIDToCertificate[certificateID].certificateOwner, licenseOwner);
@@ -29,8 +28,8 @@ contract DMCT is Models, Artisan {
         emit ReturnCertificateLicenses(CIDToCertificate[certificateID].licenses);
     }
 
-    function createCertificate(string memory title, string memory data, string memory url) public returns (uint certificateID, uint assetID) { 
-        assetID = generateAssetID(data);
+    function createCertificate(string memory title, bytes32 _hash, bytes2 _hash_function, uint8 _size, string memory url) public returns (uint certificateID, uint assetID) {
+        assetID = generateAssetID(_hash, _hash_function, _size);
         while(i < AssetIDS.length) {
             require(AssetIDS[i] != assetID, "Asset already exists");
             i++;
@@ -70,7 +69,7 @@ contract DMCT is Models, Artisan {
             CIDToAIDIndex[CID] = index;
             delete AssetIDS[AssetIDS.length-1];
             AssetIDS.length--;
-            CIDToCertificate[tokenID].status = false; 
+            CIDToCertificate[tokenID].status = false;
             Models.burn(msg.sender, tokenID);
             emit ReturnDestroyToken(Models.exists(tokenID));
         }

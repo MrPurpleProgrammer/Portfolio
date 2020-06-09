@@ -1,17 +1,18 @@
-pragma solidity ^0.5.3;
+pragma solidity >=0.5.3;
 
 import "node_modules/@openzeppelin/contracts/ownership/Ownable.sol";
 import "node_modules/@openzeppelin/contracts/math/SafeMath.sol";
 import "node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "./IPFSEngine.sol";
 
-contract Models is ERC721, Ownable {
+contract Models is ERC721, Ownable, IPFSEngine {
     //Events
     event returnAID(uint AssetID);
     event returnCID(uint CertificateID);
     event returnLID(uint LicenseID);
-    
+
     //Global Variabless
-    uint[] public CertificateIDS; 
+    uint[] public CertificateIDS;
     uint[] public LicenseIDS;
     uint[] public AssetIDS;
 
@@ -22,7 +23,7 @@ contract Models is ERC721, Ownable {
     }
     struct License {
         uint index;
-        uint licenseID; 
+        uint licenseID;
         address licenseOwner;
         string url;
         bool status;
@@ -32,7 +33,7 @@ contract Models is ERC721, Ownable {
         uint certificateID; //CID
         uint assetID; //AID
         uint[] licenses;
-        string url;
+        IpfsHash url;
         string title;
         address certificateCreator;
         address certificateOwner;
@@ -55,11 +56,7 @@ contract Models is ERC721, Ownable {
     mapping(uint => uint) CIDToAIDIndex;
     mapping(address => User) addressToUser;
 
-    function () external payable {
-        
-    }
-
-    //Security Access Modifiers 
+    //Security Access Modifiers
     modifier onlyCreator(uint ID) {
         if(ID < LI) {
             require(msg.sender == CIDToCertificate[ID].certificateCreator, "You are not the creator of this certificate");
@@ -86,14 +83,16 @@ contract Models is ERC721, Ownable {
     }
 
     //SHA Encoding Functions
-    function generateAssetID(string memory data) internal view returns (uint assetID) {
-        assetID = AI + (uint(sha256(abi.encodePacked(data))) % _IDMODULUS);
+    function generateAssetID(bytes32 _hash, bytes2 _hash_function, uint8 _size) internal view returns (uint assetID) {
+        IpfsHash data;
+        data = IPFSEngine.storeDataAsStruct(_hash, _hash_function, _size);
+        assetID = AI + (uint(sha256(abi.encodePacked(data.hash, data.quotient))) % _IDMODULUS);
     }
 
     function generateLicenseID(uint certificateID, address licenseCreator, address licenseOwner) internal view returns (uint licenseID) {
         licenseID = LI + (uint(sha256(abi.encodePacked(certificateID, licenseCreator, licenseOwner))) % _IDMODULUS);
     }
-    
+
     function generateCertificateID(uint assetID, address creator) internal view returns (uint certificateID) {
         certificateID = CI + (uint(sha256(abi.encodePacked(assetID, creator))) % _IDMODULUS);
     }

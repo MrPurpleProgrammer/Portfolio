@@ -1,10 +1,9 @@
-pragma solidity ^0.5.3;
+pragma solidity >=0.5.3;
 
 import "./DMCT.sol";
 
 contract DMCT_Services is DMCT {
 
-    function () external payable {}
     function returnAssetIDS() public view returns(uint[] memory assetIDS) {
         assetIDS = AssetIDS;
     }
