@@ -67,7 +67,6 @@
     "dev": "npm-run-all set_dev build distnode client",
     "prod": "npm-run-all ser_prod build client",
     "distnode": "cd ../dist/dist-client && npm i"
-
   },
   "eslintConfig": {
     "extends": "react-app"

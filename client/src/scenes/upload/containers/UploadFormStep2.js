@@ -15,7 +15,7 @@ function UploadFormStep2(props) {
         })
     })
     return (
-        <div id="divUploadForm_Step1" className="uploadForm">
+        <div id="divUploadForm_Step2" className="uploadForm">
             <div id="divStepExplanation" className="stepExplainContainer">
                 <h1>
                     These are the Terms...
@@ -37,14 +37,16 @@ function UploadFormStep2(props) {
                 </div>
             </div>
             <div id="divFormStep_2" className="uploadFormInputContainer">
-                <div className="uploadFormInput">
+                <form method="post" name="createCert_Step2" id="formUploadStep2">
+                <div className="uploadFormInput"> 
                     <label>Confirm with Unique UserHash:</label>
-                    <input id="mediaTitle" name="mediaTitle" type="text" />
+                    <input id="userHash" name="userHash" type="text" />
                 </div>
                 <div className="checkbox_Style1">
                     <input type="checkbox" id="termsAgreeCheck" className="checkbox_Style1_Input" />
                     <label htmlFor="termsAgreeCheck" className="checkbox_Style1_Label" style={{ margin: "15px 0px 40px 0px" }}> I hereby Agree to the Terms and Conditions</label>
                 </div>
+                </form>
             </div>
         </div>
     );

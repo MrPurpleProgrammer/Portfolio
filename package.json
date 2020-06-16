@@ -8,9 +8,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "clientdir": "cd client && npm i",
+    "serverdir": "cd server && npm i",
+    "setup": "npm i && npm run clientdir && npm run serverdir",
     "client": "cd client && npm run start",
     "server": "cd server && npm run watch",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "start": "concurrently \"npm run setup\" \"npm run client\" \"npm run server\"",
+    "dev":"concurrently \"npm run client\" \"npm run server\""
   },
   "repository": {
     "type": "git",

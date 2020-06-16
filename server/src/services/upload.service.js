@@ -80,20 +80,43 @@ let fileStorage = multer({
 });
 
 //Media Collection 
-let setMediaModel = function (req, cid, user) {
-  let newMedia = new Media({
-    mediaId: req.files[0].id,
-    mediaType: req.files[0].contentType,
-    certificateId: 'CID',
-    mediaTitle: req.body.mediaTitle,
-    mediaCreator: 'creator',
-    fileId: req.files[0].id,
-    evidenceId: req.files[1].id,
+let setMediaModel = function (req) {
+  return new Promise((resolve, reject) => {
+    if (typeof req.files[0] != "undefined" && typeof req.files[1] != "undefined" && req.body.termAgree == "true") {
+      if (req.body.storeOption == 'PORT') {
+        let newMedia = new Media({
+          mediaId: req.files[0].id,
+          mediaType: req.files[0].contentType,
+          certificateId: 'CID',
+          description: req.body.mediaDescription,
+          mediaTitle: req.body.mediaTitle,
+          mediaCreator: req.body.userHash,
+          fileId: req.files[0].id,
+          evidenceId: req.files[1].id,
+        });
+        newMedia.save((err, media) => {
+          if (err) reject(err);
+        });
+        resolve('Port Media Added');
+      }
+      if (req.body.storeOption == 'IPFS') {
+        let newMedia = new Media({
+          mediaId: req.files[0].id,
+          mediaType: req.files[0].contentType,
+          certificateId: 'CID',
+          mediaTitle: req.body.mediaTitle,
+          mediaCreator: req.body.userHash,
+        });
+        newMedia.save((err, media) => {
+          if (err) reject(err);
+        });
+        resolve('IPFS Media Added');
+      }
+    }
+    else {
+      reject('Error: No Evidence or Image to set; or Terms not checked');
+    }
   });
-  newMedia.save((err, media) => {
-    if (err) return (err);
-  });
-  return ('New media added ' + newMedia);
 }
 
 let getMediaStream = function (file, res) {

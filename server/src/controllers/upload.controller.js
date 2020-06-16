@@ -2,9 +2,15 @@
 const uploadService = require('../services/upload.service')
 const async = require('async')
 
-let postMedia = async (req, res, next) => {
-    let status = uploadService.setMediaModel(req);
-    res.send(status)
+let postMedia = async (req, res) => {
+  try{
+    let status = await uploadService.setMediaModel(req);
+    console.log(status);
+    res.status(201).send(status);
+  }
+  catch (err) {
+    console.log(err);
+  }
 }
 
 let getMedia = async (req, res, next) => {

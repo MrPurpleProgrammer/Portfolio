@@ -21,6 +21,7 @@ const UploadBoxLong = styled.div`
     `;
 function UploadFormStep1(props) {
     const history = useHistory();
+    let [evidenceUpload, setEvidenceUpload] = useState(null)
     const { acceptedFiles,
         getRootProps,
         isDragActive,
@@ -41,9 +42,7 @@ function UploadFormStep1(props) {
             event.preventDefault();
             var eventMod = event.target.files;
         }
-        console.log(event);
-        let formData = new FormData(document.getElementById("formUploadStep1"));
-        formData.append('mediaEvidence', eventMod);
+        props.onUpload(eventMod);
     }
     $(function () {
         $('.checkbox_Style1_Label').on('click', function () {
@@ -88,11 +87,11 @@ function UploadFormStep1(props) {
                         <p className="uploadText">Upload Media Here</p>
                     </UploadBoxLong>
                     <div className="checkbox_Style1">
-                        <input type="checkbox" id="storeOptionRecCheck" name="storeInPort" className="checkbox_Style1_Input"/>
+                        <input type="checkbox" id="storeOptionPort" name="storeInPort" className="checkbox_Style1_Input"/>
                         <label htmlFor="storeOptionRecCheck" className="checkbox_Style1_Label">Store Media in Portfolio Servers (Recommended)</label>
                     </div>
                     <div className="checkbox_Style1">
-                        <input type="checkbox" id="box-2" name="storeLocal" className="checkbox_Style1_Input" />
+                        <input type="checkbox" id="storeOptionIPFS" name="storeLocal" className="checkbox_Style1_Input"/>
                         <label htmlFor="box-2" className="checkbox_Style1_Label">Store Media in IPFS Only</label>
                     </div>
                 </form>

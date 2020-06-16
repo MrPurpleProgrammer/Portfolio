@@ -12,22 +12,17 @@ router.get('/read/:certificateId', (req, res) => {
     uploadController.getMedia(req, res);
 });
 
-
-
-router.get('/update/get'), (req,res) => {
-    
-}
-
-router.post('/update/post', (req, res) => {
-
+router.get('/update/get', (req,res) => {
 });
 
-router.post('/delete'), (req, res) => {
-    
-}
+router.post('/update/post', (req, res) => {
+});
 
-router.post('/create', uploadService.fileStorage.any(),  (req, res, next) => {
-    uploadController.postMedia(req, res, next)
+router.post('/delete', (req, res) => {
+});
+
+router.post('/create', uploadService.fileStorage.any(), (req, res, next) => {
+    uploadController.postMedia(req, res, next);
 });
 
 module.exports = router;
