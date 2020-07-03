@@ -180,8 +180,8 @@ const ipfsId = "QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u";
 let mh = multihashes.fromB58String(Buffer.from(ipfsId))
 //Store as argument object
 let args = {
-  hashFunction: '0x' + mh.slice(0, 2).toString('hex'),
-  digest: '0x' + mh.slice(2).toString('hex'),
+  hashFunction: '0x' + mh.slice(0, 4),
+  hash: '0x' + mh.slice(2),
   size: mh.length - 2
 }
 //Javascript code when using Artifacts

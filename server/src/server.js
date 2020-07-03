@@ -22,7 +22,7 @@ server.use((req, res, next) => {
 });
 server.use(limiter);
 server.use(express.json())
-server.use(bodyParser.json());
+server.use(bodyParser.json({ limit: '1000kb' }));
 server.use(cors());
 //renderClient(server);
 server.listen(port, () => console.log(`Server started on port ${port}`))

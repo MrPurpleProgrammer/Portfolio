@@ -1,28 +1,29 @@
-pragma solidity >=0.5.3;
+pragma solidity ^0.6.0;
+pragma experimental ABIEncoderV2;
 
 contract IPFSEngine {
-	struct IpfsHash {
-	  	bytes32 hash;
-	  	bytes2 quotient;
-	  	uint8 size;
-	}
+    struct IpfsHash {
+        bytes32 multiHash;
+        bytes4 multiHash_Function;
+    }
 
     string hash;
 
-	function storeDataAsString(string memory _hash) public {
-		hash = _hash;
-	}
+    function storeDataAsString(string memory _hash) public {
+        hash = _hash;
+    }
 
-	function storeDataAsStruct(bytes32 _hash, bytes2 _hash_function, uint8 _size) public returns (IPFSHash memory IPFSHashMemory) {
-		IPFSHash memory IPFSHashMemory;
-		IPFSHashMemory.hash = _hash;
-		IPFSHashMemory.quotient = _hash_function;
-		IPFSHashMemory.size = _size;
-	}
+    function storeDataAsStruct(
+        bytes32 multiHash,
+        bytes4 multiHash_Function
+    ) public pure returns (IpfsHash memory IpfsHashMemory) {
+        IpfsHashMemory.multiHash = multiHash;
+        IpfsHashMemory.multiHash_Function = multiHash_Function;
+    }
 
     event DataStoredInTheLog(string _hash);
-	function storeDataAsLog(string memory _hash) public {
-		emit DataStoredInTheLog(_hash);
-	}
 
+    function storeDataAsLog(string memory _hash) public {
+        emit DataStoredInTheLog(_hash);
+    }
 }

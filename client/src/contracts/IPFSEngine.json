@@ -1,0 +1,1414 @@
+{
+  "contractName": "IPFSEngine",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "_hash",
+          "type": "string"
+        }
+      ],
+      "name": "DataStoredInTheLog",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_hash",
+          "type": "string"
+        }
+      ],
+      "name": "storeDataAsString",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "multiHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes4",
+          "name": "multiHash_Function",
+          "type": "bytes4"
+        }
+      ],
+      "name": "storeDataAsStruct",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "multiHash",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes4",
+              "name": "multiHash_Function",
+              "type": "bytes4"
+            }
+          ],
+          "internalType": "struct IPFSEngine.IpfsHash",
+          "name": "IpfsHashMemory",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_hash",
+          "type": "string"
+        }
+      ],
+      "name": "storeDataAsLog",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.2+commit.bacdbe57\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_hash\",\"type\":\"string\"}],\"name\":\"DataStoredInTheLog\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_hash\",\"type\":\"string\"}],\"name\":\"storeDataAsLog\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_hash\",\"type\":\"string\"}],\"name\":\"storeDataAsString\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"multiHash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes4\",\"name\":\"multiHash_Function\",\"type\":\"bytes4\"}],\"name\":\"storeDataAsStruct\",\"outputs\":[{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"multiHash\",\"type\":\"bytes32\"},{\"internalType\":\"bytes4\",\"name\":\"multiHash_Function\",\"type\":\"bytes4\"}],\"internalType\":\"struct IPFSEngine.IpfsHash\",\"name\":\"IpfsHashMemory\",\"type\":\"tuple\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/MyData/Projects/Portfolio/contracts/IPFSEngine.sol\":\"IPFSEngine\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/MyData/Projects/Portfolio/contracts/IPFSEngine.sol\":{\"keccak256\":\"0xfc263b633cfe5d024a63301673d1086febee27d58b4ea6249ee17860ea386522\",\"urls\":[\"bzz-raw://47a404e75ce6d1830169977b08694f27d656af850e18b4fbd305e1c42dc371c5\",\"dweb:/ipfs/QmPDt6ZipQpDaek3YUXoP57ffJnPzysiuhpV5Si8Xcfkds\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610343806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c806333242a1914610046578063a52361d01461005b578063cfd56b1914610084575b600080fd5b6100596100543660046101f2565b610097565b005b61006e6100693660046101b7565b6100d1565b60405161007b91906102e0565b60405180910390f35b6100596100923660046101f2565b6100ee565b7fdb08a06eba245dbd34ffbd08b80e14e9acdd66a8ca6f8f1f035348ced6ef7dc7816040516100c6919061028d565b60405180910390a150565b6100d9610105565b9182526001600160e01b031916602082015290565b805161010190600090602084019061011c565b5050565b604080518082019091526000808252602082015290565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061015d57805160ff191683800117855561018a565b8280016001018555821561018a579182015b8281111561018a57825182559160200191906001019061016f565b5061019692915061019a565b5090565b6101b491905b8082111561019657600081556001016101a0565b90565b600080604083850312156101c9578182fd5b8235915060208301356001600160e01b0319811681146101e7578182fd5b809150509250929050565b600060208284031215610203578081fd5b813567ffffffffffffffff8082111561021a578283fd5b81840185601f82011261022b578384fd5b803592508183111561023b578384fd5b604051601f8401601f19168101602001838111828210171561025b578586fd5b604052838152818401602001871015610272578485fd5b610283846020830160208501610301565b9695505050505050565b6000602080835283518082850152825b818110156102b95785810183015185820160400152820161029d565b818111156102ca5783604083870101525b50601f01601f1916929092016040019392505050565b815181526020918201516001600160e01b0319169181019190915260400190565b8281833750600091015256fea2646970667358221220eedcaf56a66c74ebf112e24fd77087bff2a1c2cc21dba8a3fa7ac929335ddf4164736f6c63430006020033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c806333242a1914610046578063a52361d01461005b578063cfd56b1914610084575b600080fd5b6100596100543660046101f2565b610097565b005b61006e6100693660046101b7565b6100d1565b60405161007b91906102e0565b60405180910390f35b6100596100923660046101f2565b6100ee565b7fdb08a06eba245dbd34ffbd08b80e14e9acdd66a8ca6f8f1f035348ced6ef7dc7816040516100c6919061028d565b60405180910390a150565b6100d9610105565b9182526001600160e01b031916602082015290565b805161010190600090602084019061011c565b5050565b604080518082019091526000808252602082015290565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061015d57805160ff191683800117855561018a565b8280016001018555821561018a579182015b8281111561018a57825182559160200191906001019061016f565b5061019692915061019a565b5090565b6101b491905b8082111561019657600081556001016101a0565b90565b600080604083850312156101c9578182fd5b8235915060208301356001600160e01b0319811681146101e7578182fd5b809150509250929050565b600060208284031215610203578081fd5b813567ffffffffffffffff8082111561021a578283fd5b81840185601f82011261022b578384fd5b803592508183111561023b578384fd5b604051601f8401601f19168101602001838111828210171561025b578586fd5b604052838152818401602001871015610272578485fd5b610283846020830160208501610301565b9695505050505050565b6000602080835283518082850152825b818110156102b95785810183015185820160400152820161029d565b818111156102ca5783604083870101525b50601f01601f1916929092016040019392505050565b815181526020918201516001600160e01b0319169181019190915260400190565b8281833750600091015256fea2646970667358221220eedcaf56a66c74ebf112e24fd77087bff2a1c2cc21dba8a3fa7ac929335ddf4164736f6c63430006020033",
+  "sourceMap": "62:667:3:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;62:667:3;;;;;;;",
+  "deployedSourceMap": "62:667:3:-:0;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;62:667:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;625:101;;;;;;;;;:::i;:::-;;299:271;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;205:86;;;;;;;;;:::i;625:101::-;693:25;712:5;693:25;;;;;;;;;;;;;;;625:101;:::o;299:271::-;418:30;;:::i;:::-;461:36;;;-1:-1:-1;;;;;;508:54:3;:33;;;:54;461:14;299:271::o;205:86::-;271:12;;;;:4;;:12;;;;;:::i;:::-;;205:86;:::o;62:667::-;;;;;;;;;;-1:-1:-1;62:667:3;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;62:667:3;;;-1:-1:-1;62:667:3;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;:::o;728:364:-1:-;;;848:2;836:9;827:7;823:23;819:32;816:2;;;-1:-1;;854:12;816:2;72:20;;;-1:-1;1006:2;1044:22;;208:20;-1:-1;;;;;;4254:78;;5062:34;;5052:2;;-1:-1;;5100:12;5052:2;1014:62;;;;810:282;;;;;;1099:347;;1213:2;1201:9;1192:7;1188:23;1184:32;1181:2;;;-1:-1;;1219:12;1181:2;1277:17;1264:31;1315:18;;1307:6;1304:30;1301:2;;;-1:-1;;1337:12;1301:2;1413:6;1402:9;1398:22;380:3;373:4;365:6;361:17;357:27;347:2;;-1:-1;;388:12;347:2;435:6;422:20;408:34;;1315:18;3620:6;3617:30;3614:2;;;-1:-1;;3650:12;3614:2;3283;3277:9;3723;3704:17;;-1:-1;;3700:33;3309:17;;1213:2;3309:17;3369:34;;;3405:22;;;3366:62;3363:2;;;-1:-1;;3431:12;3363:2;3283;3450:22;528:21;;;628:16;;;1213:2;628:16;625:25;-1:-1;622:2;;;-1:-1;;653:12;622:2;673:41;707:6;1213:2;604:5;600:16;1213:2;570:6;566:17;673:41;;;1357:73;1175:271;-1:-1;;;;;;1175:271;2589:301;;2727:2;;2748:17;2741:47;1815:5;3901:12;4058:6;2727:2;2716:9;2712:18;4046:19;-1:-1;4571:101;4585:6;4582:1;4579:13;4571:101;;;4652:11;;;;;4646:18;4633:11;;;4086:14;4633:11;4626:39;4600:10;;4571:101;;;4687:6;4684:1;4681:13;4678:2;;;-1:-1;4086:14;4743:6;2716:9;4734:16;;4727:27;4678:2;-1:-1;3723:9;4843:14;-1:-1;;4839:28;1973:39;;;;4086:14;1973:39;;2698:192;-1:-1;;;2698:192;2897:317;2303:23;;1514:37;;2488:4;2477:16;;;2471:23;-1:-1;;;;;;4254:78;2546:14;;;1622:36;;;;3067:2;3052:18;;3038:176;4345:145;4426:6;4421:3;4416;4403:30;-1:-1;4482:1;4464:16;;4457:27;4396:94",
+  "source": "pragma solidity ^0.6.0;\r\npragma experimental ABIEncoderV2;\r\n\r\ncontract IPFSEngine {\r\n    struct IpfsHash {\r\n        bytes32 multiHash;\r\n        bytes4 multiHash_Function;\r\n    }\r\n\r\n    string hash;\r\n\r\n    function storeDataAsString(string memory _hash) public {\r\n        hash = _hash;\r\n    }\r\n\r\n    function storeDataAsStruct(\r\n        bytes32 multiHash,\r\n        bytes4 multiHash_Function\r\n    ) public pure returns (IpfsHash memory IpfsHashMemory) {\r\n        IpfsHashMemory.multiHash = multiHash;\r\n        IpfsHashMemory.multiHash_Function = multiHash_Function;\r\n    }\r\n\r\n    event DataStoredInTheLog(string _hash);\r\n\r\n    function storeDataAsLog(string memory _hash) public {\r\n        emit DataStoredInTheLog(_hash);\r\n    }\r\n}\r\n",
+  "sourcePath": "C:\\MyData\\Projects\\Portfolio\\contracts\\IPFSEngine.sol",
+  "ast": {
+    "absolutePath": "/C/MyData/Projects/Portfolio/contracts/IPFSEngine.sol",
+    "exportedSymbols": {
+      "IPFSEngine": [
+        1227
+      ]
+    },
+    "id": 1228,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1172,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:3"
+      },
+      {
+        "id": 1173,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "25:33:3"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1227,
+        "linearizedBaseContracts": [
+          1227
+        ],
+        "name": "IPFSEngine",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IPFSEngine.IpfsHash",
+            "id": 1178,
+            "members": [
+              {
+                "constant": false,
+                "id": 1175,
+                "name": "multiHash",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 1178,
+                "src": "116:17:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 1174,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "116:7:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1177,
+                "name": "multiHash_Function",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 1178,
+                "src": "144:25:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes4",
+                  "typeString": "bytes4"
+                },
+                "typeName": {
+                  "id": 1176,
+                  "name": "bytes4",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "144:6:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "IpfsHash",
+            "nodeType": "StructDefinition",
+            "scope": 1227,
+            "src": "89:88:3",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 1180,
+            "name": "hash",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 1227,
+            "src": "185:11:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_storage",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 1179,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "185:6:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1189,
+              "nodeType": "Block",
+              "src": "260:31:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1187,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 1185,
+                      "name": "hash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1180,
+                      "src": "271:4:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1186,
+                      "name": "_hash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1182,
+                      "src": "278:5:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "271:12:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 1188,
+                  "nodeType": "ExpressionStatement",
+                  "src": "271:12:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "cfd56b19",
+            "id": 1190,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "storeDataAsString",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1183,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1182,
+                  "name": "_hash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1190,
+                  "src": "232:19:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1181,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "232:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "231:21:3"
+            },
+            "returnParameters": {
+              "id": 1184,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "260:0:3"
+            },
+            "scope": 1227,
+            "src": "205:86:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1211,
+              "nodeType": "Block",
+              "src": "450:120:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1203,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1199,
+                        "name": "IpfsHashMemory",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1197,
+                        "src": "461:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                          "typeString": "struct IPFSEngine.IpfsHash memory"
+                        }
+                      },
+                      "id": 1201,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "multiHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1175,
+                      "src": "461:24:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1202,
+                      "name": "multiHash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1192,
+                      "src": "488:9:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "src": "461:36:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "id": 1204,
+                  "nodeType": "ExpressionStatement",
+                  "src": "461:36:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1209,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1205,
+                        "name": "IpfsHashMemory",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1197,
+                        "src": "508:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                          "typeString": "struct IPFSEngine.IpfsHash memory"
+                        }
+                      },
+                      "id": 1207,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "multiHash_Function",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1177,
+                      "src": "508:33:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1208,
+                      "name": "multiHash_Function",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1194,
+                      "src": "544:18:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "src": "508:54:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "id": 1210,
+                  "nodeType": "ExpressionStatement",
+                  "src": "508:54:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "a52361d0",
+            "id": 1212,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "storeDataAsStruct",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1195,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1192,
+                  "name": "multiHash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1212,
+                  "src": "336:17:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1191,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "336:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1194,
+                  "name": "multiHash_Function",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1212,
+                  "src": "364:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 1193,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "364:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "325:71:3"
+            },
+            "returnParameters": {
+              "id": 1198,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1197,
+                  "name": "IpfsHashMemory",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1212,
+                  "src": "418:30:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                    "typeString": "struct IPFSEngine.IpfsHash"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 1196,
+                    "name": "IpfsHash",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1178,
+                    "src": "418:8:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_IpfsHash_$1178_storage_ptr",
+                      "typeString": "struct IPFSEngine.IpfsHash"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "417:32:3"
+            },
+            "scope": 1227,
+            "src": "299:271:3",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 1216,
+            "name": "DataStoredInTheLog",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 1215,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1214,
+                  "indexed": false,
+                  "name": "_hash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1216,
+                  "src": "603:12:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1213,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "603:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "602:14:3"
+            },
+            "src": "578:39:3"
+          },
+          {
+            "body": {
+              "id": 1225,
+              "nodeType": "Block",
+              "src": "677:49:3",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 1222,
+                        "name": "_hash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1218,
+                        "src": "712:5:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 1221,
+                      "name": "DataStoredInTheLog",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1216,
+                      "src": "693:18:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (string memory)"
+                      }
+                    },
+                    "id": 1223,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "693:25:3",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1224,
+                  "nodeType": "EmitStatement",
+                  "src": "688:30:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "33242a19",
+            "id": 1226,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "storeDataAsLog",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1219,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1218,
+                  "name": "_hash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1226,
+                  "src": "649:19:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1217,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "649:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "648:21:3"
+            },
+            "returnParameters": {
+              "id": 1220,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "677:0:3"
+            },
+            "scope": 1227,
+            "src": "625:101:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1228,
+        "src": "62:667:3"
+      }
+    ],
+    "src": "0:731:3"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/MyData/Projects/Portfolio/contracts/IPFSEngine.sol",
+    "exportedSymbols": {
+      "IPFSEngine": [
+        1227
+      ]
+    },
+    "id": 1228,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1172,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:3"
+      },
+      {
+        "id": 1173,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "25:33:3"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1227,
+        "linearizedBaseContracts": [
+          1227
+        ],
+        "name": "IPFSEngine",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IPFSEngine.IpfsHash",
+            "id": 1178,
+            "members": [
+              {
+                "constant": false,
+                "id": 1175,
+                "name": "multiHash",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 1178,
+                "src": "116:17:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 1174,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "116:7:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1177,
+                "name": "multiHash_Function",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 1178,
+                "src": "144:25:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes4",
+                  "typeString": "bytes4"
+                },
+                "typeName": {
+                  "id": 1176,
+                  "name": "bytes4",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "144:6:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "IpfsHash",
+            "nodeType": "StructDefinition",
+            "scope": 1227,
+            "src": "89:88:3",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 1180,
+            "name": "hash",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 1227,
+            "src": "185:11:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_storage",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 1179,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "185:6:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 1189,
+              "nodeType": "Block",
+              "src": "260:31:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1187,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 1185,
+                      "name": "hash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1180,
+                      "src": "271:4:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1186,
+                      "name": "_hash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1182,
+                      "src": "278:5:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "271:12:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 1188,
+                  "nodeType": "ExpressionStatement",
+                  "src": "271:12:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "cfd56b19",
+            "id": 1190,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "storeDataAsString",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1183,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1182,
+                  "name": "_hash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1190,
+                  "src": "232:19:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1181,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "232:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "231:21:3"
+            },
+            "returnParameters": {
+              "id": 1184,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "260:0:3"
+            },
+            "scope": 1227,
+            "src": "205:86:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1211,
+              "nodeType": "Block",
+              "src": "450:120:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1203,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1199,
+                        "name": "IpfsHashMemory",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1197,
+                        "src": "461:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                          "typeString": "struct IPFSEngine.IpfsHash memory"
+                        }
+                      },
+                      "id": 1201,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "multiHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1175,
+                      "src": "461:24:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1202,
+                      "name": "multiHash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1192,
+                      "src": "488:9:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "src": "461:36:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "id": 1204,
+                  "nodeType": "ExpressionStatement",
+                  "src": "461:36:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1209,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1205,
+                        "name": "IpfsHashMemory",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1197,
+                        "src": "508:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                          "typeString": "struct IPFSEngine.IpfsHash memory"
+                        }
+                      },
+                      "id": 1207,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "multiHash_Function",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1177,
+                      "src": "508:33:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1208,
+                      "name": "multiHash_Function",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1194,
+                      "src": "544:18:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes4",
+                        "typeString": "bytes4"
+                      }
+                    },
+                    "src": "508:54:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "id": 1210,
+                  "nodeType": "ExpressionStatement",
+                  "src": "508:54:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "a52361d0",
+            "id": 1212,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "storeDataAsStruct",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1195,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1192,
+                  "name": "multiHash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1212,
+                  "src": "336:17:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 1191,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "336:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1194,
+                  "name": "multiHash_Function",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1212,
+                  "src": "364:25:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 1193,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "364:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "325:71:3"
+            },
+            "returnParameters": {
+              "id": 1198,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1197,
+                  "name": "IpfsHashMemory",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1212,
+                  "src": "418:30:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                    "typeString": "struct IPFSEngine.IpfsHash"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 1196,
+                    "name": "IpfsHash",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1178,
+                    "src": "418:8:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_IpfsHash_$1178_storage_ptr",
+                      "typeString": "struct IPFSEngine.IpfsHash"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "417:32:3"
+            },
+            "scope": 1227,
+            "src": "299:271:3",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 1216,
+            "name": "DataStoredInTheLog",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 1215,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1214,
+                  "indexed": false,
+                  "name": "_hash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1216,
+                  "src": "603:12:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1213,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "603:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "602:14:3"
+            },
+            "src": "578:39:3"
+          },
+          {
+            "body": {
+              "id": 1225,
+              "nodeType": "Block",
+              "src": "677:49:3",
+              "statements": [
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 1222,
+                        "name": "_hash",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1218,
+                        "src": "712:5:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 1221,
+                      "name": "DataStoredInTheLog",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1216,
+                      "src": "693:18:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (string memory)"
+                      }
+                    },
+                    "id": 1223,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "693:25:3",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1224,
+                  "nodeType": "EmitStatement",
+                  "src": "688:30:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "33242a19",
+            "id": 1226,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "storeDataAsLog",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1219,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1218,
+                  "name": "_hash",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1226,
+                  "src": "649:19:3",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1217,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "649:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "648:21:3"
+            },
+            "returnParameters": {
+              "id": 1220,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "677:0:3"
+            },
+            "scope": 1227,
+            "src": "625:101:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1228,
+        "src": "62:667:3"
+      }
+    ],
+    "src": "0:731:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.2+commit.bacdbe57.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.0",
+  "updatedAt": "2020-06-29T21:00:32.054Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
