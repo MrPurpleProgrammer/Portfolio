@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const EvidenceModel = require('./evidence.model.js');
 
 const mediaSchema = new Schema({
         mediaId: Schema.Types.ObjectId,
@@ -8,8 +9,8 @@ const mediaSchema = new Schema({
         mediaTitle: {type: String, required: true},
         description: {type: String, required: false},
         mediaCreator: {type: String, required: true},
-        fileId: {type: String, required: true},
-        evidenceId:{type: String, required: true},
+        fileId: {type: Schema.Types.ObjectId, required: true},
+        evidence:{type: [EvidenceModel.evidenceSchema], required: true},
     }, {
         timestamps: true,
     });

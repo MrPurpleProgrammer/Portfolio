@@ -11,6 +11,7 @@ const GridFsStorage = require("multer-gridfs-storage");
 const Media = require('../models/media.model');
 var gridfs = require('gridfs-stream');
 var fs = require('fs');
+const EvidenceModel = require("../models/evidence.model");
 
 /*-----------------------------------------*/
 /*      1.MongoDB File Storage Engine      */
@@ -33,9 +34,7 @@ let storage = new GridFsStorage({
   url: mongoURI,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
-      let type;
       if (!file) {
-        type = "invalid"
         let err = new Error('Please upload a file')
         err.httpStatusCode = 400
         reject(err)
@@ -56,7 +55,6 @@ let storage = new GridFsStorage({
               filetype: fieldType,
               tags: req.body.mediaTags,
               certificateId: req.body.certificateId,
-              description: req.body.mediaDescription
             }
           };
           resolve(fileInfo);
@@ -66,7 +64,7 @@ let storage = new GridFsStorage({
             fileName: filename,
             aliases: [req.body.mediaTitle + '_evidence'],
             bucketName: "evidenceUploads",
-            metadata: { inputName: file.fieldname, filetype: fieldType, tags: req.body.mediaTags, description: req.body.mediaDescription }
+            metadata: { inputName: file.fieldname, filetype: fieldType, tags: req.body.mediaTags }
           };
           resolve(fileInfo);
         }
@@ -83,34 +81,49 @@ let fileStorage = multer({
 let setMediaModel = function (req) {
   return new Promise((resolve, reject) => {
     if (typeof req.files[0] != "undefined" && typeof req.files[1] != "undefined" && req.body.termAgree == "true") {
+      let mid = mongoose.Types.ObjectId();
       if (req.body.storeOption == 'PORT') {
         let newMedia = new Media({
-          mediaId: req.files[0].id,
+          mediaId: mid,
           mediaType: req.files[0].contentType,
           certificateId: 'CID',
-          description: req.body.mediaDescription,
           mediaTitle: req.body.mediaTitle,
-          mediaCreator: req.body.userHash,
+          mediaCreator: 'MrPurple',
           fileId: req.files[0].id,
-          evidenceId: req.files[1].id,
+          evidence: req.files.slice(1).map((e, i) => {
+            return new EvidenceModel.Evidence({
+              uid: mongoose.Types.ObjectId(),
+              fileId: e.id,
+              mediaId: mid,
+              evidenceType: e.contentType,
+            })
+          }),
         });
         newMedia.save((err, media) => {
           if (err) reject(err);
+          else { resolve('Port Media Added: ' + media); }
         });
-        resolve('Port Media Added');
       }
       if (req.body.storeOption == 'IPFS') {
         let newMedia = new Media({
-          mediaId: req.files[0].id,
+          mediaId: mid,
           mediaType: req.files[0].contentType,
           certificateId: 'CID',
           mediaTitle: req.body.mediaTitle,
           mediaCreator: req.body.userHash,
+          evidence: req.files.slice(1).map((e, i) => {
+            return new EvidenceModel.Evidence({
+              uid: mongoose.Types.ObjectId(),
+              fileId: e.id,
+              mediaId: mid,
+              mediaType: e.contentType,
+            })
+          }),
         });
         newMedia.save((err, media) => {
           if (err) reject(err);
+          else { resolve('IPFS Media Added: ' + media); }
         });
-        resolve('IPFS Media Added');
       }
     }
     else {

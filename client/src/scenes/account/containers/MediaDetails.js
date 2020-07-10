@@ -120,11 +120,7 @@ const MediaDetails = (props) => {
                                 <div id="divMediaTitle" className="mediaTitle">
                                     <h1>Lorem Ipsum dummy text and other stuff, and more stuff. etc. </h1>
                                 </div>
-                                <div id="divMediaSubTitle">
-                                    <p className="mediaBody"> Lorem Ipsum dummy text and other stuff, and more stuff. etc. Lorem Ipsum dummy text and other stuff, and more stuff. etc. </p>
-                                </div>
                                 <div id="divMediaTags">
-                                    <h1 className="mediaHeader">Media Tags</h1>
                                     <div className="tagContainer">
                                         <p className="tags">Lightbulb,</p>
                                         <p className="tags">Red,</p>

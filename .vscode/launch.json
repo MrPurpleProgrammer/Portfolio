@@ -19,15 +19,21 @@
             "runtimeExecutable": "nodemon",
             "program": "${workspaceFolder}\\server\\index.js",
             "cwd": "${workspaceFolder}\\server",
+            "restart": true,
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         },
     ],
     "compounds": [
         {
             "name": "Launch & Debug",
-            "configurations": ["PortServer", "ClientBrowser"],
+            "configurations": [
+                "PortServer",
+                "ClientBrowser"
+            ],
             "preLaunchTask": "PortClient"
         }
     ],

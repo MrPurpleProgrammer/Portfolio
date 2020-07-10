@@ -23,7 +23,6 @@ function UploadInput(props) {
     const history = useHistory();
     const [isUploadActive, setUploadStatus] = useState(false);
     let handleUpload = (e, state) => {
-        console.log(e);
         if (state == "drop") {
             var eventMod = e;
         }
@@ -31,11 +30,12 @@ function UploadInput(props) {
             e.preventDefault();
             var eventMod = e.target.files;
         }
+        console.log(eventMod);
         history.push(
             {
                 pathname: '/Upload',
                 search: "?mediaType=jpeg&uploadStatus=true",
-                state: { event: eventMod, inputName: e.target.name }
+                state: { event: eventMod, inputName: eventMod.name }
             }
         )
     }

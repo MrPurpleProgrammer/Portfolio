@@ -31,12 +31,12 @@ function UploadStatus(props) {
                     format='upload'
                 />
             </div>
-            <div id="divUploadProgressBars" className="progressBarContainer">
+            <div id="divUploadProgressBars" className="progressBarContainer none">
                 <p>Analyzing Media Metadata</p>
                 <Progress percent={70} progress indicating />
                 <p>Hashing Media Metadata</p>
                 <Progress percent={24} progress />
-                <p>Uploading meda to IPFS</p>
+                <p>Uploading Media to IPFS</p>
                 <Progress percent={0} progress />
                 <p>Creating DMCT</p>
                 <Progress percent={0} progress />

@@ -63,7 +63,7 @@ class Media extends Component {
             />
         }
         return (
-            <div id={"divMedia_" + this.props.mediaId}>{media}</div>
+            <div id={"divMedia_" + this.props.mediaId} style={{height: "inherit"}}>{media}</div>
         )
     }
 }

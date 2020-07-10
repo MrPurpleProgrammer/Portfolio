@@ -22,7 +22,7 @@ router.post('/delete', (req, res) => {
 });
 
 router.post('/create', uploadService.fileStorage.any(), (req, res, next) => {
-    uploadController.postMedia(req, res, next);
+     uploadController.postMedia(req, res, next);
 });
 
 module.exports = router;

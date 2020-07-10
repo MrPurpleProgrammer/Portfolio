@@ -3,8 +3,8 @@ import Public from "./public/Public.js";
 import Login from "./login/Login.js";
 import Account from "./account/Account.js";
 import Signup from "./signup/Signup.js";
-import MediaDetails from "./account/containers/MediaDetails.js"
-import Upload from './upload/Upload.js'
+import MediaDetails from "./account/containers/MediaDetails.js";
+import Upload from './upload/Upload.js';
 
 import {
     BrowserRouter as Router,
@@ -21,8 +21,10 @@ class Application extends Component {
         this.state = {
             isLoggedIn: true,
             userId: 12345,
+
         }
     }
+
     render() {
         var accountState;
         if (this.state.isLoggedIn == false) accountState = <Public />;
