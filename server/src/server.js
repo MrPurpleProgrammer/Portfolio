@@ -6,6 +6,8 @@ const path = require('path');
 const mongodb = require("../database/db");
 const bodyParser = require('body-parser');
 const rateLimit = require("express-rate-limit");
+var cookieParser = require('cookie-parser')
+
 //let renderClient = require('./renderClient');
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -14,6 +16,7 @@ const limiter = rateLimit({
 const server = express();
 const port = process.env.PORT || 5000
 
+server.use(cookieParser());
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', "*");  
   res.header('Access-Control-Allow-Headers', 'content-type');

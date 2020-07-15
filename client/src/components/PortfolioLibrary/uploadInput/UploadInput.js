@@ -35,7 +35,7 @@ function UploadInput(props) {
             {
                 pathname: '/Upload',
                 search: "?mediaType=jpeg&uploadStatus=true",
-                state: { event: eventMod, inputName: eventMod.name }
+                state: { event: eventMod, inputName: eventMod[0].name }
             }
         )
     }

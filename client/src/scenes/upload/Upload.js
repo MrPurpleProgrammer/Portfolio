@@ -19,6 +19,7 @@ function Upload(props) {
     const [Form, setForm] = useState([]);
     const [EvidenceUpload, setEvidenceUpload] = useState(null);
     const [UploadFormState, setUploadFormState] = useState(0);
+    const [WalletTransactionData, setTransactionData] = useState({});
     let handleEvidenceUpload = (e) => {
         setEvidenceUpload({ name: 'uploadFormEvidence', value: e });
     }
@@ -31,50 +32,42 @@ function Upload(props) {
         return history.goBack();
     }
     function nextButton() {
-        console.log(UploadFormState);
         if (UploadFormState == 0) {
             let e = location.state;
-            let formUpload1 = $("#formUploadStep1").serializeArray();
+            let formUpload = $("#formUploadStep1").serializeArray();
             let storageOpt = storageOption();
-            formUpload1.push(storageOpt);
-            formUpload1.push({ name: e.inputName, value: e.event[0] });
-            formUpload1.push(EvidenceUpload);
-            setForm(formUpload1);
+            formUpload.push(storageOpt);
+            formUpload.push({ name: 'toolbarMediaUpload', value: e.event[0] });
+            EvidenceUpload.value.forEach((e) => {
+                formUpload.push({ name: EvidenceUpload.name, value: e });
+            })
+            setForm(formUpload);
             setUploadFormState(UploadFormState + 1);
-            console.log(Form);
         }
         if (UploadFormState == 1) {
-            let formUpload2 = $("#formUploadStep2").serializeArray();
+            let formUpload = $("#formUploadStep2").serializeArray();
             let termCheck = function () {
                 if ($('#termsAgreeCheck').prop("checked") == true) return { name: "termAgree", value: "true" }
                 else return { name: "termAgree", value: "false" };
             }
-            formUpload2.push(termCheck());
-            let updatedForm2;
-            formUpload2.map((e, i) => {
-                Form.push(e);
-                updatedForm2 = Form;
+            formUpload.push(termCheck());
+            let updatedForm;
+            formUpload.map((each, i) => {
+                Form.push(each);
+                updatedForm = Form;
             });
-            console.log(updatedForm2);
-            setForm(updatedForm2);
+            setForm(updatedForm);
+            $('#uploadFormNextButton').prop('disabled', true);
             setUploadFormState(UploadFormState + 1);
         }
         if (UploadFormState == 2) {
+            console.log(WalletTransactionData);
             let fd = new FormData();
-            Form.forEach((e, i) => {
-                if (e.name == 'uploadFormEvidence') {
-                    let file = 0;
-                    while (file < e.value.length) {
-                        console.log(e, e.name + file, e.value[file]);
-                        fd.append(e.name, e.value[file]);
-                        file++;
-                    }
-                }
-                else {
-                    fd.append(e.name, e.value);
-                }
-            })
-            fetch('http://localhost:5000/upload/create/', {
+            Form.forEach((e) => {
+                fd.append(e.name, e.value);
+            });
+            let url = 'http://localhost:5000/upload/create/';
+            fetch(url, {
                 mode: 'cors',
                 method: 'post',
                 body: fd,
@@ -86,7 +79,7 @@ function Upload(props) {
         if (UploadFormState == 3) {
             setUploadFormState(0);
         }
-        console.log(Form);
+        console.log(Form, UploadFormState);
     }
     let renderUploadForm = () => {
         if (UploadFormState == 0) {
@@ -101,7 +94,7 @@ function Upload(props) {
         }
         else if (UploadFormState == 2) {
             return (
-                <UploadFormStep3 contractMetadata={Form} />
+                <UploadFormStep3 contractMetadata={Form} transactionReciept={reciept => setTransactionData(reciept)} />
             )
         }
         else if (UploadFormState == 3) {
@@ -128,7 +121,7 @@ function Upload(props) {
     }
     let handleNextButton = function () {
         return (
-            <button className="formMainButton" onClick={() => { nextButton() }}><h1>Next</h1></button>
+            <button id='uploadFormNextButton' className="formMainButton" onClick={() => { nextButton() }}><h1>Next</h1></button>
         )
     }
     return (

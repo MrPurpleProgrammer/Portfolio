@@ -11,6 +11,7 @@ import trezorSVG from '../../../assets/SVG/trezor.svg'
 
 function UploadFormStep3(props) {
     const [WalletAccount, setWalletAccount] = useState(null);
+    const [WalletStatus, setWalletStatus] = useState('Pending');
     $(function () {
         $('.checkbox_Style1_Label').on('click', function () {
             $(this).toggleClass('checkboxActive');
@@ -22,57 +23,71 @@ function UploadFormStep3(props) {
             $(this).prop('checked', true);
         })
     });
-    async function connectToWallet(type) {
-        let web3Instance;
+    async function connectToWeb3(type) {
         if (window.ethereum) {
-            await window.ethereum.enable();
+            window.ethereum.enable();
+            window.ethereum.autoRefreshOnNetworkChange = false;
+            window.web3 = new Web3(window.ethereum);
+            return window.web3;
         }
-        if (typeof window.web3 !== 'undefined') {
-            web3Instance = new Web3(window.web3.currentProvider);
-        }
-        else {
-            web3Instance = new Web3(new Web3.providers.HttpProvider("ws://localhost:8545"));
-        }
-        const accounts = await web3Instance.eth.getAccounts((err, res) => {
+        return false;
+    }
+    async function loadBlockchainData(type) {
+        setWalletStatus('Connecting');
+        let web3 = await connectToWeb3(type);
+        const accounts = await web3.eth.getAccounts((err, res) => {
             if (err) {
                 console.log(err);
+                setWalletStatus('Rejected');
             }
             else {
                 console.log(res);
                 return res;
             }
         });
-        setWalletAccount(accounts[0]);
-        return { acc: accounts, web3: web3Instance };
-    }
-    async function loadBlockchainData(type) {
-        let walletData = await connectToWallet(type);
-        let netVer = window.web3.currentProvider.networkVersion;
-        let web3 = walletData.web3;
-        const DMCT = new web3.eth.Contract(DMCTCompile.abi, DMCTCompile.networks[5777].address);
-        let assetHash = Buffer.from('Hello DMCT', 'hex');
-        const url = "388CD7A0AC2B02";
-        //Convert Id into multihash data bytes
-        let ipfsCID = new CID('bafybeidsnx4fyxavnmonff7fopzps5lwdbmhcmo7fchiebgddodctcetzy');
-        let args = {
-            hashFunction: ipfsCID.buffer.slice(0, 4),
-            hash: ipfsCID.multihash.slice(4),
+        if (web3 != false && accounts.length != 0) {
+            setWalletAccount(accounts[0]);
+            setWalletStatus('Connected');
+            let netVer = web3.currentProvider.networkVersion;
+            //web3.eth.Contract.handleRevert = true;
+            const DMCT = new web3.eth.Contract(DMCTCompile.abi, DMCTCompile.networks[5777].address);
+            let assetHash = Buffer.from('Hello MrPurple11', 'hex');
+            //Convert Id into multihash data bytes
+            let ipfsCID = new CID('bafybeidsnx6fy7aannonff7fopzps5lwdbmhcmo7fchiebgddodctcetzy');
+            let args = {
+                hashFunction: ipfsCID.buffer.slice(0, 4),
+                hash: ipfsCID.multihash.slice(4),
+            }
+            DMCT.handleRevert = true;
+            DMCT.methods.createCertificate(props.contractMetadata[0].value, assetHash, args.hash, args.hashFunction)
+                .send({ from: accounts[0], gasPrice: 20000000000, gas: 8000000, value: 1000000000000000000 })
+                .on('transactionHash', function (hash) {
+                    console.log(hash);
+                    setWalletStatus('Completed');
+                })
+                .on('confirmation', function (confirmationNumber, receipt) {
+                    console.log(confirmationNumber, receipt);
+                    $('transactionComplete_' + type).show();
+                })
+                .on('receipt', function (receipt) {
+                    props.transactionReciept(receipt);
+                    console.log(receipt);
+                })
+                .on('error', function (error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+                    props.transactionReciept(error);
+                    setWalletStatus('Rejected');
+                    console.log(error, receipt);
+                });
         }
-        console.log(props.contractMetadata, assetHash, args.hash, args.hashFunction);
-        DMCT.methods.createCertificate(props.contractMetadata[0].value, assetHash, args.hash, args.hashFunction)
-            .send({ from: walletData.acc[0] })
-            .on('transactionHash', function (hash) {
-                console.log(hash);
-            })
-            .on('confirmation', function (confirmationNumber, receipt) {
-                console.log(confirmationNumber, receipt);
-                $('transactionComplete_'+type).show();
-            })
-            .on('receipt', function (receipt) {
-                console.log(receipt);
-            });
+        else { setWalletStatus('Rejected'); return console.log('Web3 Instance Not Found.'); }
     }
-
+    function transactionStatus() {
+        if (WalletStatus == 'Pending') return (<p style={{ color: 'gray', marginLeft: 7 }}>Pending</p>)
+        if (WalletStatus == 'Connecting') return (<p style={{ color: 'yellow', marginLeft: 7 }}>Connecting</p>)
+        if (WalletStatus == 'Connected') return (<p style={{ color: 'orange', marginLeft: 7 }}>Connected</p>)
+        if (WalletStatus == 'Completed') return (<p style={{ color: '#14bb2e', marginLeft: 7 }}>Completed</p>)
+        if (WalletStatus == 'Rejected') return (<p style={{ color: '#cb3030', marginLeft: 7 }}>Rejected</p>)
+    }
     return (
         <div id="divUploadForm_Step1" className="uploadForm">
             <div id="divStepExplanation" className="stepExplainContainer">
@@ -89,7 +104,10 @@ function UploadFormStep3(props) {
                         <button id="btnAltLogin" className="altLoginButton_Style1 mt10" onClick={() => loadBlockchainData('metamask')}>
                             <img src={metamaskSVG}></img>
                             <h1>Connect With Metamask</h1>
-                            <i id='transactionComplete_metamask' className="fas fa-check none"></i>
+                            <div className='walletTransactionStatus'>
+                                <p>Transaction Status: </p>
+                                {transactionStatus()}
+                            </div>
                         </button>
                     </div>
                     {/* <div className="altbuttonContainer_Style1">

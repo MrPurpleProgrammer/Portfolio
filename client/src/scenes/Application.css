@@ -542,23 +542,32 @@ input:-webkit-autofill {
 	border: 4px solid #122E75;
 	border-radius: 10px;
 	cursor: pointer;
-	display: flex;
 	padding: 10px;
 }
 .altLoginButton_Style1 h1 {
 	font-size: 16px;
     font-family: 'Montserrat-Bold', sans-serif;
-    margin: 15px;
+	margin: 15px;
+	float: left;
 }
 .altLoginButton_Style1 img {
 	height: 35px;
-    margin: 5px;
+	margin: 5px;
+	float: left;
 }
 .altLoginButton_Style1 i {
 	align-self: center;
 	color: yellowgreen;
 }
-
+.walletTransactionStatus {
+	display: inline-flex;
+	float: right;
+	margin: 18px;
+}
+.walletTransactionStatus p{
+	margin-bottom: 0px;
+	font-size: 13px;
+}
 .altLoginButton {
 	background: #0c1e50;
 	height: 75px;

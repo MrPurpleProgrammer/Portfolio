@@ -59,7 +59,7 @@ let storage = new GridFsStorage({
           };
           resolve(fileInfo);
         }
-        if (fieldType == "media_evidence") {
+        else if (fieldType == "media_evidence") {
           const fileInfo = {
             fileName: filename,
             aliases: [req.body.mediaTitle + '_evidence'],
@@ -67,6 +67,10 @@ let storage = new GridFsStorage({
             metadata: { inputName: file.fieldname, filetype: fieldType, tags: req.body.mediaTags }
           };
           resolve(fileInfo);
+        }
+        else {
+          console.log('FieldType Unauthorized or not Found');
+          reject('FieldType Unauthorized or not Found');
         }
       });
     });
@@ -82,28 +86,6 @@ let setMediaModel = function (req) {
   return new Promise((resolve, reject) => {
     if (typeof req.files[0] != "undefined" && typeof req.files[1] != "undefined" && req.body.termAgree == "true") {
       let mid = mongoose.Types.ObjectId();
-      if (req.body.storeOption == 'PORT') {
-        let newMedia = new Media({
-          mediaId: mid,
-          mediaType: req.files[0].contentType,
-          certificateId: 'CID',
-          mediaTitle: req.body.mediaTitle,
-          mediaCreator: 'MrPurple',
-          fileId: req.files[0].id,
-          evidence: req.files.slice(1).map((e, i) => {
-            return new EvidenceModel.Evidence({
-              uid: mongoose.Types.ObjectId(),
-              fileId: e.id,
-              mediaId: mid,
-              evidenceType: e.contentType,
-            })
-          }),
-        });
-        newMedia.save((err, media) => {
-          if (err) reject(err);
-          else { resolve('Port Media Added: ' + media); }
-        });
-      }
       if (req.body.storeOption == 'IPFS') {
         let newMedia = new Media({
           mediaId: mid,
@@ -123,6 +105,28 @@ let setMediaModel = function (req) {
         newMedia.save((err, media) => {
           if (err) reject(err);
           else { resolve('IPFS Media Added: ' + media); }
+        });
+      }
+      else {
+        let newMedia = new Media({
+          mediaId: mid,
+          mediaType: req.files[0].contentType,
+          certificateId: 'CID',
+          mediaTitle: req.body.mediaTitle,
+          mediaCreator: 'MrPurple',
+          fileId: req.files[0].id,
+          evidence: req.files.slice(1).map((e, i) => {
+            return new EvidenceModel.Evidence({
+              uid: mongoose.Types.ObjectId(),
+              fileId: e.id,
+              mediaId: mid,
+              evidenceType: e.contentType,
+            })
+          }),
+        });
+        newMedia.save((err, media) => {
+          if (err) reject(err);
+          else { resolve('Port Media Added: ' + media); }
         });
       }
     }
@@ -160,7 +164,7 @@ let getMediaCollection = function (res) {
     fileBucket.find().toArray((err, files) => {
       // check if files
       if (!files || files.length === 0) {
-        return res.status(404).json({
+        return resolve({
           err: "no files exist"
         });
       }
