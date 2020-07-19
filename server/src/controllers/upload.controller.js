@@ -1,5 +1,6 @@
 
 const uploadService = require('../services/upload.service')
+const {DHash, PHash, generateIPFS_URL} = require('../services/asset.service')
 const async = require('async')
 
 let postMedia = async (req, res) => {
@@ -25,8 +26,18 @@ let getAllMedia = async (req, res, next) => {
   res.json({mediaColl, mediaCert});
 }
 
+let getAssetHash = async (req, res) => {
+  let dhash = new DHash(req.files[0]);
+  let assetHash_d = await dhash.getDHash();
+  let phash = new PHash(req.files[0]);
+  let assetHash_p = await phash.getPHash();
+  let ipfsUrl = await generateIPFS_URL(req.files[0].buffer);
+  res.json({dhash: assetHash_d, phash: assetHash_p, url: ipfsUrl});
+}
+
 module.exports = {
   postMedia, 
   getMedia,
   getAllMedia,
+  getAssetHash,
 };

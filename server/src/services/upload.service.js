@@ -9,8 +9,8 @@ const multer = require("multer");
 const uploadDict = require('../dictionaries/upload.dictionary');
 const GridFsStorage = require("multer-gridfs-storage");
 const Media = require('../models/media.model');
-var gridfs = require('gridfs-stream');
-var fs = require('fs');
+const gridfs = require('gridfs-stream');
+const fs = require('fs');
 const EvidenceModel = require("../models/evidence.model");
 
 /*-----------------------------------------*/

@@ -12,6 +12,10 @@ import UploadFormStep3 from './containers/UploadFormStep3';
 import UploadFormStep4 from './containers/UploadFormStep4';
 import UploadChart from '../../components/PortfolioLibrary/uploadChart/UploadChart.js';
 
+function bufferToHexString(buffer) { // buffer is an ArrayBuffer
+    return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+}
+
 function Upload(props) {
     let location = useLocation();
     let history = useHistory();
@@ -20,6 +24,23 @@ function Upload(props) {
     const [EvidenceUpload, setEvidenceUpload] = useState(null);
     const [UploadFormState, setUploadFormState] = useState(0);
     const [WalletTransactionData, setTransactionData] = useState({});
+    const [AssetData, setAssetData] = useState({});
+    let getAssetData = () => {
+        let fileForm = new FormData();
+        fileForm.append('asset', location.state.event[0]);
+        let url = 'http://localhost:5000/upload/generate/assetHash';
+        fetch(url, {
+            mode: 'cors',
+            method: 'POST',
+            body: fileForm,
+        })
+            .then(res => res.json())
+            .then(data => {
+                setAssetData(data);
+            })
+            .catch(err => console.log(err));
+    }
+
     let handleEvidenceUpload = (e) => {
         setEvidenceUpload({ name: 'uploadFormEvidence', value: e });
     }
@@ -30,6 +51,34 @@ function Upload(props) {
     }
     let backButton = () => {
         return history.goBack();
+    }
+    let renderUploadForm = () => {
+        if (UploadFormState == 0) {
+            return (
+                <UploadFormStep1 onUpload={handleEvidenceUpload} />
+            )
+        }
+        else if (UploadFormState == 1) {
+            return (
+                <UploadFormStep2 />
+            )
+        }
+        else if (UploadFormState == 2) {
+            return (
+                <UploadFormStep3 assetData={AssetData} contractMetadata={Form} transactionReciept={reciept => setTransactionData(reciept)} />
+            )
+        }
+        else if (UploadFormState == 3) {
+            return (
+                <UploadFormStep4 />
+            )
+        }
+        else {
+            setUploadFormState(0)
+            return (
+                <UploadFormStep1 />
+            )
+        }
     }
     function nextButton() {
         if (UploadFormState == 0) {
@@ -47,7 +96,9 @@ function Upload(props) {
         if (UploadFormState == 1) {
             let formUpload = $("#formUploadStep2").serializeArray();
             let termCheck = function () {
-                if ($('#termsAgreeCheck').prop("checked") == true) return { name: "termAgree", value: "true" }
+                if ($('#termsAgreeCheck').prop("checked") == true) {
+                    return { name: "termAgree", value: "true" }
+                }
                 else return { name: "termAgree", value: "false" };
             }
             formUpload.push(termCheck());
@@ -57,7 +108,7 @@ function Upload(props) {
                 updatedForm = Form;
             });
             setForm(updatedForm);
-            $('#uploadFormNextButton').prop('disabled', true);
+            getAssetData();
             setUploadFormState(UploadFormState + 1);
         }
         if (UploadFormState == 2) {
@@ -73,7 +124,6 @@ function Upload(props) {
                 body: fd,
             }).then(res => {
                 if (res.status == 201) setUploadFormState(UploadFormState + 1);
-                console.log(res);
             });
         }
         if (UploadFormState == 3) {
@@ -81,33 +131,10 @@ function Upload(props) {
         }
         console.log(Form, UploadFormState);
     }
-    let renderUploadForm = () => {
-        if (UploadFormState == 0) {
-            return (
-                <UploadFormStep1 onUpload={handleEvidenceUpload} />
-            )
-        }
-        else if (UploadFormState == 1) {
-            return (
-                <UploadFormStep2 />
-            )
-        }
-        else if (UploadFormState == 2) {
-            return (
-                <UploadFormStep3 contractMetadata={Form} transactionReciept={reciept => setTransactionData(reciept)} />
-            )
-        }
-        else if (UploadFormState == 3) {
-            return (
-                <UploadFormStep4 />
-            )
-        }
-        else {
-            setUploadFormState(0)
-            return (
-                <UploadFormStep1 />
-            )
-        }
+    let handleNextButton = function () {
+        return (
+            <button id='uploadFormNextButton' className="formMainButton" onClick={() => { nextButton() }}><h1>Next</h1></button>
+        )
     }
     let handlePreviousButton = function () {
         if (UploadFormState != 0 && UploadFormState != 3) {
@@ -118,11 +145,6 @@ function Upload(props) {
         else {
             return;
         }
-    }
-    let handleNextButton = function () {
-        return (
-            <button id='uploadFormNextButton' className="formMainButton" onClick={() => { nextButton() }}><h1>Next</h1></button>
-        )
     }
     return (
         <div id="accountContent" className="accountContentContainer">

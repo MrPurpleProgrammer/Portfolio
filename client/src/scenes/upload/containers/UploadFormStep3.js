@@ -51,24 +51,17 @@ function UploadFormStep3(props) {
             let netVer = web3.currentProvider.networkVersion;
             //web3.eth.Contract.handleRevert = true;
             const DMCT = new web3.eth.Contract(DMCTCompile.abi, DMCTCompile.networks[5777].address);
-            let assetHash = Buffer.from('Hello MrPurple11', 'hex');
+            let assetHash = Buffer.from(props.assetData.dhash.str, 'hex');
             //Convert Id into multihash data bytes
-            let ipfsCID = new CID('bafybeidsnx6fy7aannonff7fopzps5lwdbmhcmo7fchiebgddodctcetzy');
-            let args = {
+            let assetUrl = props.assetData.url;
+            let ipfsCID = new CID(assetUrl);
+            let urlArgs = {
                 hashFunction: ipfsCID.buffer.slice(0, 4),
                 hash: ipfsCID.multihash.slice(4),
             }
             DMCT.handleRevert = true;
-            DMCT.methods.createCertificate(props.contractMetadata[0].value, assetHash, args.hash, args.hashFunction)
-                .send({ from: accounts[0], gasPrice: 20000000000, gas: 8000000, value: 1000000000000000000 })
-                .on('transactionHash', function (hash) {
-                    console.log(hash);
-                    setWalletStatus('Completed');
-                })
-                .on('confirmation', function (confirmationNumber, receipt) {
-                    console.log(confirmationNumber, receipt);
-                    $('transactionComplete_' + type).show();
-                })
+            DMCT.methods.createCertificate(props.contractMetadata[0].value, assetHash, urlArgs.hash, urlArgs.hashFunction)
+                .send({ from: accounts[0], gasPrice: 20000000000, gas: 8000000 })
                 .on('receipt', function (receipt) {
                     props.transactionReciept(receipt);
                     console.log(receipt);
