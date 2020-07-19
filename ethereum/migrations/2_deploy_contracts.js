@@ -1,7 +1,7 @@
-var Models = artifacts.require("./contracts/Models.sol");
-var DMCT = artifacts.require("./contracts/DMCT/DMCT.sol");
-var DMCT_Services = artifacts.require("./contracts/DMCT/DMCT_Services.sol");
-var Artisan = artifacts.require("./contracts/Artisan.sol");
+var Models = artifacts.require("../contracts/Models.sol");
+var DMCT = artifacts.require("../contracts/DMCT/DMCT.sol");
+var DMCT_Services = artifacts.require("../contracts/DMCT/DMCT_Services.sol");
+var Artisan = artifacts.require("../contracts/Artisan.sol");
 
 //var NFCSearch = artifacts.require("./contracts/NFCSearch.sol");
 

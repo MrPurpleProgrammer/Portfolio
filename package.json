@@ -1,16 +1,16 @@
 {
   "name": "portfolio",
   "version": "1.0.0",
-  "description": "",
-  "main": "truffle-config.js",
-  "directories": {
-    "test": "test"
-  },
+  "description": "Decentralized Digital Media Certification Token (DMCT) smart contract app. Designed to improve current digital media copyrighting standards.",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clientdir": "cd client && npm i",
     "serverdir": "cd server && npm i",
     "setup": "npm i && npm run clientdir && npm run serverdir",
+    "ganache": "ganache-cli -a 10 -p 7547",
+    "truffle_migrate": "cd ethereum && npm run start",
+    "ethereum_dev": "npm run ganache && npm run truffle_migrate",
     "client": "cd client && npm run start",
     "server": "cd server && npm run watch",
     "start": "concurrently \"npm run setup\" \"npm run client\" \"npm run server\"",
@@ -18,23 +18,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/truffle-box/drizzle-box.git"
+    "url": "git+https://github.com/MrPurpleProgrammer/Portfolio.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "MrPurple",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/truffle-box/drizzle-box/issues"
+    "url": "https://github.com/MrPurpleProgrammer/Portfolio/issues"
   },
-  "homepage": "https://github.com/truffle-box/drizzle-box#readme",
+  "homepage": "https://github.com/MrPurpleProgrammer/Portfolio#readme",
   "dependencies": {
-    "@openzeppelin/contracts": "^3.0.2",
-    "cids": "^0.8.3",
-    "concurrently": "^5.2.0",
-    "gsap": "^3.3.3",
-    "multihashes": "^1.0.1",
-    "multihashing-async": "^1.0.0",
-    "portfolio-dmct": "^0.1.0",
-    "solc": "^0.6.10"
+    "copyfiles": "^2.3.0",
+    "rimraf": "^3.0.2"
   }
 }

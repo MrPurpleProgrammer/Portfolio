@@ -14,7 +14,7 @@ contract Artisan is Models {
         require(
             addressToUser[msg.sender].userAddress ==
                 0x0000000000000000000000000000000000000000,
-            "This User already exists"
+            "This User already exist"
         );
         addressToUser[msg.sender] = User(
             msg.sender,
