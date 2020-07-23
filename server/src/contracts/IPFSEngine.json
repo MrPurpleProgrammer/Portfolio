@@ -88,14 +88,14 @@
     "absolutePath": "/C/MyData/Projects/Portfolio/ethereum/contracts/IPFSEngine.sol",
     "exportedSymbols": {
       "IPFSEngine": [
-        1227
+        1233
       ]
     },
-    "id": 1228,
+    "id": 1234,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1172,
+        "id": 1178,
         "literals": [
           "solidity",
           "^",
@@ -106,7 +106,7 @@
         "src": "0:23:3"
       },
       {
-        "id": 1173,
+        "id": 1179,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -121,24 +121,24 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1227,
+        "id": 1233,
         "linearizedBaseContracts": [
-          1227
+          1233
         ],
         "name": "IPFSEngine",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "IPFSEngine.IpfsHash",
-            "id": 1178,
+            "id": 1184,
             "members": [
               {
                 "constant": false,
-                "id": 1175,
+                "id": 1181,
                 "name": "multiHash",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 1178,
+                "scope": 1184,
                 "src": "116:17:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -147,7 +147,7 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 1174,
+                  "id": 1180,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
                   "src": "116:7:3",
@@ -161,11 +161,11 @@
               },
               {
                 "constant": false,
-                "id": 1177,
+                "id": 1183,
                 "name": "multiHash_Function",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 1178,
+                "scope": 1184,
                 "src": "144:25:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -174,7 +174,7 @@
                   "typeString": "bytes4"
                 },
                 "typeName": {
-                  "id": 1176,
+                  "id": 1182,
                   "name": "bytes4",
                   "nodeType": "ElementaryTypeName",
                   "src": "144:6:3",
@@ -189,17 +189,17 @@
             ],
             "name": "IpfsHash",
             "nodeType": "StructDefinition",
-            "scope": 1227,
+            "scope": 1233,
             "src": "89:88:3",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 1180,
+            "id": 1186,
             "name": "hash",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1227,
+            "scope": 1233,
             "src": "185:11:3",
             "stateVariable": true,
             "storageLocation": "default",
@@ -208,7 +208,7 @@
               "typeString": "string"
             },
             "typeName": {
-              "id": 1179,
+              "id": 1185,
               "name": "string",
               "nodeType": "ElementaryTypeName",
               "src": "185:6:3",
@@ -222,25 +222,25 @@
           },
           {
             "body": {
-              "id": 1189,
+              "id": 1195,
               "nodeType": "Block",
               "src": "260:31:3",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 1187,
+                    "id": 1193,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 1185,
+                      "id": 1191,
                       "name": "hash",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1180,
+                      "referencedDeclaration": 1186,
                       "src": "271:4:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage",
@@ -251,11 +251,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 1186,
+                      "id": 1192,
                       "name": "_hash",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1182,
+                      "referencedDeclaration": 1188,
                       "src": "278:5:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -268,7 +268,7 @@
                       "typeString": "string storage ref"
                     }
                   },
-                  "id": 1188,
+                  "id": 1194,
                   "nodeType": "ExpressionStatement",
                   "src": "271:12:3"
                 }
@@ -276,7 +276,7 @@
             },
             "documentation": null,
             "functionSelector": "cfd56b19",
-            "id": 1190,
+            "id": 1196,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -284,16 +284,16 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1183,
+              "id": 1189,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1182,
+                  "id": 1188,
                   "name": "_hash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1190,
+                  "scope": 1196,
                   "src": "232:19:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -302,7 +302,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1181,
+                    "id": 1187,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "232:6:3",
@@ -318,12 +318,12 @@
               "src": "231:21:3"
             },
             "returnParameters": {
-              "id": 1184,
+              "id": 1190,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "260:0:3"
             },
-            "scope": 1227,
+            "scope": 1233,
             "src": "205:86:3",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -331,72 +331,10 @@
           },
           {
             "body": {
-              "id": 1211,
+              "id": 1217,
               "nodeType": "Block",
               "src": "450:120:3",
               "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 1203,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 1199,
-                        "name": "IpfsHashMemory",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 1197,
-                        "src": "461:14:3",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
-                          "typeString": "struct IPFSEngine.IpfsHash memory"
-                        }
-                      },
-                      "id": 1201,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": true,
-                      "memberName": "multiHash",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1175,
-                      "src": "461:24:3",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bytes32",
-                        "typeString": "bytes32"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "id": 1202,
-                      "name": "multiHash",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 1192,
-                      "src": "488:9:3",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bytes32",
-                        "typeString": "bytes32"
-                      }
-                    },
-                    "src": "461:36:3",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "id": 1204,
-                  "nodeType": "ExpressionStatement",
-                  "src": "461:36:3"
-                },
                 {
                   "expression": {
                     "argumentTypes": null,
@@ -413,10 +351,10 @@
                         "name": "IpfsHashMemory",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1197,
-                        "src": "508:14:3",
+                        "referencedDeclaration": 1203,
+                        "src": "461:14:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                          "typeIdentifier": "t_struct$_IpfsHash_$1184_memory_ptr",
                           "typeString": "struct IPFSEngine.IpfsHash memory"
                         }
                       },
@@ -425,9 +363,71 @@
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
+                      "memberName": "multiHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1181,
+                      "src": "461:24:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1208,
+                      "name": "multiHash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1198,
+                      "src": "488:9:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "src": "461:36:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "id": 1210,
+                  "nodeType": "ExpressionStatement",
+                  "src": "461:36:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1215,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1211,
+                        "name": "IpfsHashMemory",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1203,
+                        "src": "508:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_IpfsHash_$1184_memory_ptr",
+                          "typeString": "struct IPFSEngine.IpfsHash memory"
+                        }
+                      },
+                      "id": 1213,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
                       "memberName": "multiHash_Function",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1177,
+                      "referencedDeclaration": 1183,
                       "src": "508:33:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes4",
@@ -438,11 +438,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 1208,
+                      "id": 1214,
                       "name": "multiHash_Function",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1194,
+                      "referencedDeclaration": 1200,
                       "src": "544:18:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes4",
@@ -455,7 +455,7 @@
                       "typeString": "bytes4"
                     }
                   },
-                  "id": 1210,
+                  "id": 1216,
                   "nodeType": "ExpressionStatement",
                   "src": "508:54:3"
                 }
@@ -463,7 +463,7 @@
             },
             "documentation": null,
             "functionSelector": "a52361d0",
-            "id": 1212,
+            "id": 1218,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -471,16 +471,16 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1195,
+              "id": 1201,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1192,
+                  "id": 1198,
                   "name": "multiHash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1212,
+                  "scope": 1218,
                   "src": "336:17:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -489,7 +489,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1191,
+                    "id": 1197,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "336:7:3",
@@ -503,11 +503,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 1194,
+                  "id": 1200,
                   "name": "multiHash_Function",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1212,
+                  "scope": 1218,
                   "src": "364:25:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -516,7 +516,7 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 1193,
+                    "id": 1199,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
                     "src": "364:6:3",
@@ -532,32 +532,32 @@
               "src": "325:71:3"
             },
             "returnParameters": {
-              "id": 1198,
+              "id": 1204,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1197,
+                  "id": 1203,
                   "name": "IpfsHashMemory",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1212,
+                  "scope": 1218,
                   "src": "418:30:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                    "typeIdentifier": "t_struct$_IpfsHash_$1184_memory_ptr",
                     "typeString": "struct IPFSEngine.IpfsHash"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1196,
+                    "id": 1202,
                     "name": "IpfsHash",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1178,
+                    "referencedDeclaration": 1184,
                     "src": "418:8:3",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_IpfsHash_$1178_storage_ptr",
+                      "typeIdentifier": "t_struct$_IpfsHash_$1184_storage_ptr",
                       "typeString": "struct IPFSEngine.IpfsHash"
                     }
                   },
@@ -567,7 +567,7 @@
               ],
               "src": "417:32:3"
             },
-            "scope": 1227,
+            "scope": 1233,
             "src": "299:271:3",
             "stateMutability": "pure",
             "virtual": false,
@@ -576,21 +576,21 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 1216,
+            "id": 1222,
             "name": "DataStoredInTheLog",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1215,
+              "id": 1221,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1214,
+                  "id": 1220,
                   "indexed": false,
                   "name": "_hash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1216,
+                  "scope": 1222,
                   "src": "603:12:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -599,7 +599,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1213,
+                    "id": 1219,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "603:6:3",
@@ -618,7 +618,7 @@
           },
           {
             "body": {
-              "id": 1225,
+              "id": 1231,
               "nodeType": "Block",
               "src": "677:49:3",
               "statements": [
@@ -628,11 +628,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 1222,
+                        "id": 1228,
                         "name": "_hash",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1218,
+                        "referencedDeclaration": 1224,
                         "src": "712:5:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -647,18 +647,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 1221,
+                      "id": 1227,
                       "name": "DataStoredInTheLog",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1216,
+                      "referencedDeclaration": 1222,
                       "src": "693:18:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (string memory)"
                       }
                     },
-                    "id": 1223,
+                    "id": 1229,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -673,7 +673,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1224,
+                  "id": 1230,
                   "nodeType": "EmitStatement",
                   "src": "688:30:3"
                 }
@@ -681,7 +681,7 @@
             },
             "documentation": null,
             "functionSelector": "33242a19",
-            "id": 1226,
+            "id": 1232,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -689,16 +689,16 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1219,
+              "id": 1225,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1218,
+                  "id": 1224,
                   "name": "_hash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1226,
+                  "scope": 1232,
                   "src": "649:19:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -707,7 +707,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1217,
+                    "id": 1223,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "649:6:3",
@@ -723,19 +723,19 @@
               "src": "648:21:3"
             },
             "returnParameters": {
-              "id": 1220,
+              "id": 1226,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "677:0:3"
             },
-            "scope": 1227,
+            "scope": 1233,
             "src": "625:101:3",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 1228,
+        "scope": 1234,
         "src": "62:667:3"
       }
     ],
@@ -745,14 +745,14 @@
     "absolutePath": "/C/MyData/Projects/Portfolio/ethereum/contracts/IPFSEngine.sol",
     "exportedSymbols": {
       "IPFSEngine": [
-        1227
+        1233
       ]
     },
-    "id": 1228,
+    "id": 1234,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1172,
+        "id": 1178,
         "literals": [
           "solidity",
           "^",
@@ -763,7 +763,7 @@
         "src": "0:23:3"
       },
       {
-        "id": 1173,
+        "id": 1179,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -778,24 +778,24 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1227,
+        "id": 1233,
         "linearizedBaseContracts": [
-          1227
+          1233
         ],
         "name": "IPFSEngine",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "IPFSEngine.IpfsHash",
-            "id": 1178,
+            "id": 1184,
             "members": [
               {
                 "constant": false,
-                "id": 1175,
+                "id": 1181,
                 "name": "multiHash",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 1178,
+                "scope": 1184,
                 "src": "116:17:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -804,7 +804,7 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 1174,
+                  "id": 1180,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
                   "src": "116:7:3",
@@ -818,11 +818,11 @@
               },
               {
                 "constant": false,
-                "id": 1177,
+                "id": 1183,
                 "name": "multiHash_Function",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 1178,
+                "scope": 1184,
                 "src": "144:25:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -831,7 +831,7 @@
                   "typeString": "bytes4"
                 },
                 "typeName": {
-                  "id": 1176,
+                  "id": 1182,
                   "name": "bytes4",
                   "nodeType": "ElementaryTypeName",
                   "src": "144:6:3",
@@ -846,17 +846,17 @@
             ],
             "name": "IpfsHash",
             "nodeType": "StructDefinition",
-            "scope": 1227,
+            "scope": 1233,
             "src": "89:88:3",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 1180,
+            "id": 1186,
             "name": "hash",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1227,
+            "scope": 1233,
             "src": "185:11:3",
             "stateVariable": true,
             "storageLocation": "default",
@@ -865,7 +865,7 @@
               "typeString": "string"
             },
             "typeName": {
-              "id": 1179,
+              "id": 1185,
               "name": "string",
               "nodeType": "ElementaryTypeName",
               "src": "185:6:3",
@@ -879,25 +879,25 @@
           },
           {
             "body": {
-              "id": 1189,
+              "id": 1195,
               "nodeType": "Block",
               "src": "260:31:3",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 1187,
+                    "id": 1193,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 1185,
+                      "id": 1191,
                       "name": "hash",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1180,
+                      "referencedDeclaration": 1186,
                       "src": "271:4:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage",
@@ -908,11 +908,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 1186,
+                      "id": 1192,
                       "name": "_hash",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1182,
+                      "referencedDeclaration": 1188,
                       "src": "278:5:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -925,7 +925,7 @@
                       "typeString": "string storage ref"
                     }
                   },
-                  "id": 1188,
+                  "id": 1194,
                   "nodeType": "ExpressionStatement",
                   "src": "271:12:3"
                 }
@@ -933,7 +933,7 @@
             },
             "documentation": null,
             "functionSelector": "cfd56b19",
-            "id": 1190,
+            "id": 1196,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -941,16 +941,16 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1183,
+              "id": 1189,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1182,
+                  "id": 1188,
                   "name": "_hash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1190,
+                  "scope": 1196,
                   "src": "232:19:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -959,7 +959,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1181,
+                    "id": 1187,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "232:6:3",
@@ -975,12 +975,12 @@
               "src": "231:21:3"
             },
             "returnParameters": {
-              "id": 1184,
+              "id": 1190,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "260:0:3"
             },
-            "scope": 1227,
+            "scope": 1233,
             "src": "205:86:3",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -988,72 +988,10 @@
           },
           {
             "body": {
-              "id": 1211,
+              "id": 1217,
               "nodeType": "Block",
               "src": "450:120:3",
               "statements": [
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 1203,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 1199,
-                        "name": "IpfsHashMemory",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 1197,
-                        "src": "461:14:3",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
-                          "typeString": "struct IPFSEngine.IpfsHash memory"
-                        }
-                      },
-                      "id": 1201,
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": true,
-                      "memberName": "multiHash",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1175,
-                      "src": "461:24:3",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bytes32",
-                        "typeString": "bytes32"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "id": 1202,
-                      "name": "multiHash",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 1192,
-                      "src": "488:9:3",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bytes32",
-                        "typeString": "bytes32"
-                      }
-                    },
-                    "src": "461:36:3",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "id": 1204,
-                  "nodeType": "ExpressionStatement",
-                  "src": "461:36:3"
-                },
                 {
                   "expression": {
                     "argumentTypes": null,
@@ -1070,10 +1008,10 @@
                         "name": "IpfsHashMemory",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1197,
-                        "src": "508:14:3",
+                        "referencedDeclaration": 1203,
+                        "src": "461:14:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                          "typeIdentifier": "t_struct$_IpfsHash_$1184_memory_ptr",
                           "typeString": "struct IPFSEngine.IpfsHash memory"
                         }
                       },
@@ -1082,9 +1020,71 @@
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
+                      "memberName": "multiHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1181,
+                      "src": "461:24:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 1208,
+                      "name": "multiHash",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 1198,
+                      "src": "488:9:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      }
+                    },
+                    "src": "461:36:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "id": 1210,
+                  "nodeType": "ExpressionStatement",
+                  "src": "461:36:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 1215,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1211,
+                        "name": "IpfsHashMemory",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1203,
+                        "src": "508:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_IpfsHash_$1184_memory_ptr",
+                          "typeString": "struct IPFSEngine.IpfsHash memory"
+                        }
+                      },
+                      "id": 1213,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
                       "memberName": "multiHash_Function",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1177,
+                      "referencedDeclaration": 1183,
                       "src": "508:33:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes4",
@@ -1095,11 +1095,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 1208,
+                      "id": 1214,
                       "name": "multiHash_Function",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1194,
+                      "referencedDeclaration": 1200,
                       "src": "544:18:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes4",
@@ -1112,7 +1112,7 @@
                       "typeString": "bytes4"
                     }
                   },
-                  "id": 1210,
+                  "id": 1216,
                   "nodeType": "ExpressionStatement",
                   "src": "508:54:3"
                 }
@@ -1120,7 +1120,7 @@
             },
             "documentation": null,
             "functionSelector": "a52361d0",
-            "id": 1212,
+            "id": 1218,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1128,16 +1128,16 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1195,
+              "id": 1201,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1192,
+                  "id": 1198,
                   "name": "multiHash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1212,
+                  "scope": 1218,
                   "src": "336:17:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1146,7 +1146,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1191,
+                    "id": 1197,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "336:7:3",
@@ -1160,11 +1160,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 1194,
+                  "id": 1200,
                   "name": "multiHash_Function",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1212,
+                  "scope": 1218,
                   "src": "364:25:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1173,7 +1173,7 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 1193,
+                    "id": 1199,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
                     "src": "364:6:3",
@@ -1189,32 +1189,32 @@
               "src": "325:71:3"
             },
             "returnParameters": {
-              "id": 1198,
+              "id": 1204,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1197,
+                  "id": 1203,
                   "name": "IpfsHashMemory",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1212,
+                  "scope": 1218,
                   "src": "418:30:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_IpfsHash_$1178_memory_ptr",
+                    "typeIdentifier": "t_struct$_IpfsHash_$1184_memory_ptr",
                     "typeString": "struct IPFSEngine.IpfsHash"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1196,
+                    "id": 1202,
                     "name": "IpfsHash",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1178,
+                    "referencedDeclaration": 1184,
                     "src": "418:8:3",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_IpfsHash_$1178_storage_ptr",
+                      "typeIdentifier": "t_struct$_IpfsHash_$1184_storage_ptr",
                       "typeString": "struct IPFSEngine.IpfsHash"
                     }
                   },
@@ -1224,7 +1224,7 @@
               ],
               "src": "417:32:3"
             },
-            "scope": 1227,
+            "scope": 1233,
             "src": "299:271:3",
             "stateMutability": "pure",
             "virtual": false,
@@ -1233,21 +1233,21 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 1216,
+            "id": 1222,
             "name": "DataStoredInTheLog",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 1215,
+              "id": 1221,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1214,
+                  "id": 1220,
                   "indexed": false,
                   "name": "_hash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1216,
+                  "scope": 1222,
                   "src": "603:12:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1256,7 +1256,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1213,
+                    "id": 1219,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "603:6:3",
@@ -1275,7 +1275,7 @@
           },
           {
             "body": {
-              "id": 1225,
+              "id": 1231,
               "nodeType": "Block",
               "src": "677:49:3",
               "statements": [
@@ -1285,11 +1285,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 1222,
+                        "id": 1228,
                         "name": "_hash",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1218,
+                        "referencedDeclaration": 1224,
                         "src": "712:5:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -1304,18 +1304,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 1221,
+                      "id": 1227,
                       "name": "DataStoredInTheLog",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1216,
+                      "referencedDeclaration": 1222,
                       "src": "693:18:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (string memory)"
                       }
                     },
-                    "id": 1223,
+                    "id": 1229,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1330,7 +1330,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1224,
+                  "id": 1230,
                   "nodeType": "EmitStatement",
                   "src": "688:30:3"
                 }
@@ -1338,7 +1338,7 @@
             },
             "documentation": null,
             "functionSelector": "33242a19",
-            "id": 1226,
+            "id": 1232,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1346,16 +1346,16 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1219,
+              "id": 1225,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1218,
+                  "id": 1224,
                   "name": "_hash",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1226,
+                  "scope": 1232,
                   "src": "649:19:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1364,7 +1364,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1217,
+                    "id": 1223,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "649:6:3",
@@ -1380,19 +1380,19 @@
               "src": "648:21:3"
             },
             "returnParameters": {
-              "id": 1220,
+              "id": 1226,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "677:0:3"
             },
-            "scope": 1227,
+            "scope": 1233,
             "src": "625:101:3",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 1228,
+        "scope": 1234,
         "src": "62:667:3"
       }
     ],
@@ -1404,7 +1404,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-07-18T23:51:00.520Z",
+  "updatedAt": "2020-07-22T20:59:21.590Z",
   "devdoc": {
     "methods": {}
   },

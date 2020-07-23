@@ -4,6 +4,7 @@ html {
 }
 
 /*Make scrollbar transparent */
+
 ::-webkit-scrollbar {
 	width: 0px !important;
 	height: 0px !important;
@@ -11,20 +12,19 @@ html {
 }
 
 /*Override Chrome autofill*/
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px #081229 inset !important;
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 30px #081229 inset !important;
 }
 
 input:-webkit-autofill {
-    -webkit-text-fill-color: white !important;
+	-webkit-text-fill-color: white !important;
 }
 
 .fitContent {
 	width: fit-content!important;
 }
+
 .mt10 {
 	margin-top: 10px;
 }
@@ -496,9 +496,11 @@ input:-webkit-autofill {
 .altbuttonContainer {
 	display: inline-block;
 }
+
 .altbuttonContainer_Style1 {
 	display: block;
 }
+
 .loginButton {
 	background: #5980E1;
 	height: 40px;
@@ -534,6 +536,7 @@ input:-webkit-autofill {
 	color: #09183c;
 	text-decoration: none;
 }
+
 .altLoginButton_Style1 {
 	background: #0c1e50;
 	height: 75px;
@@ -544,30 +547,36 @@ input:-webkit-autofill {
 	cursor: pointer;
 	padding: 10px;
 }
+
 .altLoginButton_Style1 h1 {
 	font-size: 16px;
-    font-family: 'Montserrat-Bold', sans-serif;
+	font-family: 'Montserrat-Bold', sans-serif;
 	margin: 15px;
 	float: left;
 }
+
 .altLoginButton_Style1 img {
 	height: 35px;
 	margin: 5px;
 	float: left;
 }
+
 .altLoginButton_Style1 i {
 	align-self: center;
 	color: yellowgreen;
 }
+
 .walletTransactionStatus {
 	display: inline-flex;
 	float: right;
 	margin: 18px;
 }
-.walletTransactionStatus p{
+
+.walletTransactionStatus p {
 	margin-bottom: 0px;
 	font-size: 13px;
 }
+
 .altLoginButton {
 	background: #0c1e50;
 	height: 75px;
@@ -687,7 +696,8 @@ input:-webkit-autofill {
 }
 
 /*Checkboxes styles*/
-.checkboxActive {	
+
+.checkboxActive {
 	text-decoration: line-through!important;
 }
 
@@ -717,7 +727,7 @@ input:-webkit-autofill {
 
 .checkbox_Style1 p {
 	font-size: 11px;
-	padding: 10px 0px 0px 22px;
+	padding: 6px 0px 0px 22px;
 	color: #dadada;
 }
 
@@ -745,11 +755,12 @@ input:-webkit-autofill {
 	opacity: .6;
 	transition: all .12s, border-color .08s;
 }
-.checkBox_RememberMe > input[type="checkbox"] {
+
+.checkBox_RememberMe>input[type="checkbox"] {
 	display: none;
 }
 
-.checkBox_RememberMe > input[type="checkbox"]+label {
+.checkBox_RememberMe>input[type="checkbox"]+label {
 	display: block;
 	position: relative;
 	padding: 1px 0px 0px 22px;
@@ -761,7 +772,7 @@ input:-webkit-autofill {
 	-ms-user-select: none;
 }
 
-.checkBox_RememberMe > input[type="checkbox"]+label:before {
+.checkBox_RememberMe>input[type="checkbox"]+label:before {
 	content: '';
 	display: block;
 	width: 15px;
@@ -775,7 +786,7 @@ input:-webkit-autofill {
 	transition: all .12s, border-color .08s;
 }
 
-.checkBox_RememberMe > input[type="checkbox"]:checked+label:before {
+.checkBox_RememberMe>input[type="checkbox"]:checked+label:before {
 	width: 5px;
 	top: -2px;
 	left: 2px;
@@ -959,8 +970,8 @@ input:-webkit-autofill {
 }
 
 .thumbNailContainer {
-    display: flex;
-    flex-flow: wrap row;
+	display: flex;
+	flex-flow: wrap row;
 }
 
 .thumbNail {
@@ -977,8 +988,8 @@ input:-webkit-autofill {
 }
 
 .thumbNailInner {
-    display: flex;
-    min-width: 0px;
+	display: flex;
+	min-width: 0px;
 	overflow: hidden;
 	flex-flow: row-reverse;
 }
@@ -991,8 +1002,15 @@ input:-webkit-autofill {
 }
 
 .thumbImg {
-    width: auto !important;
+	width: auto !important;
 	height: 60px !important;
+	margin-top: 0px !important;
+	vertical-align: middle !important;
+}
+
+.thumbIcon {
+	width: 60% !important;
+	height: 60% !important;
 	margin-top: 0px !important;
 	vertical-align: middle !important;
 }
@@ -1073,9 +1091,14 @@ input:-webkit-autofill {
 }
 
 .formNavButtons {
-    display: flex;
-    margin-top: 25px;
-    justify-content: flex-end;
+	display: flex;
+	margin-top: 25px;
+	justify-content: flex-end;
+}
+
+.disableClick {
+	cursor: not-allowed !important;
+	background: #808080 !important;
 }
 
 .formMainButton {
@@ -1112,7 +1135,6 @@ input:-webkit-autofill {
 	font-family: 'Montserrat-Bold', sans-serif;
 	margin: 5px;
 }
-
 
 .mediaShareButtons {
 	display: flex;
@@ -1487,9 +1509,9 @@ input:-webkit-autofill {
 
 .uploadFormParent {
 	position: fixed;
-    top: 246px;
-    width: 100%;
-    height: 100%;
+	top: 246px;
+	width: 100%;
+	height: 100%;
 }
 
 .uploadHeader {
@@ -1514,14 +1536,16 @@ input:-webkit-autofill {
 
 .uploadFormContainer {
 	width: 100%;
-    height: inherit;
-    position: relative;
+	height: inherit;
+	position: relative;
 }
+
 .uploadButtonContainer {
 	position: absolute;
-    bottom: 0;
-    width: inherit;
+	bottom: 0;
+	width: inherit;
 }
+
 .progressBarContainer {
 	font-family: 'Montserrat-Bold', sans-serif;
 	font-size: 13px;
@@ -1550,17 +1574,19 @@ input:-webkit-autofill {
 .textDescription::-webkit-scrollbar {
 	width: 7px !important;
 	height: 0px !important;
-	background-color:#081229 !important;
+	background-color: #081229 !important;
 }
+
 .textDescription::-webkit-scrollbar-track .textDescription::-webkit-scrollbar-track-piece {
 	border-radius: 10px;
 }
 
 .textDescription::-webkit-scrollbar-thumb {
-	background-color:#2f384f !important;
+	background-color: #2f384f !important;
 }
+
 .textDescription::-webkit-scrollbar-corner {
-	background-color:#081229 !important;
+	background-color: #081229 !important;
 }
 
 .stepExplainContainer {
@@ -1605,10 +1631,12 @@ input:-webkit-autofill {
 	margin-top: 8px;
 	color: rgb(202, 199, 199);
 }
+
 .uploadFormInput input::selection {
-	background: #ff0051; 
+	background: #ff0051;
 	color: white;
-  }
+}
+
 .uploadFormInput textarea {
 	background: #081229;
 	border: 8px solid #081229;
@@ -1616,4 +1644,47 @@ input:-webkit-autofill {
 	border-radius: 7px;
 	margin-top: 8px;
 	color: white;
+}
+
+.inputError {
+	color: #d82e64;
+}
+
+.tagify {
+    --tags-border-color: #081229;
+    --tags-hover-border-color: #CCC;
+    --tags-focus-border-color: #3595f6;
+    --tag-bg: #94e7ef;
+    --tag-hover: #D3E2E2;
+    --tag-text-color: #081229;
+    --tag-text-color--edit: black;
+    --tag-pad: 0.3em 0.5em;
+    --tag-inset-shadow-size: 1.1em;
+    --tag-invalid-color: #D39494;
+	--tag-invalid-bg: rgb(117, 117, 117);
+	--tag-remove-bg: rgba(211, 148, 148, 0.3);
+    --tag-remove-btn-color: black;
+    --tag-remove-btn-bg: none;
+    --tag-remove-btn-bg--hover: #c77777;
+    --input-color: inherit;
+    --tag--min-width: 1ch;
+    --tag--max-width: auto;
+    --tag-hide-transition: .3s;
+    --placeholder-color: rgba(0, 0, 0, 0.4);
+    --placeholder-color-focus: rgba(0, 0, 0, 0.25);
+    --loader-size: .8em;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    border: 1px solid #ddd;
+    border: 1px solid var(--tags-border-color);
+    padding: 0;
+    line-height: 1.1;
+    cursor: text;
+    outline: 0;
+    position: relative;
+    background: #081229;
+    transition: .1s;
+	border-radius: 7px;
+	margin-top: 7px;
 }

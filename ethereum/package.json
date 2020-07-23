@@ -24,10 +24,13 @@
     "@openzeppelin/contracts": "^3.0.2",
     "cids": "^0.8.3",
     "concurrently": "^5.2.0",
+    "copyfiles": "^2.3.0",
     "gsap": "^3.3.3",
     "multihashes": "^1.0.1",
     "multihashing-async": "^1.0.0",
     "portfolio-dmct": "^0.1.0",
-    "solc": "^0.6.10"
+    "rimraf": "^3.0.2",
+    "solc": "^0.6.10",
+    "web3": "^1.2.11"
   }
 }

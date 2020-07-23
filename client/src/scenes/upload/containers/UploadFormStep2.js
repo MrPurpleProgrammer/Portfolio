@@ -3,17 +3,13 @@ import $ from 'jquery';
 import { Redirect, useHistory } from 'react-router-dom';
 
 function UploadFormStep2(props) {
-    $(function () {
-        $('.checkbox_Style1_Label').on('click', function () {
-            $(this).toggleClass('checkboxActive');
-            $(this).parent().find('.checkbox_Style1_Input').toggleClass('check')
-        })
-    })
-    $(function () {
-        $('.check').on('click', function() {
-            $(this).prop('checked', true);
-        })
-    })
+    function handleCheckmark(e) {
+        let o = e.currentTarget;
+        let termsCheck = $(o).parent().find('.checkbox_Style1_Input');
+        $(o).toggleClass('checkboxActive');
+        termsCheck.toggleClass('check');
+        termsCheck.prop("checked", !termsCheck.prop("checked"));
+    };
     return (
         <div id="divUploadForm_Step2" className="uploadForm">
             <div id="divStepExplanation" className="stepExplainContainer">
@@ -36,12 +32,12 @@ function UploadFormStep2(props) {
             <div id="divFormStep_2" className="uploadFormInputContainer">
                 <form method="post" name="createCert_Step2" id="formUploadStep2">
                 <div className="uploadFormInput"> 
-                    <label>Confirm with Account Password:</label>
+                    <label id="err_accountPassword" data-norm='Confirm with Account Password:' data-error='Incorrect or Invalid Password, try again.'>Confirm with Account Password:</label>
                     <input id="accountPassword" name="accountPassword" type="password" />
                 </div>
                 <div className="checkbox_Style1">
-                    <input type="checkbox" id="termsAgreeCheck" className="checkbox_Style1_Input" />
-                    <label htmlFor="termsAgreeCheck" className="checkbox_Style1_Label" style={{ margin: "15px 0px 40px 0px" }}> I hereby Agree to the Terms and Conditions</label>
+                    <input type="checkbox" id="termAgreeCheck" name="termAgreeCheck" className="checkbox_Style1_Input" />
+                    <label id="err_termAgreeOption" data-norm='I hereby Agree to the Terms and Conditions' data-error='Do you Agree to the Terms and Conditions?' htmlFor="termsAgreeCheck" className="checkbox_Style1_Label" style={{ margin: "15px 0px 40px 0px" }} onClick={handleCheckmark.bind(this)}> I hereby Agree to the Terms and Conditions</label>
                 </div>
                 </form>
             </div>

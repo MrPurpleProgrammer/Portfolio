@@ -84,7 +84,7 @@ let fileStorage = multer({
 //Media Collection 
 let setMediaModel = function (req) {
   return new Promise((resolve, reject) => {
-    if (typeof req.files[0] != "undefined" && typeof req.files[1] != "undefined" && req.body.termAgree == "true") {
+    if (typeof req.files[0] != "undefined" && typeof req.files[1] != "undefined" && req.body.termAgreeOption == "true") {
       let mid = mongoose.Types.ObjectId();
       if (req.body.storeOption == 'IPFS') {
         let newMedia = new Media({

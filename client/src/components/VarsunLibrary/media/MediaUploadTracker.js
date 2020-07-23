@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class MediaUploadTracker extends Component {
+    componentDidMount() {
+        console.log(this.props.src);
+    }
     render() {
         return (
             <div className="mediaUploadTrackerContainer"

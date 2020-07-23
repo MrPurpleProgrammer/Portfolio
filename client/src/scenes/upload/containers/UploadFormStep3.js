@@ -12,17 +12,6 @@ import trezorSVG from '../../../assets/SVG/trezor.svg'
 function UploadFormStep3(props) {
     const [WalletAccount, setWalletAccount] = useState(null);
     const [WalletStatus, setWalletStatus] = useState('Pending');
-    $(function () {
-        $('.checkbox_Style1_Label').on('click', function () {
-            $(this).toggleClass('checkboxActive');
-            $(this).parent().find('.checkbox_Style1_Input').toggleClass('check')
-        })
-    })
-    $(function () {
-        $('.check').on('click', function () {
-            $(this).prop('checked', true);
-        })
-    });
     async function connectToWeb3(type) {
         if (window.ethereum) {
             window.ethereum.enable();
@@ -63,12 +52,28 @@ function UploadFormStep3(props) {
             DMCT.methods.createCertificate(props.contractMetadata[0].value, assetHash, urlArgs.hash, urlArgs.hashFunction)
                 .send({ from: accounts[0], gasPrice: 20000000000, gas: 8000000 })
                 .on('receipt', function (receipt) {
-                    props.transactionReciept(receipt);
+                    setWalletStatus('Accepted');
+                    let txValidation = {
+                        title: props.contractMetadata[0].value,
+                        assetHash: assetHash,
+                        url: assetUrl,
+                        txReciept: receipt,
+                        status: 'Accepted',
+                    }
+                    props.transactionReciept(txValidation);
+                    props.submitForm(txValidation);
                     console.log(receipt);
                 })
                 .on('error', function (error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
-                    props.transactionReciept(error);
                     setWalletStatus('Rejected');
+                    let txValidation = {
+                        title: props.contractMetadata[0].value,
+                        assetHash: assetHash,
+                        ipfs: urlArgs,
+                        txReciept: receipt,
+                        status: 'Rejected',
+                    }
+                    props.transactionReciept(txValidation);
                     console.log(error, receipt);
                 });
         }
@@ -78,7 +83,7 @@ function UploadFormStep3(props) {
         if (WalletStatus == 'Pending') return (<p style={{ color: 'gray', marginLeft: 7 }}>Pending</p>)
         if (WalletStatus == 'Connecting') return (<p style={{ color: 'yellow', marginLeft: 7 }}>Connecting</p>)
         if (WalletStatus == 'Connected') return (<p style={{ color: 'orange', marginLeft: 7 }}>Connected</p>)
-        if (WalletStatus == 'Completed') return (<p style={{ color: '#14bb2e', marginLeft: 7 }}>Completed</p>)
+        if (WalletStatus == 'Accepted') return (<p style={{ color: '#14bb2e', marginLeft: 7 }}>Accepted</p>)
         if (WalletStatus == 'Rejected') return (<p style={{ color: '#cb3030', marginLeft: 7 }}>Rejected</p>)
     }
     return (
@@ -93,12 +98,13 @@ function UploadFormStep3(props) {
             </div>
             <div id="divFormStep_3" className="uploadFormInputContainer">
                 <div id="divAltLoginInputs" style={{ display: 'block', height: 'fit-content' }}>
+                    <h3 id='err_walletTransactionStatus' style={{marginTop: 0}} data-norm='Wallet Options' data-error='Something went wrong, try again.'>Wallet Options</h3>
                     <div className="altbuttonContainer_Style1">
                         <button id="btnAltLogin" className="altLoginButton_Style1 mt10" onClick={() => loadBlockchainData('metamask')}>
                             <img src={metamaskSVG}></img>
                             <h1>Connect With Metamask</h1>
                             <div className='walletTransactionStatus'>
-                                <p>Transaction Status: </p>
+                                <p style={{fontSize: 12}}>Transaction Status: </p>
                                 {transactionStatus()}
                             </div>
                         </button>

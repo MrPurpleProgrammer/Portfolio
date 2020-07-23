@@ -9,6 +9,8 @@ contract DMCT is Models, Artisan {
     event ReturnCreateCertificate(
         uint256 index,
         uint256 CID,
+        uint256 AID,
+        IpfsHash url,
         address msgsender,
         address[] onwershipHistory,
         uint256[] licenses
@@ -76,6 +78,8 @@ contract DMCT is Models, Artisan {
         emit ReturnCreateCertificate(
             certificate.index,
             certificate.certificateID,
+            assetID,
+            IpfsUrl,
             msg.sender,
             CIDToCertificate[certificateID].ownershipHistory,
             CIDToCertificate[certificateID].licenses
