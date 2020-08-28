@@ -6,8 +6,23 @@ import ProfileButton from '../../../components/PortfolioLibrary/profileButton/Pr
 import Logo from '../../../components/PortfolioLibrary/logo/Logo.js';
 import FilterToolbar from '../../../components/VarsunLibrary/filterToolbar/FilterToolbar.js';
 import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
+import { isAuthenticatedAccount } from "../../../api/auth.js";
+import {getAccount} from "../../../api/account.js";
 
 class AccountLanding extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            account: {},
+            user: {}
+        }
+    }
+    async componentDidMount() {
+        let accountId = isAuthenticatedAccount().res.account._id;
+        let token = isAuthenticatedAccount().token;
+        let accountData = await getAccount(token, accountId);
+        this.setState({account: accountData.account, user: accountData.user});
+    }
     render() {
         return (
             <div id="accountContent" className="accountContentContainer">
@@ -15,7 +30,7 @@ class AccountLanding extends Component {
                 <div id="divContent">
                     <div id="divAccountContentHeader" className="accountContentHeader">
                         <div id="divAccountDetails" className="accountDetails">
-                            <h1 className="accountNameLanding">Aditya Sayyaparaju</h1>
+                            <h1 className="accountNameLanding">{this.state.user.username}</h1>
                             <div id="divAccountMetrics" className="metricsContainer">
                                 <div id="divAccountBadges" className="accountBadges">
                                     <i className="fas fa-award"></i>
@@ -41,7 +56,7 @@ class AccountLanding extends Component {
                         <FilterToolbar />
                     </div>
                     <div id="divAccountMediaList" className="accountContent">
-                        <MediaGallery sort='default'/>
+                        <MediaGallery sort='default' portfolio={this.state.user.portfolio}/>
                     </div>
                 </div>
             </div>

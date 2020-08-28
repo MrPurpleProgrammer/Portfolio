@@ -1,46 +1,26 @@
 import React, { Component, useState } from 'react';
-import $ from 'jquery';
-import { Redirect, useHistory } from 'react-router-dom';
-import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
-import DMCTCompile from '../../../contracts/DMCT.json';
-import Web3 from 'web3';
 import CID from 'cids';
 import ledgerSVG from '../../../assets/SVG/ledger-new-logo-.svg'
 import metamaskSVG from '../../../assets/SVG/metamask.svg'
 import trezorSVG from '../../../assets/SVG/trezor.svg'
+const { Wallet, DMCT } = require('portfolio_dmct');
 
 function UploadFormStep3(props) {
     const [WalletAccount, setWalletAccount] = useState(null);
     const [WalletStatus, setWalletStatus] = useState('Pending');
-    async function connectToWeb3(type) {
-        if (window.ethereum) {
-            window.ethereum.enable();
-            window.ethereum.autoRefreshOnNetworkChange = false;
-            window.web3 = new Web3(window.ethereum);
-            return window.web3;
-        }
-        return false;
-    }
-    async function loadBlockchainData(type) {
+    async function initiateWallet() {
         setWalletStatus('Connecting');
-        let web3 = await connectToWeb3(type);
-        const accounts = await web3.eth.getAccounts((err, res) => {
-            if (err) {
-                console.log(err);
-                setWalletStatus('Rejected');
-            }
-            else {
-                console.log(res);
-                return res;
-            }
-        });
-        if (web3 != false && accounts.length != 0) {
-            setWalletAccount(accounts[0]);
+        let wallet = new Wallet(window);
+        let web3 = await wallet.initiateWeb3();
+        return web3;
+    }
+    async function initiateDMCTContract(type) {
+        let wallet = await initiateWallet();
+        if (wallet.status == true) {
+            setWalletAccount(wallet.account);
             setWalletStatus('Connected');
-            let netVer = web3.currentProvider.networkVersion;
-            //web3.eth.Contract.handleRevert = true;
-            const DMCT = new web3.eth.Contract(DMCTCompile.abi, DMCTCompile.networks[5777].address);
-            let assetHash = Buffer.from(props.assetData.dhash.str, 'hex');
+            const DMCTOracle = new DMCT(wallet.web3, wallet.account);
+            let assetHash = props.assetData.dhash.str;
             //Convert Id into multihash data bytes
             let assetUrl = props.assetData.url;
             let ipfsCID = new CID(assetUrl);
@@ -48,37 +28,25 @@ function UploadFormStep3(props) {
                 hashFunction: ipfsCID.buffer.slice(0, 4),
                 hash: ipfsCID.multihash.slice(4),
             }
-            DMCT.handleRevert = true;
-            DMCT.methods.createCertificate(props.contractMetadata[0].value, assetHash, urlArgs.hash, urlArgs.hashFunction)
-                .send({ from: accounts[0], gasPrice: 20000000000, gas: 8000000 })
-                .on('receipt', function (receipt) {
-                    setWalletStatus('Accepted');
-                    let txValidation = {
-                        title: props.contractMetadata[0].value,
-                        assetHash: assetHash,
-                        url: assetUrl,
-                        txReciept: receipt,
-                        status: 'Accepted',
-                    }
-                    props.transactionReciept(txValidation);
-                    props.submitForm(txValidation);
-                    console.log(receipt);
-                })
-                .on('error', function (error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
-                    setWalletStatus('Rejected');
-                    let txValidation = {
-                        title: props.contractMetadata[0].value,
-                        assetHash: assetHash,
-                        ipfs: urlArgs,
-                        txReciept: receipt,
-                        status: 'Rejected',
-                    }
-                    props.transactionReciept(txValidation);
-                    console.log(error, receipt);
-                });
+            let txObj = await DMCTOracle.createCertificate(props.contractMetadata[0].value, assetHash, urlArgs.hash, urlArgs.hashFunction);
+            txObj.url.string = assetUrl;
+            console.log(txObj);
+            props.transactionReceipt(txObj);
+            if (txObj.status == true) {
+                setWalletStatus('Accepted');
+                props.submitForm(txObj)
+            }
+            else if (typeof txObj != 'undefined' || txObj.status == false) {
+                // let revertReason = await DMCTOracle.getRevertReason(txObj.txReceipt.transactionHash);
+                setWalletStatus('Rejected');
+            }
+            else {
+                setWalletStatus('Rejected');
+            }
         }
-        else { setWalletStatus('Rejected'); return console.log('Web3 Instance Not Found.'); }
+        else setWalletStatus('Rejected');
     }
+
     function transactionStatus() {
         if (WalletStatus == 'Pending') return (<p style={{ color: 'gray', marginLeft: 7 }}>Pending</p>)
         if (WalletStatus == 'Connecting') return (<p style={{ color: 'yellow', marginLeft: 7 }}>Connecting</p>)
@@ -98,13 +66,13 @@ function UploadFormStep3(props) {
             </div>
             <div id="divFormStep_3" className="uploadFormInputContainer">
                 <div id="divAltLoginInputs" style={{ display: 'block', height: 'fit-content' }}>
-                    <h3 id='err_walletTransactionStatus' style={{marginTop: 0}} data-norm='Wallet Options' data-error='Something went wrong, try again.'>Wallet Options</h3>
+                    <h3 id='err_walletTransactionStatus' style={{ marginTop: 0 }} data-norm='Wallet Options' data-error='Something went wrong, try again.'>Wallet Options</h3>
                     <div className="altbuttonContainer_Style1">
-                        <button id="btnAltLogin" className="altLoginButton_Style1 mt10" onClick={() => loadBlockchainData('metamask')}>
+                        <button id="btnAltLogin" className="altLoginButton_Style1 mt10" onClick={() => { initiateDMCTContract('metamask') }}>
                             <img src={metamaskSVG}></img>
                             <h1>Connect With Metamask</h1>
                             <div className='walletTransactionStatus'>
-                                <p style={{fontSize: 12}}>Transaction Status: </p>
+                                <p style={{ fontSize: 12 }}>Transaction Status: </p>
                                 {transactionStatus()}
                             </div>
                         </button>

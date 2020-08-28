@@ -6,7 +6,7 @@ class ProfileButton extends Component {
     }
     render() {
         return (
-            <button id="btnAccountButton" className="profileButton">
+            <button id="btnAccountButton" className="accountModuleButton">
                 <i className="fas fa-user"></i>
             </button>
         )

@@ -1,10 +1,13 @@
 const { body, validationResult } = require('express-validator')
-const valGetMediaObj= () => {
+
+const validateCreateRequest = () => {
   return [
-    // username must be an email
-    body('username').isEmail(),
-    // password must be at least 5 chars long
-    body('password').isLength({ min: 5 }),
+    body('mediaTitle').exists().notEmpty().isString().withMessage('Title is Invalid'),
+    body('storeOption').exists().notEmpty().isString().if(body('storeOption').equals('PORT') || body('storeOption').equals('IPFS')).withMessage('Store Option is Invalid'),
+    body('mediaTags').exists().notEmpty().isArray({ min: 1, max: 10 }).withMessage('Media Tags are Invalid'),
+    body('termAgreeOption').exists().notEmpty().isString().if(body('termAgreeOption').equals('true')).withMessage('Term Agree Option is Invalid'),
+    body('walletTransactionData').exists().notEmpty().withMessage('Wallet Transaction Data is Invalid'),
+    body('walletTransactionStatus').exists().notEmpty().isString().if(body('walletTransactionStatus').equals('true')).withMessage('Wallet Transaction Status is Invalid'),
   ]
 }
 
@@ -22,6 +25,6 @@ const validate = (req, res, next) => {
 }
 
 module.exports = {
-    uploadValidations,
-    validate,
+  validateCreateRequest,
+  validate,
 }

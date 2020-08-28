@@ -10,6 +10,7 @@
             "name": "ClientBrowser",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}\\client",
+            "runtimeArgs": ["--preserve-symlinks"],
         },
         {
             "name": "PortServer",
@@ -17,6 +18,7 @@
             "request": "launch",
             "address": "localhost",
             "runtimeExecutable": "nodemon",
+            "runtimeArgs": ["--preserve-symlinks"],
             "program": "${workspaceFolder}\\server\\index.js",
             "cwd": "${workspaceFolder}\\server",
             "restart": true,
@@ -34,7 +36,7 @@
                 "PortServer",
                 "ClientBrowser"
             ],
-            "preLaunchTask": "PortClient"
+            "preLaunchTask": "PortClient/DMCT"
         }
     ],
 }

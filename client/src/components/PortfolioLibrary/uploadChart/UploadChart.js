@@ -21,7 +21,7 @@ class UploadChart extends Component {
             },
             title: {
                 text: "Upload Activity",
-                style: { "color": '#ffffff', "font-size": "12px", "border-bottom": "1px solid #ffffff"},
+                style: { "color": '#ffffff', "font-size": "12px", "border-bottom": "1px solid #ffffff" },
                 useHtml: true,
                 y: 0,
             },
@@ -69,13 +69,15 @@ class UploadChart extends Component {
                             color: 'white',
                             font: '8px Montserrat, sans-serif',
                             fontWeight: 'normal',
-                          },
-                          filter: {
+                        },
+                        filter: {
                             property: 'y',
                             operator: '>',
                             value: 10
                         },
-                        position: 'center'
+                        position: 'center',
+                        y: -10,
+                        x: -5
                     },
                     borderRadius: 3,
                     fillColor: '#ffffff',

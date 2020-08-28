@@ -19,19 +19,19 @@ function UploadFormStep4(props) {
             <div id="divFormStep_4" className="uploadFormInputContainer">
                 <div className="uploadFormInput">
                     <label>Certificate Identification # </label>
-                    <input id="mediaCID" name="mediaCID" type="text" value={props.transactionData.txReciept.events.ReturnCreateCertificate.returnValues.CID} readOnly/>
+                    <input id="mediaCID" name="mediaCID" type="text" value={props.transactionData.assetId} readOnly/>
                 </div>
                 <div className="uploadFormInput">
                     <label>Asset Identification #</label>
-                    <input id="mediaAID" name="mediaAID" value={props.transactionData.txReciept.events.ReturnCreateCertificate.returnValues.AID} readOnly/>
+                    <input id="mediaAID" name="mediaAID" value={props.transactionData.certificateId} readOnly/>
                 </div>
                 <div className="uploadFormInput">
                     <label>IPFS Gateway URL</label>
-                    <input id="mediaIPFSURL" name="mediaIPFSURL" value={props.transactionData.url} readOnly/>
+                    <input id="mediaIPFSURL" name="mediaIPFSURL" value={props.transactionData.url.string} readOnly/>
                 </div>
                 <div className="uploadFormInput">
                     <label>Transaction Hash</label>
-                    <input id="mediaEtherTransactionHash" name="mediaEtherTransactionHash" value={props.transactionData.txReciept.transactionHash} readOnly/>
+                    <input id="mediaEtherTransactionHash" name="mediaEtherTransactionHash" value={props.transactionData.txReceipt.transactionHash} readOnly/>
                 </div>
                 <div className="checkbox_Style1">
                     <input type="checkbox" id="storeOptionRecCheck" className="checkbox_Style1_Input" />

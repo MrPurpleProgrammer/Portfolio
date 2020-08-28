@@ -3,14 +3,15 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useHistory, useLocation } from 'react-router-dom';
 import ProfileHeader from '../../components/PortfolioLibrary/profileHeader/ProfileHeader';
 import $ from 'jquery';
-import DMCTCompile from '../../contracts/DMCT.json';
-import Web3 from 'web3';
 import UploadStatus from './containers/UploadStatus';
 import UploadFormStep1 from './containers/UploadFormStep1';
 import UploadFormStep2 from './containers/UploadFormStep2';
 import UploadFormStep3 from './containers/UploadFormStep3';
 import UploadFormStep4 from './containers/UploadFormStep4';
 import UploadChart from '../../components/PortfolioLibrary/uploadChart/UploadChart.js';
+import { isAuthenticatedAccount } from '../../api/auth';
+import { getAccount } from '../../api/account';
+require('dotenv').config()
 
 function bufferToHexString(buffer) { // buffer is an ArrayBuffer
     return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
@@ -24,15 +25,19 @@ function Upload(props) {
     const [EvidenceUpload, setEvidenceUpload] = useState(null);
     const [MediaTags, setMediaTags] = useState([])
     const [UploadFormState, setUploadFormState] = useState(0);
-    const [WalletTransactionData, setTransactionData] = useState(null);
+    const [WalletTransactionData, setTransactionData] = useState(false);
     const [AssetData, setAssetData] = useState(null);
+    const authToken = isAuthenticatedAccount().token;
     let getAssetData = () => {
         let fileForm = new FormData();
         fileForm.append('asset', location.state.event[0]);
-        let url = 'http://localhost:5000/upload/generate/assetHash';
+        let url = process.env.REACT_APP_SERVER_API_URL + 'upload/generate/assetHash';
         fetch(url, {
             mode: 'cors',
             method: 'POST',
+            headers: {
+                Authorization: 'Bearer ' + authToken
+            },
             body: fileForm,
         })
             .then(res => res.json())
@@ -47,7 +52,6 @@ function Upload(props) {
     let handleEvidenceUpload = (e) => {
         setEvidenceUpload({ name: 'uploadFormEvidence', value: e });
     }
-
     let renderUploadForm = () => {
         if (UploadFormState == 0) {
             return (
@@ -61,12 +65,12 @@ function Upload(props) {
         }
         else if (UploadFormState == 2) {
             return (
-                <UploadFormStep3 assetData={AssetData} contractMetadata={Form} transactionReciept={reciept => setTransactionData(reciept)} submitForm={clickSubmitButton}/>
+                <UploadFormStep3 assetData={AssetData} contractMetadata={Form} transactionReceipt={receipt => setTransactionData(receipt)} submitForm={clickSubmitButton} />
             )
         }
         else if (UploadFormState == 3) {
             return (
-                <UploadFormStep4 transactionData={WalletTransactionData}/>
+                <UploadFormStep4 transactionData={WalletTransactionData} />
             )
         }
         else {
@@ -76,7 +80,6 @@ function Upload(props) {
             )
         }
     }
-    // Next Button Functionality
     function storageOption() {
         if ($('#storeOptionPort').prop("checked") == true) return { name: "storeOption", value: "PORT" };
         else if ($('#storeOptionIPFS').prop("checked") == true) return { name: "storeOption", value: "IPFS" };
@@ -84,14 +87,15 @@ function Upload(props) {
     }
     function mediaTags() {
         let tagNodes = $('.tagify__tag');
-        let tagArr = null;
+        let tagArr = [];
+        let jsonArr = null;
         if (tagNodes.length > 0) {
-            tagArr = [];
             tagNodes.each((i, e) => {
                 tagArr.push(e.innerText);
             })
+            jsonArr = JSON.stringify(tagArr);
         }
-        return { name: "mediaTags", value: tagArr };
+        return { name: "mediaTags", value: jsonArr };
     }
     function termsOption() {
         if ($('#termAgreeCheck').prop("checked") == true) {
@@ -105,6 +109,7 @@ function Upload(props) {
         formArray.forEach((e) => {
             let obj;
             if (e.name == 'storeOption') obj = $('.storeOption');
+            else if (e.name == 'uploadFormEvidence') obj = [];
             else if (e.name == 'walletTransactionStatus') obj = $("#err_" + e.name)
             else obj = $("#err_" + e.name);
             if (obj.length > 0) {
@@ -123,30 +128,20 @@ function Upload(props) {
             }
         })
         if (nullCounter > 0) {
-            //$('#uploadFormNextButton').addClass('disableClick');
             return false;
         }
         else {
-            //$('#uploadFormNextButton').removeClass('disableClick');
             return true;
         }
     }
     function setFormArray(step) {
+        let e = location.state;
         if (step == 0) {
-            let e = location.state;
-            getAssetData();
             let formUpload = $("#formUploadStep1").serializeArray();
             let mediaTagArr = mediaTags();
             formUpload.push(mediaTagArr);
             let storageOpt = storageOption();
             formUpload.push(storageOpt);
-            formUpload.push({ name: 'toolbarMediaUpload', value: e.event[0] });
-            if (EvidenceUpload != null) {
-                EvidenceUpload.value.forEach((each) => {
-                    formUpload.push({ name: EvidenceUpload.name, value: each });
-                })
-            }
-            else formUpload.push({ name: 'uploadFormEvidence', value: null });
             return formUpload;
         }
         if (step == 1) {
@@ -156,12 +151,20 @@ function Upload(props) {
             return formUpload;
         }
         if (step == 2) {
-            if(WalletTransactionData.status == 'Accepted') {
-                let formUpload = [{ name: 'walletTransactionData', value: WalletTransactionData }, { name: 'walletTransactionStatus', value: WalletTransactionData.status }];
+            let txValidationObj = JSON.stringify(WalletTransactionData);
+            if (WalletTransactionData.status == true) {
+                let formUpload = [{ name: 'walletTransactionData', value: txValidationObj }, { name: 'walletTransactionStatus', value: WalletTransactionData.status }];
+                formUpload.push({ name: 'toolbarMediaUpload', value: e.event[0] });
+                if (EvidenceUpload != null) {
+                    EvidenceUpload.value.forEach((each) => {
+                        formUpload.push({ name: EvidenceUpload.name, value: each });
+                    })
+                }
+                else formUpload.push({ name: 'uploadFormEvidence', value: null });
                 return formUpload;
             }
             else {
-                let formUpload = [{ name: 'walletTransactionData', value: WalletTransactionData }, { name: 'walletTransactionStatus', value: null }];
+                let formUpload = [{ name: 'walletTransactionData', value: txValidationObj }, { name: 'walletTransactionStatus', value: false }];
                 return formUpload;
             }
         }
@@ -170,6 +173,9 @@ function Upload(props) {
     function nextForm() {
         let uploadForm = setFormArray(UploadFormState);
         if (isFormValid(uploadForm) == true) {
+            if(UploadFormState == 1) {
+                getAssetData();
+            }
             let updatedForm;
             uploadForm.map((each, i) => {
                 Form.push(each);
@@ -199,13 +205,19 @@ function Upload(props) {
             updatedForm.forEach((e) => {
                 fd.append(e.name, e.value);
             });
-            let url = 'http://localhost:5000/upload/create/';
+            let url = process.env.REACT_APP_SERVER_API_URL + 'upload/create/';
             fetch(url, {
                 mode: 'cors',
                 method: 'post',
+                headers: {
+                    Authorization: 'Bearer ' + authToken
+                },
                 body: fd,
             }).then(res => {
                 if (res.status == 201) setUploadFormState(UploadFormState + 1);
+                else console.log(res);
+            }).catch(err => {
+                console.log(err);
             });
         }
     }
@@ -230,8 +242,8 @@ function Upload(props) {
         else {
             return (
                 <div id="divStateButtons" className="formNavButtons">
-                    <button type='button' id='uploadDownloadButton' className="formMainButton" onClick={() => console.log("reciept")}><h1>Download Reciept</h1></button>
-                    <button className="formSecondaryButton" onClick={() => history.push('/')}><h1>Complete</h1></button>
+                    <button type='button' id='uploadDownloadButton' className="formMainButton" onClick={() => console.log("receipt")}><h1>Download Receipt</h1></button>
+                    <button className="formSecondaryButton" onClick={() => history.push('/Account/' + isAuthenticatedAccount().res.account._id)}><h1>Complete</h1></button>
                 </div>
             )
         }

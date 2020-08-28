@@ -59,6 +59,7 @@ class MediaGallery extends Component {
         console.log(parentWidth, children);
     }
     getUserMediaList() {
+        var portfolio = this.props.portfolio;
         var json = [
             { id:1231245344, mediaType:"Image", src:"https://images.pexels.com/photos/3331094/pexels-photo-3331094.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", certificateId:"A1B2C3", mediaId:"123456", ipfsUrl:"ipfs:conn", licenseCount: 20, mediaTitle: "Lorem Ipsum", mediaCreator: "MrPurple"},
             { id:1232341245, mediaType:"Image", src:"https://images.pexels.com/photos/3494648/pexels-photo-3494648.jpeg?cs=srgb&dl=person-in-black-jacket-walking-on-snow-covered-pathway-3494648.jpg&fm=jpg", certificateId:"A1B2C3", mediaId:"123456", ipfsUrl:"ipfs:conn", licenseCount: 12 , mediaTitle: "Lorem Ipsum", mediaCreator: "MrPurple"},

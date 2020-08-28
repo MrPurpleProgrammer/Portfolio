@@ -3,6 +3,14 @@ html {
 	scroll-behavior: smooth;
 }
 
+body {
+	height: auto;
+}
+
+button {
+	outline: none ;
+}
+
 /*Make scrollbar transparent */
 
 ::-webkit-scrollbar {
@@ -91,6 +99,7 @@ input:-webkit-autofill {
 
 .parentContent {
 	height: 10000px;
+	overflow-x: unset;
 }
 
 .headerLayout {
@@ -127,11 +136,13 @@ input:-webkit-autofill {
 	z-index: 10;
 }
 
-.profileButton {
+.accountModuleButton {
 	background: #09183c;
 	font-size: 25px;
 	border: 0px;
 	color: #ff0051;
+	margin-left: 40px;
+	cursor: pointer;
 }
 
 .tutorialAnimation {
@@ -351,7 +362,7 @@ input:-webkit-autofill {
 	display: inline-block;
 	vertical-align: middle;
 	position: relative;
-	width: 40px;
+	width: 60px;
 	height: 40px;
 	border-radius: 50%;
 	background-clip: content-box;
@@ -402,7 +413,7 @@ input:-webkit-autofill {
 }
 
 .loginContainer {
-	height: 500px;
+	height: 100%;
 	width: 370px;
 	margin: auto;
 	margin-top: 250px;
@@ -410,7 +421,7 @@ input:-webkit-autofill {
 }
 
 .signupContainer {
-	height: 500px;
+	height: 100%;
 	width: 500px;
 	margin: auto;
 	margin-top: 250px;
@@ -426,7 +437,7 @@ input:-webkit-autofill {
 	border-radius: 10px;
 	box-sizing: border-box;
 	background: #071331;
-	color: #ff0051;
+	color: #ffffff; 
 }
 
 .loginInputs input::placeholder {
@@ -444,7 +455,7 @@ input:-webkit-autofill {
 	border-radius: 10px;
 	box-sizing: border-box;
 	background: #071331;
-	color: #ff0051;
+	color: #fff;
 }
 
 .signupInputs input::placeholder {
@@ -487,6 +498,7 @@ input:-webkit-autofill {
 .signupWelcomeText p {
 	color: white;
 	font-size: 19px;
+	padding-bottom: 20px;
 }
 
 .buttonsContainer {
@@ -599,6 +611,12 @@ input:-webkit-autofill {
 	margin: 0px;
 }
 
+.altButtonDisabled {
+    background: #676767 !important;
+    border: 4px solid #444 !important;
+    cursor: not-allowed !important;
+}
+
 .altSignupButton {
 	background: #0c1e50;
 	height: 55px;
@@ -607,12 +625,28 @@ input:-webkit-autofill {
 	border: 4px solid #122E75;
 	border-radius: 10px;
 	cursor: pointer;
+	display: table-row;
 }
 
 .altSignupButton h1 {
 	font-size: 16px;
 	font-family: 'Montserrat-Bold', sans-serif;
 	margin: 5px;
+	display: table-cell;
+	width: inherit;
+}
+
+.altSignupButton i {
+	display: table-cell;
+	width: 10%;
+}
+
+.accepted {
+	color: #14bb2e;
+}
+
+.rejected {
+	color: #cb3030
 }
 
 .altsignupButton p {
@@ -1407,7 +1441,7 @@ input:-webkit-autofill {
 		text-align: center;
 		display: flex;
 		/* padding-left: 65px; */
-		width: auto !important;
+		width: fit-content !important;
 	}
 }
 
@@ -1650,41 +1684,52 @@ input:-webkit-autofill {
 	color: #d82e64;
 }
 
+.inputErrorTypeTwo {
+	border-color: #d82e64 !important;
+}
+
+input.inputErrorTypeTwo::placeholder {
+	color: #d82e64;
+}
+
+input.inputErrorTypeTwo::-webkit-input-placeholder {
+    color: #d82e64;
+}
 .tagify {
-    --tags-border-color: #081229;
-    --tags-hover-border-color: #CCC;
-    --tags-focus-border-color: #3595f6;
-    --tag-bg: #94e7ef;
-    --tag-hover: #D3E2E2;
-    --tag-text-color: #081229;
-    --tag-text-color--edit: black;
-    --tag-pad: 0.3em 0.5em;
-    --tag-inset-shadow-size: 1.1em;
-    --tag-invalid-color: #D39494;
+	--tags-border-color: #081229;
+	--tags-hover-border-color: #CCC;
+	--tags-focus-border-color: #3595f6;
+	--tag-bg: #94e7ef;
+	--tag-hover: #D3E2E2;
+	--tag-text-color: #081229;
+	--tag-text-color--edit: black;
+	--tag-pad: 0.3em 0.5em;
+	--tag-inset-shadow-size: 1.1em;
+	--tag-invalid-color: #D39494;
 	--tag-invalid-bg: rgb(117, 117, 117);
 	--tag-remove-bg: rgba(211, 148, 148, 0.3);
-    --tag-remove-btn-color: black;
-    --tag-remove-btn-bg: none;
-    --tag-remove-btn-bg--hover: #c77777;
-    --input-color: inherit;
-    --tag--min-width: 1ch;
-    --tag--max-width: auto;
-    --tag-hide-transition: .3s;
-    --placeholder-color: rgba(0, 0, 0, 0.4);
-    --placeholder-color-focus: rgba(0, 0, 0, 0.25);
-    --loader-size: .8em;
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    border: 1px solid #ddd;
-    border: 1px solid var(--tags-border-color);
-    padding: 0;
-    line-height: 1.1;
-    cursor: text;
-    outline: 0;
-    position: relative;
-    background: #081229;
-    transition: .1s;
+	--tag-remove-btn-color: black;
+	--tag-remove-btn-bg: none;
+	--tag-remove-btn-bg--hover: #c77777;
+	--input-color: inherit;
+	--tag--min-width: 1ch;
+	--tag--max-width: auto;
+	--tag-hide-transition: .3s;
+	--placeholder-color: rgba(0, 0, 0, 0.4);
+	--placeholder-color-focus: rgba(0, 0, 0, 0.25);
+	--loader-size: .8em;
+	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	border: 1px solid #ddd;
+	border: 1px solid var(--tags-border-color);
+	padding: 0;
+	line-height: 1.1;
+	cursor: text;
+	outline: 0;
+	position: relative;
+	background: #081229;
+	transition: .1s;
 	border-radius: 7px;
 	margin-top: 7px;
 }

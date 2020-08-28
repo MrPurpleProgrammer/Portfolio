@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const uploadDict = require('../dictionaries/upload.dictionary');
 const GridFsStorage = require("multer-gridfs-storage");
-const Media = require('../models/media.model');
+const {Media} = require('../models/media.model');
 const gridfs = require('gridfs-stream');
 const fs = require('fs');
 const EvidenceModel = require("../models/evidence.model");
@@ -30,7 +30,7 @@ mongodb.once("open", () => {
 });
 
 //File Storage
-let storage = new GridFsStorage({
+let uploadStorage = new GridFsStorage({
   url: mongoURI,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
@@ -44,76 +44,108 @@ let storage = new GridFsStorage({
           return reject(err);
         }
         const filename = buf.toString("hex") + path.extname(file.originalname);
-        const fieldType = uploadDict.uploadInputFields(file.fieldname);
-        if (fieldType == "novel_media") {
-          const fileInfo = {
-            fileName: filename,
-            aliases: [req.body.mediaTitle],
-            bucketName: "fileUploads",
-            metadata: {
-              inputName: file.fieldname,
-              filetype: fieldType,
-              tags: req.body.mediaTags,
-              certificateId: req.body.certificateId,
-            }
-          };
-          resolve(fileInfo);
-        }
-        else if (fieldType == "media_evidence") {
-          const fileInfo = {
-            fileName: filename,
-            aliases: [req.body.mediaTitle + '_evidence'],
-            bucketName: "evidenceUploads",
-            metadata: { inputName: file.fieldname, filetype: fieldType, tags: req.body.mediaTags }
-          };
-          resolve(fileInfo);
+        const bucketName = uploadDict.uploadInputFields(file.fieldname);
+        let txObj = JSON.parse(req.body.walletTransactionData);
+        if (typeof req.body.mediaTags != 'object') req.body.mediaTags = JSON.parse(req.body.mediaTags);
+        let certId = txObj.certificateId;
+        let txHash = txObj.txReceipt.transactionHash;
+        let url = txObj.url.string;
+        if (req.body.walletTransactionStatus == 'true' && req.body.termAgreeOption == 'true') {
+          let fileObj = handleFileStorage(bucketName, filename, certId, txHash, url, req, file);
+          if (fileObj.status == true) resolve(fileObj.fileInfo);
+          else {
+            console.log(fileObj.fileInfo);
+            reject(fileObj.fileInfo);
+          }
         }
         else {
-          console.log('FieldType Unauthorized or not Found');
-          reject('FieldType Unauthorized or not Found');
+          console.log('Terms not agreed upon or store in IPFS selected, Transaction not authorized.');
+          reject('Terms not agreed upon or store in IPFS selected, Transaction not authorized.');
         }
       });
     });
   }
 })
 
-let fileStorage = multer({
-  storage: storage
+let handleFileStorage = (bucketName, filename, certId, txHash, url, req, file) => {
+  if (bucketName == 'evidenceUploads' || bucketName == 'fileUploads') {
+    let fileObj = { fileInfo: null, status: null, type: null };
+    let aliases;
+    if (bucketName == "evidenceUploads") aliases = [req.body.mediaTitle + '_evidence' + '_filename'];
+    else aliases = [req.body.mediaTitle];
+    let fileInfo = {
+      fileName: filename,
+      aliases: aliases,
+      bucketName: bucketName,
+      metadata: {
+        inputName: file.fieldname,
+        filetype: bucketName,
+        certificateId: certId,
+        transactionHash: txHash,
+        url: url
+      }
+    };
+    fileObj.fileInfo = fileInfo;
+    fileObj.status = true;
+    return fileObj;
+  }
+  else {
+    console.log('BucketName Unauthorized or not Found');
+    fileObj.fileInfo = "BucketName Unauthorized or not Found";
+    fileObj.status = false;
+    fileObj.type = null;
+    return fileObj;
+  }
+}
+
+let mediaUploadHandler = multer({
+  storage: uploadStorage
 });
 
+
 //Media Collection 
-let setMediaModel = function (req) {
+let setNewMedia = function (req) {
   return new Promise((resolve, reject) => {
-    if (typeof req.files[0] != "undefined" && typeof req.files[1] != "undefined" && req.body.termAgreeOption == "true") {
+    let walletTxObj = JSON.parse(req.body.walletTransactionData);
+    let assetHash = walletTxObj.assetHash;
+    if (typeof req.files[0] != "undefined" && req.body.termAgreeOption == "true") {
       let mid = mongoose.Types.ObjectId();
       if (req.body.storeOption == 'IPFS') {
         let newMedia = new Media({
           mediaId: mid,
           mediaType: req.files[0].contentType,
-          certificateId: 'CID',
+          certificateId: walletTxObj.certificateId,
           mediaTitle: req.body.mediaTitle,
-          mediaCreator: req.body.userHash,
+          mediaTags: req.body.mediaTags,
+          transactionHash: walletTxObj.txReceipt.transactionHash,
+          transactionReceipt: req.body.walletTransactionData,
+          mediaCreator: req.auth._id,
           evidence: req.files.slice(1).map((e, i) => {
             return new EvidenceModel.Evidence({
               uid: mongoose.Types.ObjectId(),
               fileId: e.id,
               mediaId: mid,
-              mediaType: e.contentType,
+              evidenceType: e.contentType,
             })
           }),
+          mediaUrl: walletTxObj.url.string,
+          assetHash: assetHash,
         });
         newMedia.save((err, media) => {
           if (err) reject(err);
-          else { resolve('IPFS Media Added: ' + media); }
+          else { resolve(media); }
         });
       }
       else {
         let newMedia = new Media({
           mediaId: mid,
           mediaType: req.files[0].contentType,
-          certificateId: 'CID',
+          certificateId: walletTxObj.certificateId,
           mediaTitle: req.body.mediaTitle,
-          mediaCreator: 'MrPurple',
+          mediaTags: req.body.mediaTags,
+          transactionHash: walletTxObj.txReceipt.transactionHash,
+          transactionReceipt: req.body.walletTransactionData,
+          mediaCreator: req.auth._id,
           fileId: req.files[0].id,
           evidence: req.files.slice(1).map((e, i) => {
             return new EvidenceModel.Evidence({
@@ -123,15 +155,17 @@ let setMediaModel = function (req) {
               evidenceType: e.contentType,
             })
           }),
+          mediaUrl: walletTxObj.url.string,
+          assetHash: assetHash,
         });
         newMedia.save((err, media) => {
           if (err) reject(err);
-          else { resolve('Port Media Added: ' + media); }
+          else { resolve(media); }
         });
       }
     }
     else {
-      reject('Error: No Evidence or Image to set; or Terms not checked');
+      reject('Error: No Image to set; or Terms not checked');
     }
   });
 }
@@ -221,8 +255,8 @@ let args = {
 
 
 module.exports = {
-  fileStorage,
-  setMediaModel,
+  mediaUploadHandler,
+  setNewMedia,
   getMediaObject,
   getMediaCollection,
   getCertificateCollection,

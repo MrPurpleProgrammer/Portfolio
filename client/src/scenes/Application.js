@@ -14,21 +14,28 @@ import {
 import "./Application.css";
 import AccountButton from '../components/PortfolioLibrary/accountButton/AccountButton.js';
 import Media from '../components/VarsunLibrary/media/Media.js';
+import { isAuthenticatedAccount } from '../api/auth.js';
 
 class Application extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: true,
-            userId: 12345,
-
+            isLoggedIn: false,
+            accountId: null,
         }
     }
 
+    componentDidMount() {
+        if(isAuthenticatedAccount.token) {
+            this.setState({accountId: isAuthenticatedAccount().res.account});
+            this.setState({isLoggedIn: true});
+        }
+        
+    }
     render() {
-        var accountState;
-        if (this.state.isLoggedIn == false) accountState = <Public />;
-        if (this.state.isLoggedIn == true) accountState = <Account isLoggedIn={this.state.isLoggedIn} userId={this.state.userId} />;
+        let accountState;
+        if (this.state.isLoggedIn == false) accountState = <Public/>;
+        if (this.state.isLoggedIn == true) accountState = <Account/>;
         return (
             <div>
                 <Router>
@@ -42,7 +49,7 @@ class Application extends Component {
                         <Route path="/Login">
                             <Login />
                         </Route>
-                        <Route path="/Account">
+                        <Route path="/Account/:id" >
                             <Account />
                         </Route>
                         <Route path="/Signup">

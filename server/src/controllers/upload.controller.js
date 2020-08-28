@@ -2,12 +2,19 @@
 const uploadService = require('../services/upload.service')
 const {DHash, PHash, generateIPFS_URL} = require('../services/asset.service')
 const async = require('async')
+const {User} = require('../models/user.model')
+const {Account} = require('../models/account.model')
 
 let postMedia = async (req, res) => {
+  console.log(req);
   try{
-    let status = await uploadService.setMediaModel(req);
-    console.log(status);
-    res.status(201).send(status);
+    let media = await uploadService.setNewMedia(req);
+    let account = await Account.findOne({_id: req.auth._id});
+    let user = await User.findOne({_id: account.userId});
+    user.portfolio.push(media);
+    user.save();
+    console.log(media, user);
+    res.status(201).json(media);
   }
   catch (err) {
     console.log(err);
@@ -27,11 +34,11 @@ let getAllMedia = async (req, res, next) => {
 }
 
 let getAssetHash = async (req, res) => {
-  let dhash = new DHash(req.files[0]);
+  let dhash = new DHash(req.file);
   let assetHash_d = await dhash.getDHash();
-  let phash = new PHash(req.files[0]);
+  let phash = new PHash(req.file);
   let assetHash_p = await phash.getPHash();
-  let ipfsUrl = await generateIPFS_URL(req.files[0].buffer);
+  let ipfsUrl = await generateIPFS_URL(req.file.buffer);
   res.json({dhash: assetHash_d, phash: assetHash_p, url: ipfsUrl});
 }
 

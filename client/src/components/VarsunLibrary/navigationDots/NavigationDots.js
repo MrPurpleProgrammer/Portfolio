@@ -19,7 +19,7 @@ class NavigationUL extends Component {
         var renderedUL = [];
         for (j=0; j < numberOfDots; j++) {
             renderedUL.push(
-                <NavigationLI state={this.props.state} name={this.props.names[j]} activeState={j} location={this.props.links[j]} />
+                <NavigationLI state={this.props.state} name={this.props.names[j]} key={j} activeState={j} location={this.props.links[j]} />
             );
         }
         return renderedUL

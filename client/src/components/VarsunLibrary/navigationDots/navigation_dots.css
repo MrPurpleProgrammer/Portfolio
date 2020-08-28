@@ -1,13 +1,14 @@
 .navigationDots {
     position: fixed;
 	top: 35%;
+	width: 120px;
 	left: 30px;
 	z-index: 9999;
 }
 .navigationDots ul {
     list-style-type: none;
 	position: relative;
-	width: 70%;
+	width: 90%;
 	cursor: pointer;
 }
 .navigationDots ul li{
@@ -35,7 +36,7 @@
 }
 .navigationDots p {
     float: right;
-	margin: 0px;
+	margin: -4px;
 	display: none;
 	color: #c10c4687;
 	font-size: 16px;

@@ -1,8 +1,8 @@
 
 let uploadInputFields = (fieldName) => {
   let inputDict = {
-    toolbarMediaUpload: "novel_media",
-    uploadFormEvidence: "media_evidence",
+    toolbarMediaUpload: "fileUploads",
+    uploadFormEvidence: "evidenceUploads",
   }
   return inputDict[fieldName]; 
 }
