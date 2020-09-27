@@ -26,16 +26,15 @@ class Application extends Component {
     }
 
     componentDidMount() {
-        if(isAuthenticatedAccount.token) {
-            this.setState({accountId: isAuthenticatedAccount().res.account});
-            this.setState({isLoggedIn: true});
+        if (isAuthenticatedAccount.token) {
+            this.setState({ accountId: isAuthenticatedAccount().res.account });
+            this.setState({ isLoggedIn: true });
         }
-        
     }
     render() {
         let accountState;
-        if (this.state.isLoggedIn == false) accountState = <Public/>;
-        if (this.state.isLoggedIn == true) accountState = <Account/>;
+        if (this.state.isLoggedIn == false) accountState = <Public />;
+        if (this.state.isLoggedIn == true) accountState = <Account />;
         return (
             <div>
                 <Router>
@@ -49,17 +48,12 @@ class Application extends Component {
                         <Route path="/Login">
                             <Login />
                         </Route>
-                        <Route path="/Account/:id" >
-                            <Account />
-                        </Route>
+                        <Route path="/Account" component={Account} />
                         <Route path="/Signup">
                             <Signup />
                         </Route>
-                        <Route path="/Media/MediaDetails">
-                            <MediaDetails />
-                        </Route>
-                        <Route path="/Upload">
-                            <Upload />
+                        <Route path={"/Upload/:id"}>
+                            <Upload/>
                         </Route>
                     </Switch>
                 </Router>

@@ -8,11 +8,14 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const uploadDict = require('../dictionaries/upload.dictionary');
 const GridFsStorage = require("multer-gridfs-storage");
-const {Media} = require('../models/media.model');
+const { Media } = require('../models/media.model');
 const gridfs = require('gridfs-stream');
 const fs = require('fs');
 const EvidenceModel = require("../models/evidence.model");
-
+const imageThumbnail = require('image-thumbnail');
+const StreamToArray = require('stream-to-array')
+const { ipfs } = require('./ipfs.service');
+const { reject } = require("async");
 /*-----------------------------------------*/
 /*      1.MongoDB File Storage Engine      */
 /*-----------------------------------------*/
@@ -27,6 +30,7 @@ mongodb.once("open", () => {
   evidenceBucket = new mongoose.mongo.GridFSBucket(mongodb.db, {
     bucketName: "evidenceUploads"
   })
+
 });
 
 //File Storage
@@ -102,17 +106,24 @@ let mediaUploadHandler = multer({
   storage: uploadStorage
 });
 
-
-//Media Collection 
-let setNewMedia = function (req) {
+let generateThumbnail = async function (req) {
+  try {
+    let fileBuffArr = Uint32Array.from(JSON.parse(req.body.fileBuff)).buffer;
+    let thumbnail = await imageThumbnail(fileBuffArr, { percentage: 30, responseType: 'base64', jpegOptions: { force: true, quality: 90 } });
+    return { thumbnail: thumbnail };
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
+//Media Storage 
+let setNewMedia = async function (req) {
   return new Promise((resolve, reject) => {
     let walletTxObj = JSON.parse(req.body.walletTransactionData);
     let assetHash = walletTxObj.assetHash;
     if (typeof req.files[0] != "undefined" && req.body.termAgreeOption == "true") {
-      let mid = mongoose.Types.ObjectId();
       if (req.body.storeOption == 'IPFS') {
         let newMedia = new Media({
-          mediaId: mid,
           mediaType: req.files[0].contentType,
           certificateId: walletTxObj.certificateId,
           mediaTitle: req.body.mediaTitle,
@@ -124,12 +135,13 @@ let setNewMedia = function (req) {
             return new EvidenceModel.Evidence({
               uid: mongoose.Types.ObjectId(),
               fileId: e.id,
-              mediaId: mid,
+              certificateId: walletTxObj.certificateId,
               evidenceType: e.contentType,
             })
           }),
           mediaUrl: walletTxObj.url.string,
           assetHash: assetHash,
+          thumbnail: req.body.thumbnail
         });
         newMedia.save((err, media) => {
           if (err) reject(err);
@@ -138,7 +150,6 @@ let setNewMedia = function (req) {
       }
       else {
         let newMedia = new Media({
-          mediaId: mid,
           mediaType: req.files[0].contentType,
           certificateId: walletTxObj.certificateId,
           mediaTitle: req.body.mediaTitle,
@@ -151,12 +162,13 @@ let setNewMedia = function (req) {
             return new EvidenceModel.Evidence({
               uid: mongoose.Types.ObjectId(),
               fileId: e.id,
-              mediaId: mid,
+              certificateId: walletTxObj.certificateId,
               evidenceType: e.contentType,
             })
           }),
           mediaUrl: walletTxObj.url.string,
           assetHash: assetHash,
+          thumbnail: req.body.thumbnail
         });
         newMedia.save((err, media) => {
           if (err) reject(err);
@@ -170,8 +182,21 @@ let setNewMedia = function (req) {
   });
 }
 
-let getMediaStream = function (file, res) {
-  fileBucket.openDownloadStream(file.id).pipe(res);
+let getMediaStream = async function (fid, res) {
+  return new Promise((resolve, reject) => {
+    let downloadStream = fileBucket.openDownloadStream(fid);
+    StreamToArray(downloadStream)
+      .then(function (parts) {
+        var buffers = []
+        for (var i = 0, l = parts.length; i < l; ++i) {
+          var part = parts[i]
+          buffers.push((part instanceof Buffer) ? part : new Buffer(part))
+        }
+        return Buffer.concat(buffers)
+      }).then((resp) => {
+        resolve(resp)
+      })
+  })
 }
 
 let getFileId = function (cid) {
@@ -183,12 +208,15 @@ let getFileId = function (cid) {
   });
 }
 
-let getMediaObject = function (req) {
-  cid = req.params.certificateId;
-  fid = getfileId(cid);
-  return new Promise(resolve => {
-    fileBucket.find({ fid }).toArray((err, files) => {
-      // check if files
+let getMediaObject = async function (fid) {
+  return new Promise((resolve, reject) => {
+    fileBucket.find({ _id: fid }).toArray((err, files) => {
+      if (err) reject(err);
+      if (files.length > 0) reject(err);
+      console.log(files);
+      // files.forEach((e) => {
+      resolve(files);
+      // })
     });
   });
 }
@@ -222,42 +250,43 @@ let getCertificateCollection = function () {
 }
 
 /*-----------------------------------------*/
-/*      1.IPFS Storage Engine              */
+/*      2.IPFS Storage Engine              */
 /*-----------------------------------------*/
 
-//For now the Id is static
-const ipfsId = "QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u";
-//Convert Id into multihash data bytes
-let mh = multihashes.fromB58String(Buffer.from(ipfsId))
-//Store as argument object
-let args = {
-  hashFunction: '0x' + mh.slice(0, 4),
-  hash: '0x' + mh.slice(2),
-  size: mh.length - 2
-}
-//Javascript code when using Artifacts
-/*it('should store the IPFS Hash in the logs', async () => {
-  instance.storeCIDInTheLog(ipfsId, { 'from': accounts[0] }).then(function (txReceipt) {
-    console.log('# should store the IPFS Hash in the logs');
-
-    let gasUsed = txReceipt.receipt.gasUsed;
-    console.log("gasUsed: " + gasUsed + " units");
-
-    let gasCost = gasUsed * gasPrice;
-    console.log("gasCost (wei): " + gasCost + " wei");
-
-    let gasCostEth = web3.fromWei(gasCost, 'ether')
-    console.log("gasCost (ether): " + gasCostEth + " ether");
-  }).catch(function (error) {
-    console.log(error);
+//File Storage
+async function postFileToIpfs(data) {
+  return new Promise((resolve, reject) => {
+    ipfs.add(data, { hashAlg: 'sha2-256', cidVersion: 1 }, (err, ipfsHash) => {
+      if (err) reject(err);
+      else {
+        resolve(ipfsHash)
+      }
+    });
   });
-});*/
+}
+
+async function getFileFromIpfs(url) {
+    let stream = ipfs.cat(url, () => {})
+    let buffers = []
+    for await (let parts of stream) {
+        for (var i = 0, l = parts.length; i < l; ++i) {
+          var part = parts[i]
+          buffers.push((part instanceof Buffer) ? part : new Buffer(part))
+        }
+        return Buffer.concat(buffers)
+    }
+}
 
 
 module.exports = {
+  fileBucket,
+  evidenceBucket,
   mediaUploadHandler,
   setNewMedia,
+  postFileToIpfs,
+  getFileFromIpfs,
   getMediaObject,
+  getMediaStream,
   getMediaCollection,
   getCertificateCollection,
 };

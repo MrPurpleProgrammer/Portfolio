@@ -13,6 +13,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    useRouteMatch,
+    useParams,
 } from "react-router-dom";
 
 var mediaJson = { mediaType: "Image", src: "https://images.pexels.com/photos/3331094/pexels-photo-3331094.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", certificateId: "A1B2C3", mediaId: "123456", ipfsUrl: "ipfs:conn", licenseCount: 20, mediaTitle: "Lorem Ipsum", mediaCreator: "MrPurple" }
@@ -21,6 +23,7 @@ const MediaDetails = (props) => {
     let state = {
         stepNumber: 0,
     };
+    let match = useParams();
     var divHeight = () => {
         var innerHeight = window.innerHeight;
         return innerHeight - 400
@@ -30,7 +33,7 @@ const MediaDetails = (props) => {
     let backButton = () => {
         return history.goBack();
     }
-    console.log(location, props);
+    console.log(location);
     $(function () {
         $('.ResOption').on('click', function () {
             $('.ResFilter').css('background-color', '#ffffff');
@@ -61,14 +64,15 @@ const MediaDetails = (props) => {
                         <div id="divMediaSource" className="mediaView">
                             <Media
                                 mediaType={location.state.mediaType}
-                                src={location.state.src}
+                                mediaUrl={location.state.mediaUrl}
                                 certificateId={location.state.certificateId}
                                 mediaId={mediaJson.mediaId}
-                                ipfsUrl={mediaJson.ipfsUrl}
                                 licenseCount={mediaJson.licenseCount}
                                 mediaTitle={location.state.mediaTitle}
                                 mediaCreator={location.state.mediaCreator}
                                 format='detailed'
+                                match={match}
+                                accountId={props.account._id}
                             />
                         </div>
                         <div id="divMediaMetrics" className="none">

@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const EvidenceModel = require('./evidence.model.js');
 
 const mediaSchema = new Schema({
-        mediaId: Schema.Types.ObjectId,
         mediaType: { type: String, required: true},
         certificateId: {type: String, required: true}, 
         mediaTitle: {type: String, required: true},
@@ -15,6 +14,7 @@ const mediaSchema = new Schema({
         evidence:{type: [EvidenceModel.evidenceSchema], required: false},
         mediaUrl: {type: String, required: false},
         assetHash: {type: String, required: false},
+        thumbnail: {type: String, required: false}
     }, {
         timestamps: true,
     });

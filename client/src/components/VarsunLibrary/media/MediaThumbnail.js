@@ -8,9 +8,9 @@ class MediaThumbnail extends Component {
                     data-asset={this.props.mediaType}
                     data-certificate={this.props.certificateID}
                 >
-                    <img className="mediaThumbnail" src={this.props.src}
-                        data-source={this.props.ipfsUrl}
-                        data-dimensions={{ Obj: "42" }}
+                    <img className="mediaThumbnail" src={this.props.thumbnail}
+                        data-source={this.props.mediaUrl}
+                        data-dimensions={42}
                     />
                     <div id="divMediaOverlay" className="mediaOverlay">
                         <div className="overlayMetrics">

@@ -29,7 +29,7 @@ server.use((req, res, next) => {
 server.use(cors());
 server.use(limiter);
 server.use(express.json())
-server.use(bodyParser.json({ limit: '1000kb' }));
+server.use(bodyParser.json({ limit: '10000kb' }));
 indexRoutes(server);
 server.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {

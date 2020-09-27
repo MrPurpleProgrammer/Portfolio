@@ -13940,12 +13940,12 @@
         }
       },
       "links": {},
-      "address": "0xf643Af8DFb119514bAf30b6F9398214633C633a5",
-      "transactionHash": "0xa16fcb5756fb4cd5d2abf80d411a56532b38e5c2a104bc3a01627268954c0fb8"
+      "address": "0x20Fe95BFBc765FB42E02587EA9B4BC24D3Da8aFe",
+      "transactionHash": "0x3b7b7770ef13d39e0d24ece46a3337db7a78226db998236da6878feb83cfc1be"
     }
   },
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-08-27T07:39:22.580Z",
+  "updatedAt": "2020-09-20T17:46:06.477Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

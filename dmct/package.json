@@ -27,6 +27,7 @@
     "copyfiles": "^2.3.0",
     "eth-revert-reason": "^1.0.3",
     "gsap": "^3.3.3",
+    "ipfs-api": "^26.1.2",
     "multihashes": "^1.0.1",
     "multihashing-async": "^1.0.0",
     "portfolio-dmct": "^0.1.0",

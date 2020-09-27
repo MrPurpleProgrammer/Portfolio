@@ -27,12 +27,6 @@ function UploadStatus(props) {
                     <Media
                         mediaType={'Image'}
                         src={src}
-                        certificateId={1234}
-                        mediaId={12345}
-                        ipfsUrl={'www.helloworld.com'}
-                        licenseCount={1}
-                        mediaTitle={'Purple'}
-                        mediaCreator={'MrPurple'}
                         format='upload'
                     />
                 </div>

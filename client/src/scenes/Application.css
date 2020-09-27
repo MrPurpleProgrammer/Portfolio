@@ -259,7 +259,7 @@ input:-webkit-autofill {
 
 .fade-appear.fade-appear-active {
 	opacity: 1;
-	transition: opacity 2000ms ease-in;
+	transition: opacity 500ms ease-in;
 }
 
 .fade-enter {
@@ -268,7 +268,7 @@ input:-webkit-autofill {
 
 .fade-enter.fade-enter-active {
 	opacity: 1;
-	transition: opacity 1000ms ease-in 500ms;
+	transition: opacity 500ms ease-in 500ms;
 }
 
 .fade-exit {
@@ -1733,3 +1733,40 @@ input.inputErrorTypeTwo::-webkit-input-placeholder {
 	border-radius: 7px;
 	margin-top: 7px;
 }
+
+.loadingDiv {
+	position: absolute;
+    left: 42%;
+    color: white;
+    top: 45%;
+}
+
+.loadingDiv h1 {
+	font-size: 50px;
+}
+
+.emptyPortIcon {
+	margin: 30px;
+	padding-bottom: 50px;
+}
+
+.emptyPortIcon svg {
+	height: 150px;
+    width: 150px;
+}
+
+.arrow {
+	pointer-events: none;
+	z-index: 9999;
+  }
+   
+  .arrow__path {
+	stroke: white;
+	fill: transparent;
+	stroke-dasharray: 4 2;
+  }
+   
+  .arrow__head line {
+	stroke: white;
+	stroke-width: 1px;
+  }

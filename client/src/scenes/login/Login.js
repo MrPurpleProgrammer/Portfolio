@@ -10,7 +10,7 @@ class Login extends Component {
             <CSSTransition
                 in={true}
                 appear={true}
-                timeout={2000}
+                timeout={500}
                 classNames="fade"
             >
                 <div className="loginSceneContainer">

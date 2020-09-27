@@ -10,7 +10,6 @@ function Content(props) {
     let location = useLocation();
     let history = useHistory();
     const [Form, setForm] = useState({});
-    let [redirectToReferer, setRedirectToReferer] = useState();
     let altLoginOptions = () => {
         $('#formMainLoginInputs').animate({ opacity: 0, height: '0px' }, 500,
             function () {
@@ -102,9 +101,8 @@ function Content(props) {
                         if (resp.res) {
                             if (resp.res.status == 200) {
                                 authenticateAccount(resp, () => {
-                                    setRedirectToReferer(true);
                                     history.push({
-                                        pathname: '/Account/' + resp.res.account._id,
+                                        pathname: '/Account/Profile/' + resp.res.account._id,
                                     });
                                 });
                             }

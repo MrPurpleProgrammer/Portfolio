@@ -1,22 +1,24 @@
 
 const uploadService = require('../services/upload.service')
 const {DHash, PHash, generateIPFS_URL} = require('../services/asset.service')
+const {postFileToIpfs} = require('../services/upload.service')
 const async = require('async')
 const {User} = require('../models/user.model')
 const {Account} = require('../models/account.model')
 
 let postMedia = async (req, res) => {
-  console.log(req);
   try{
     let media = await uploadService.setNewMedia(req);
     let account = await Account.findOne({_id: req.auth._id});
     let user = await User.findOne({_id: account.userId});
+    let data = await uploadService.getMediaStream(media.fileId);
+    postFileToIpfs(data);
     user.portfolio.push(media);
     user.save();
-    console.log(media, user);
-    res.status(201).json(media);
+    res.status(201).json({media: media});
   }
   catch (err) {
+    res.status(401).send(err);
     console.log(err);
   }
 }

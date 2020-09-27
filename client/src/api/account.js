@@ -9,13 +9,13 @@ let getAccount = async (token, accountId) => {
             Authorization: 'Bearer ' + token
         },
     })
-    .then(response => response.json())
-    .then((resp) => {
-        return {account: resp.account, user: resp.user, error: null} 
-    })
-    .catch(err => {
-        return {account: null, user: null, error: err}
-    });
+        .then(response => response.json())
+        .then((resp) => {
+            return { account: resp.account, user: resp.user, error: null }
+        })
+        .catch(err => {
+            return { account: null, user: null, error: err }
+        });
     return resp
 }
 

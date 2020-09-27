@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import './media_gallery.css';
 import $ from 'jquery';
 import Media from '../media/Media.js'
+import PortfolioIcon from '../../PortfolioLibrary/emptyPortfolioIcon/PortfolioIcon'
 
 class MediaGallery extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sort:this.props.sort
+            sort: this.props.sort
         };
     }
     sortGalleryDefault = () => {
@@ -99,30 +100,53 @@ class MediaGallery extends Component {
         /*window.addEventListener('load', this.sortGalleryDefault);*/
     }
     render() {
-        var mediaJson = this.getUserMediaList();
-        const mediaList = mediaJson.map((e) =>
-            <Media
-                key = {e.id}
-                mediaType={e.mediaType}
-                src={e.src}
-                certificateId={e.certificateId}
-                mediaId={e.mediaId}
-                ipfsUrl={e.ipfsUrl}
-                licenseCount={e.licenseCount}
-                mediaTitle={e.mediaTitle}
-                mediaCreator={e.mediaCreator}
-                format= {'thumbnail'}
-            />
-        );
-        return (
-            <div>
-                <div id="divMediaGallery" className="galleryContainer">
-                    <ul id="ulMediaGallery" className="mediaGrid">
-                        {mediaList}
-                    </ul>
+        var portfolio = this.props.portfolio;
+        if (portfolio.length > 0) {
+            let mediaList = portfolio.map((e) =>
+                <Media
+                    key={e._id}
+                    mediaType={e.mediaType}
+                    thumbnail={e.thumbnail}
+                    certificateId={e.certificateId}
+                    mediaId={e.mediaId}
+                    mediaUrl={e.mediaUrl}
+                    licenseCount={null}
+                    mediaTitle={e.mediaTitle}
+                    mediaCreator={e.mediaCreator}
+                    format={'thumbnail'}
+                    match={this.props.match}
+                    accountId={this.props.account._id}
+                />
+            );
+            return (
+                <div>
+                    <div id="divMediaGallery" className="galleryContainer">
+                        <ul id="ulMediaGallery" className="mediaGrid">
+                            {mediaList}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        else {
+            return (
+                <div>
+                    <div id="divMediaGallery" className="emptyGalleryContainer">
+                        <div id="divInstructions">
+                            <h1>Your portfolio seems to be empty. Let's fix that!</h1>
+                        </div>
+                        <div className="emptyGalleryInstructionsDiv">
+                            <h1>Drop a File in the</h1>
+                            <h1 style={{ color: '#ff0051', fontWeight: 'Bold'}}> Upload Box </h1>
+                            <h1 >above.</h1>
+                        </div>
+                        <div className="emptyPortIcon">
+                            <PortfolioIcon/>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 export default MediaGallery;

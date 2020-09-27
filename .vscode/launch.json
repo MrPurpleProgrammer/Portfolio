@@ -37,6 +37,13 @@
                 "ClientBrowser"
             ],
             "preLaunchTask": "PortClient/DMCT"
+        },
+        {
+            "name": "Relaunch",
+            "configurations": [
+                "PortServer",
+                "ClientBrowser"
+            ],
         }
     ],
 }

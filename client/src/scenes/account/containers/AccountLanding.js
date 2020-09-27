@@ -6,23 +6,31 @@ import ProfileButton from '../../../components/PortfolioLibrary/profileButton/Pr
 import Logo from '../../../components/PortfolioLibrary/logo/Logo.js';
 import FilterToolbar from '../../../components/VarsunLibrary/filterToolbar/FilterToolbar.js';
 import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
-import { isAuthenticatedAccount } from "../../../api/auth.js";
-import {getAccount} from "../../../api/account.js";
+import Arrow, { DIRECTION } from 'react-arrows'
+import { isAuthenticatedAccount } from '../../../api/auth';
+import { getAccount } from "../../../api/account.js";
 
 class AccountLanding extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            account: {},
-            user: {}
+            account: this.props.account,
+            user: this.props.user,
+            isUserNew: true,
         }
     }
-    async componentDidMount() {
+    componentWillMount() {
+        if (this.props.user.portfolio.length > 0) this.setState({ isUserNew: false });
+    }
+    componentDidMount() {
         let accountId = isAuthenticatedAccount().res.account._id;
         let token = isAuthenticatedAccount().token;
-        let accountData = await getAccount(token, accountId);
-        this.setState({account: accountData.account, user: accountData.user});
+        getAccount(token, accountId).then((resp) => {
+            this.setState({ loading: false, account: resp.account, user: resp.user })
+            this.props.onPortfolioUpdate(resp.user.portfolio);
+        });
     }
+
     render() {
         return (
             <div id="accountContent" className="accountContentContainer">
@@ -53,10 +61,25 @@ class AccountLanding extends Component {
                                 </div>
                             </div>
                         </div>
-                        <FilterToolbar />
+                        <div id='divFilterToolbar'>
+                            <FilterToolbar match={this.props.match} accountId={this.state.account._id} isUserNew={this.state.isUserNew} />
+                        </div>
                     </div>
+                    {/* <Arrow
+                        className='arrow'
+                        from={{
+                            direction: DIRECTION.LEFT,
+                            node: () => document.getElementById('divInstructions'),
+                            translation: [-1, 1],
+                        }}
+                        to={{
+                            direction: DIRECTION.BOTTOM,
+                            node: () => document.getElementById('divUploadInputBox'),
+                            translation: [1, 0.5],
+                        }}
+                    /> */}
                     <div id="divAccountMediaList" className="accountContent">
-                        <MediaGallery sort='default' portfolio={this.state.user.portfolio}/>
+                        <MediaGallery sort='default' portfolio={this.state.user.portfolio} match={this.props.match} account={this.props.account} isUserNew={this.state.isUserNew} />
                     </div>
                 </div>
             </div>

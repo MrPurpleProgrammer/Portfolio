@@ -11,27 +11,26 @@ class Media extends Component {
         super(props);
     }
     render() {
-        var mediaUrl = '/Media/MediaDetails?id=' + this.props.mediaId + '&mediaType=' + this.props.mediaType;
         let media;
         if (this.props.format == 'thumbnail') {
             media = <Link to={{
-                pathname: '/Media/MediaDetails',
-                search: 'id=' + this.props.mediaId + '&mediaType=' + this.props.mediaType + '&certificateID=' + this.props.certificateId,
+                pathname: this.props.match.url + '/Media/MediaDetails/' + this.props.accountId + '/' + this.props.mediaId,
                 state: {
-                    src: this.props.src,
+                    thumbnail: this.props.thumbnail,
                     mediaType: this.props.mediaType,
                     certificateId: this.props.certificateId,
                     mediaTitle: this.props.mediaTitle,
                     mediaCreator: this.props.mediaCreator,
                     mediaId: this.props.mediaId,
+                    mediaUrl: this.props.mediaUrl,
                 },
-            }}
-            ><MediaThumbnail
+            }}>
+                <MediaThumbnail
                     mediaType={this.props.mediaType}
-                    src={this.props.src}
+                    thumbnail={this.props.thumbnail}
                     certificateId={this.props.certificateId}
                     mediaId={this.props.mediaId}
-                    ipfsUrl={this.props.ipfsUrl}
+                    mediaUrl={this.props.mediaUrl}
                     licenseCount={this.props.licenseCount}
                     mediaTitle={this.props.mediaTitle}
                     mediaCreator={this.props.mediaCreator}
@@ -41,10 +40,9 @@ class Media extends Component {
         else if (this.props.format == 'detailed') {
             media = <MediaDetailed
                 mediaType={this.props.mediaType}
-                src={this.props.src}
                 certificateId={this.props.certificateId}
                 mediaId={this.props.mediaId}
-                ipfsUrl={this.props.ipfsUrl}
+                mediaUrl={this.props.mediaUrl}
                 licenseCount={this.props.licenseCount}
                 mediaTitle={this.props.mediaTitle}
                 mediaCreator={this.props.mediaCreator}
@@ -63,7 +61,7 @@ class Media extends Component {
             />
         }
         return (
-            <div id={"divMedia_" + this.props.mediaId} style={{height: "inherit"}}>{media}</div>
+            <div id={"divMedia_" + this.props.mediaId} style={{ height: "inherit" }}>{media}</div>
         )
     }
 }

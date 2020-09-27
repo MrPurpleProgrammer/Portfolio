@@ -20803,12 +20803,12 @@
         }
       },
       "links": {},
-      "address": "0x5b91adfE3d0D2c6236b2036e9ffca471a1EdAED3",
-      "transactionHash": "0xe23d5ed3d39495b1725d5e6f1db7772a37e13e1a62f1753fb30028079ded6958"
+      "address": "0x498ac12c21390285B58525E744C69696E6de02Ce",
+      "transactionHash": "0xd6e660a587f3c4c8576e10475699e3b9dc48bd3638c64526a171e5be79f4ad20"
     }
   },
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-08-27T07:39:22.604Z",
+  "updatedAt": "2020-09-20T17:46:06.509Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

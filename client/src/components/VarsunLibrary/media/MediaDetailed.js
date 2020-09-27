@@ -8,7 +8,7 @@ class MediaDetailed extends Component {
                 data-asset={this.props.mediaType}
                 data-certificate={this.props.certificateID}
             >
-                <img className="mediaDetailed" src={this.props.src}
+                <img className="mediaDetailed" src={'https://ipfs.io/ipfs/' + this.props.mediaUrl}
                     data-source={this.props.ipfsUrl}
                     data-dimensions={{ Obj: "42" }}
                 />

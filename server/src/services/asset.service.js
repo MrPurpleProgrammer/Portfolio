@@ -4,9 +4,9 @@ let assert = require('assert');
 const { memoryStorage } = require('multer');
 const DHASH_SIZE = 8;
 const PHASH_SIZE = 32;
-const IPFSHash = require('ipfs-only-hash')
+const IPFSHash = require('ipfs-only-hash');
 
-let assetMemStorage = multer();
+let assetMemStorage = multer(); 
 
 async function generateIPFS_URL(data) {
     let IPFS_URL = await IPFSHash.of(data, {hashAlg:'sha2-256' , cidVersion: 1})

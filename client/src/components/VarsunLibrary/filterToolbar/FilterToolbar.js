@@ -62,10 +62,11 @@ class FilterToolbar extends Component {
                 'max': 10000
             }
         });
+        if(this.props.isUserNew == true) this.toggleToolbar();
     }
     toggleToolbar = () => {
         if (this.state.toolbarExpand == false) {
-            $('#divMediaGallery').animate({ padding: '630px 65px 0px' }, 500)
+            $('#divMediaGallery').animate({ padding: '595px 65px 0px' }, 500)
             $("#divAccountToolbar").animate({ height: '300px' }, 500,
                 () => {
                     this.setState({
@@ -100,8 +101,8 @@ class FilterToolbar extends Component {
                     <i className="fas fa-angle-double-down"></i>
                 </div>
                 <div id="divToolBarContent" className="accountToolBarContent">
-                    <div className="uploadTool">
-                        <UploadInput />
+                    <div id='divUploadInput' className="uploadTool">
+                        <UploadInput match={this.props.match} accountId={this.props.accountId}/>
                     </div>
                     <div className="refineTools">
                         <div className="refineTitle">

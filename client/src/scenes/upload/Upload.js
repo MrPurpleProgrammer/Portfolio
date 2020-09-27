@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useHistory, useLocation } from 'react-router-dom';
 import ProfileHeader from '../../components/PortfolioLibrary/profileHeader/ProfileHeader';
@@ -13,10 +13,6 @@ import { isAuthenticatedAccount } from '../../api/auth';
 import { getAccount } from '../../api/account';
 require('dotenv').config()
 
-function bufferToHexString(buffer) { // buffer is an ArrayBuffer
-    return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
-}
-
 function Upload(props) {
     let location = useLocation();
     let history = useHistory();
@@ -27,7 +23,17 @@ function Upload(props) {
     const [UploadFormState, setUploadFormState] = useState(0);
     const [WalletTransactionData, setTransactionData] = useState(false);
     const [AssetData, setAssetData] = useState(null);
+    const [Account, setAccount] = useState({});
+    const [User, setUser] = useState({})
     const authToken = isAuthenticatedAccount().token;
+    let getAccountData = () => {
+        let accountId = isAuthenticatedAccount().res.account._id;
+        let token = isAuthenticatedAccount().token;
+        getAccount(token, accountId).then((resp) => {
+            setAccount(resp.account);
+            setUser(resp.user);
+        });
+    }
     let getAssetData = () => {
         let fileForm = new FormData();
         fileForm.append('asset', location.state.event[0]);
@@ -140,6 +146,8 @@ function Upload(props) {
             let formUpload = $("#formUploadStep1").serializeArray();
             let mediaTagArr = mediaTags();
             formUpload.push(mediaTagArr);
+            let thumb = {name: 'thumbnail', value: location.state.thumbnail[0].prefix + location.state.thumbnail[0].data}           
+            formUpload.push(thumb);
             let storageOpt = storageOption();
             formUpload.push(storageOpt);
             return formUpload;
@@ -173,7 +181,7 @@ function Upload(props) {
     function nextForm() {
         let uploadForm = setFormArray(UploadFormState);
         if (isFormValid(uploadForm) == true) {
-            if(UploadFormState == 1) {
+            if (UploadFormState == 0) {
                 getAssetData();
             }
             let updatedForm;
@@ -193,6 +201,7 @@ function Upload(props) {
     }
     // Submit Form Button Functionality
     function submitFormData() {
+        $('#submitBtnText').text('Processing...')
         let uploadForm = setFormArray(UploadFormState);
         if (isFormValid(uploadForm) == true) {
             let fd = new FormData();
@@ -215,12 +224,17 @@ function Upload(props) {
                 body: fd,
             }).then(res => {
                 if (res.status == 201) setUploadFormState(UploadFormState + 1);
-                else console.log(res);
+                else {
+                    $('#submitBtnText').text('Rejected')
+                };
             }).catch(err => {
                 console.log(err);
             });
         }
     }
+    useEffect(() => {
+        getAccountData();
+    }, []);
     //Load form navigation buttons based on state
     let handleButtons = function () {
         if (UploadFormState == 2) {
@@ -243,7 +257,7 @@ function Upload(props) {
             return (
                 <div id="divStateButtons" className="formNavButtons">
                     <button type='button' id='uploadDownloadButton' className="formMainButton" onClick={() => console.log("receipt")}><h1>Download Receipt</h1></button>
-                    <button className="formSecondaryButton" onClick={() => history.push('/Account/' + isAuthenticatedAccount().res.account._id)}><h1>Complete</h1></button>
+                    <button className="formSecondaryButton" onClick={() => {history.push('/refresh'); history.replace('/Account/Profile/' + isAuthenticatedAccount().res.account._id)}}><h1>Complete</h1></button>
                 </div>
             )
         }
@@ -253,7 +267,7 @@ function Upload(props) {
             <ProfileHeader sceneState="account" />
             <div id="divAccountContentHeader" className="accountContentHeader">
                 <div id="divAccountDetails" className="accountDetails">
-                    <h1 className="accountNameLanding">Aditya Sayyaparaju</h1>
+                    <h1 className="accountNameLanding">{User.username}</h1>
                     <div id="divAccountMetrics" className="metricsContainer">
                         <div id="divAccountBadges" className="accountBadges">
                             <i className="fas fa-award"></i>
@@ -289,7 +303,7 @@ function Upload(props) {
                 </div>
                 <div id="divUploadFormContent" className="uploadContainer">
                     <div id="divUploadStatusTracker" className="uploadStatusContainer">
-                        <UploadStatus />
+                        <UploadStatus/>
                     </div>
                     <div id="divUploadForm" className="uploadFormContainer">
                         {renderUploadForm()}
