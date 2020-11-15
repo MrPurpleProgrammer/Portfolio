@@ -15,36 +15,42 @@ function UploadFormStep3(props) {
         return web3;
     }
     async function initiateDMCTContract(type) {
-        let wallet = await initiateWallet();
-        if (wallet.status == true) {
-            setWalletAccount(wallet.account);
-            setWalletStatus('Connected');
-            const DMCTOracle = new DMCT(wallet.web3, wallet.account);
-            let assetHash = props.assetData.dhash.str;
-            //Convert Id into multihash data bytes
-            let assetUrl = props.assetData.url;
-            let ipfsCID = new CID(assetUrl);
-            let urlArgs = {
-                hashFunction: ipfsCID.buffer.slice(0, 4),
-                hash: ipfsCID.multihash.slice(4),
+        try {
+            let wallet = await initiateWallet();
+            if (wallet.status == true) {
+                setWalletAccount(wallet.account);
+                setWalletStatus('Connected');
+                const DMCTOracle = new DMCT(wallet.web3, wallet.account);
+                let assetHash = props.assetData.phash.str;
+                //Convert Id into multihash data bytes
+                let assetUrl = props.assetData.url;
+                let ipfsCID = new CID(assetUrl);
+                let urlArgs = {
+                    hashFunction: ipfsCID.buffer.slice(0, 4),
+                    hash: ipfsCID.multihash.slice(4),
+                }
+                let txObj = await DMCTOracle.createCertificate(props.contractMetadata[0].value, assetHash, urlArgs.hash, urlArgs.hashFunction);
+                txObj.url.string = assetUrl;
+                console.log(txObj);
+                props.transactionReceipt(txObj);
+                if (txObj.status == true) {
+                    setWalletStatus('Accepted');
+                    props.submitForm(txObj)
+                }
+                else if (typeof txObj != 'undefined' || txObj.status == false) {
+                    // let revertReason = await DMCTOracle.getRevertReason(txObj.txReceipt.transactionHash);
+                    setWalletStatus('Rejected');
+                }
+                else {
+                    setWalletStatus('Rejected');
+                }
             }
-            let txObj = await DMCTOracle.createCertificate(props.contractMetadata[0].value, assetHash, urlArgs.hash, urlArgs.hashFunction);
-            txObj.url.string = assetUrl;
-            console.log(txObj);
-            props.transactionReceipt(txObj);
-            if (txObj.status == true) {
-                setWalletStatus('Accepted');
-                props.submitForm(txObj)
-            }
-            else if (typeof txObj != 'undefined' || txObj.status == false) {
-                // let revertReason = await DMCTOracle.getRevertReason(txObj.txReceipt.transactionHash);
-                setWalletStatus('Rejected');
-            }
-            else {
-                setWalletStatus('Rejected');
-            }
+            else setWalletStatus('Rejected');
         }
-        else setWalletStatus('Rejected');
+        catch(err) {
+            console.log(err)
+            setWalletStatus('Rejected')
+        }
     }
 
     function transactionStatus() {

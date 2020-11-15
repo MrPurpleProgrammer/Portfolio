@@ -79,7 +79,7 @@ class AccountLanding extends Component {
                         }}
                     /> */}
                     <div id="divAccountMediaList" className="accountContent">
-                        <MediaGallery sort='default' portfolio={this.state.user.portfolio} match={this.props.match} account={this.props.account} isUserNew={this.state.isUserNew} />
+                        <MediaGallery sort='default' portfolio={this.state.user.portfolio} match={this.props.match} account={this.props.account} isUserNew={this.state.isUserNew} username={this.state.user.username}/>
                     </div>
                 </div>
             </div>

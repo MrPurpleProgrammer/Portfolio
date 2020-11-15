@@ -1,4 +1,4 @@
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { TweenMax, Power2, Elastic } from "gsap";
 import { Link } from 'react-router-dom';
 

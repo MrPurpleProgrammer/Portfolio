@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=0.1">
+    <meta property="og:url" content='https://ipfs.io/ipfs/<%= media.mediaUrl %>' />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<%= media.mediaTitle %>" />
+    <meta property="og:description" content="Lorem Ipsum Bleh Bleh Bleh" />
+    <meta property="owner" content="<%=media.mediaCreator%>" />
+    <title><%=media.certificateId %> / <%=media._id%> </title>
+</head>
+
+<body style="margin: 0px; background: rgb(14, 14, 14);">
+    <div>
+        <img style="-webkit-user-select: none;margin: auto;cursor: zoom-in; width: 100%; height: 100%;" 
+        data-portId="<%=media._id%>"" 
+        data-certificateId="<%=media.certificateId%>" 
+        data-transactionHash="<%=media.transactionHash%>"
+        src="https://ipfs.io/ipfs/<%= media.mediaUrl %>">
+
+    </div>
+    </body>
+
+</html>

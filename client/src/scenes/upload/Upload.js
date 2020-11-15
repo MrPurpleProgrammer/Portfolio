@@ -8,6 +8,7 @@ import UploadFormStep1 from './containers/UploadFormStep1';
 import UploadFormStep2 from './containers/UploadFormStep2';
 import UploadFormStep3 from './containers/UploadFormStep3';
 import UploadFormStep4 from './containers/UploadFormStep4';
+import UploadFormStepLink from './containers/UploadFormStepLink';
 import UploadChart from '../../components/PortfolioLibrary/uploadChart/UploadChart.js';
 import { isAuthenticatedAccount } from '../../api/auth';
 import { getAccount } from '../../api/account';
@@ -48,7 +49,14 @@ function Upload(props) {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 setAssetData(data);
+                if (data.ownershipStatus.status == true) {
+                    setUploadFormState(1.5);
+                }
+                else {
+                    setUploadFormState(1);
+                }
             })
             .catch(err => console.log(err));
     }
@@ -67,6 +75,11 @@ function Upload(props) {
         else if (UploadFormState == 1) {
             return (
                 <UploadFormStep2 />
+            )
+        }
+        else if (UploadFormState == 1.5) {
+            return (
+                <UploadFormStepLink AssetData={AssetData} />
             )
         }
         else if (UploadFormState == 2) {
@@ -121,7 +134,21 @@ function Upload(props) {
             if (obj.length > 0) {
                 obj.each((i, elm) => {
                     let elmId = elm.id;
-                    if (e.value == null || e.value == "") {
+                    if (e.name == 'mediaTags') {
+                        let val;
+                        if(e.value == null) val = [];
+                        else val = JSON.parse(e.value);
+                        if (val.length < 3) {
+                            let errMsg = $('#' + elmId).attr('data-error');
+                            $('#' + obj[0].id).html(errMsg).addClass('inputError');
+                            nullCounter++    
+                        }
+                        else {
+                            let normMsg = $('#' + elmId).attr('data-norm');
+                            $('#' + elmId).html(normMsg).removeClass('inputError');
+                        }
+                    }
+                    else if (e.value == null || e.value == "") {
                         let errMsg = $('#' + elmId).attr('data-error');
                         $('#' + elmId).html(errMsg).addClass('inputError');
                         nullCounter++
@@ -146,7 +173,8 @@ function Upload(props) {
             let formUpload = $("#formUploadStep1").serializeArray();
             let mediaTagArr = mediaTags();
             formUpload.push(mediaTagArr);
-            let thumb = {name: 'thumbnail', value: location.state.thumbnail[0].prefix + location.state.thumbnail[0].data}           
+            let thumb = { name: 'thumbnail', value: null };
+            if(location.state.thumbnail) thumb = { name: 'thumbnail', value: location.state.thumbnail[0].prefix + location.state.thumbnail[0].data }
             formUpload.push(thumb);
             let storageOpt = storageOption();
             formUpload.push(storageOpt);
@@ -182,15 +210,23 @@ function Upload(props) {
         let uploadForm = setFormArray(UploadFormState);
         if (isFormValid(uploadForm) == true) {
             if (UploadFormState == 0) {
+                let updatedForm;
+                uploadForm.map((each, i) => {
+                    Form.push(each);
+                    updatedForm = Form;
+                });
+                setForm(updatedForm);
                 getAssetData();
             }
-            let updatedForm;
-            uploadForm.map((each, i) => {
-                Form.push(each);
-                updatedForm = Form;
-            });
-            setForm(updatedForm);
-            setUploadFormState(UploadFormState + 1);
+            else {
+                let updatedForm;
+                uploadForm.map((each, i) => {
+                    Form.push(each);
+                    updatedForm = Form;
+                });
+                setForm(updatedForm);
+                setUploadFormState(UploadFormState + 1);
+            }
         }
         console.log(Form, UploadFormState);
     }
@@ -234,32 +270,48 @@ function Upload(props) {
     }
     useEffect(() => {
         getAccountData();
+        $(document).keypress(
+            function(event){
+              if (event.which == '13') {
+                $('.formMainButton').click();
+                event.preventDefault();
+              }
+          });
     }, []);
     //Load form navigation buttons based on state
     let handleButtons = function () {
-        if (UploadFormState == 2) {
+        if (UploadFormState == 1.5) {
             return (
                 <div id="divStateButtons" className="formNavButtons">
-                    <button type='button' id='uploadFormSubmitButton' className="formMainButton" onClick={() => { submitFormData() }}><h1 id='submitBtnText'>Submit</h1></button>
-                    <button className="formSecondaryButton" onClick={backButton}><h1>Cancel</h1></button>
-                </div>
-            )
-        }
-        else if (UploadFormState < 2) {
-            return (
-                <div id="divStateButtons" className="formNavButtons">
-                    <button type='button' id='uploadFormNextButton' className="formMainButton" onClick={() => { nextForm() }}><h1>Next</h1></button>
                     <button className="formSecondaryButton" onClick={backButton}><h1>Cancel</h1></button>
                 </div>
             )
         }
         else {
-            return (
-                <div id="divStateButtons" className="formNavButtons">
-                    <button type='button' id='uploadDownloadButton' className="formMainButton" onClick={() => console.log("receipt")}><h1>Download Receipt</h1></button>
-                    <button className="formSecondaryButton" onClick={() => {history.push('/refresh'); history.replace('/Account/Profile/' + isAuthenticatedAccount().res.account._id)}}><h1>Complete</h1></button>
-                </div>
-            )
+            if (UploadFormState == 2) {
+                return (
+                    <div id="divStateButtons" className="formNavButtons">
+                        <button type='button' id='uploadFormSubmitButton' className="formMainButton" onClick={() => { submitFormData() }}><h1 id='submitBtnText'>Submit</h1></button>
+                        <button className="formSecondaryButton" onClick={backButton}><h1>Cancel</h1></button>
+                    </div>
+                )
+            }
+            else if (UploadFormState < 2) {
+                return (
+                    <div id="divStateButtons" className="formNavButtons">
+                        <button type='button' id='uploadFormNextButton' className="formMainButton" onClick={() => { nextForm() }}><h1>Next</h1></button>
+                        <button className="formSecondaryButton" onClick={backButton}><h1>Cancel</h1></button>
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <div id="divStateButtons" className="formNavButtons">
+                        <button type='button' id='uploadDownloadButton' className="formMainButton" onClick={() => console.log("receipt")}><h1>Download Receipt</h1></button>
+                        <button className="formSecondaryButton" onClick={() => { history.push('/refresh'); history.replace('/Account/Profile/' + isAuthenticatedAccount().res.account._id) }}><h1>Complete</h1></button>
+                    </div>
+                )
+            }
         }
     }
     return (
@@ -303,7 +355,7 @@ function Upload(props) {
                 </div>
                 <div id="divUploadFormContent" className="uploadContainer">
                     <div id="divUploadStatusTracker" className="uploadStatusContainer">
-                        <UploadStatus/>
+                        <UploadStatus />
                     </div>
                     <div id="divUploadForm" className="uploadFormContainer">
                         {renderUploadForm()}

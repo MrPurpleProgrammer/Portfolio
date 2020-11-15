@@ -5,7 +5,7 @@ import Account from "./account/Account.js";
 import Signup from "./signup/Signup.js";
 import MediaDetails from "./account/containers/MediaDetails.js";
 import Upload from './upload/Upload.js';
-
+import MediaScene from './media/Media.js'
 import {
     BrowserRouter as Router,
     Switch,
@@ -55,6 +55,7 @@ class Application extends Component {
                         <Route path={"/Upload/:id"}>
                             <Upload/>
                         </Route>
+                        <Route path={"/Media"} component={MediaScene}/>
                     </Switch>
                 </Router>
             </div>

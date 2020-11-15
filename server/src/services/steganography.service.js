@@ -17,6 +17,10 @@ class ImageSteganograph {
         this.secretBuffer = secret;
     }
 
+    LSB () {
+
+    }
+
     encodeData() {
             
     }

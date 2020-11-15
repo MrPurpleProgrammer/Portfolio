@@ -30,7 +30,7 @@ function UploadFormStep2(props) {
                 </div>
             </div>
             <div id="divFormStep_2" className="uploadFormInputContainer">
-                <form method="post" name="createCert_Step2" id="formUploadStep2">
+                <form name="createCert_Step2" id="formUploadStep2">
                 <div className="uploadFormInput"> 
                     <label id="err_accountPassword" data-norm='Confirm with Account Password:' data-error='Incorrect or Invalid Password, try again.'>Confirm with Account Password:</label>
                     <input id="accountPassword" name="accountPassword" type="password" />

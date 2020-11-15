@@ -156,7 +156,7 @@ function UploadFormStep1(props) {
                         <input id="mediaTitle" name="mediaTitle" type="text" autoComplete='off' spellCheck='off' />
                     </div>
                     <div className="uploadFormInput">
-                        <label id='err_mediaTags' data-norm='Tags' data-error='Enter atleast one tag for reference'>Tags</label>
+                        <label id='err_mediaTags' data-norm='Tags' data-error='Enter atleast three tags for reference'>Tags</label>
                         <input id="mediaTags" autoComplete='off' spellCheck='off' />
                     </div>
                     <p id='err_uploadFormEvidence' data-norm='Upload Evidence' data-error='Upload evidence showing you own this media file.'>Upload Evidence</p>

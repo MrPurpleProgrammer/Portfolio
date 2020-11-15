@@ -1,39 +1,208 @@
-import React, { Component } from "react";
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import React, { useState, Component, useEffect, useRef } from "react";
+import { useLocation, useHistory } from 'react-router-dom';
 import $ from 'jquery';
-import UploadChart from '../../../components/PortfolioLibrary/uploadChart/UploadChart.js';
-import MediaGallery from '../../../components/VarsunLibrary/mediaGallery/MediaGallery';
-import ProfileButton from '../../../components/PortfolioLibrary/profileButton/ProfileButton.js';
-import Logo from '../../../components/PortfolioLibrary/logo/Logo.js';
 import Media from '../../../components/VarsunLibrary/media/Media.js';
+import Share from '../../share/Share'
 import '../../../components/VarsunLibrary/mediaGallery/media_gallery.css';
-import NavigationDots from "../../../components/VarsunLibrary/navigationDots/NavigationDots.js";
 import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    useRouteMatch,
     useParams,
 } from "react-router-dom";
+import MediaStats from "../../../components/PortfolioLibrary/mediaDetails/MediaStats.js";
+import MediaReport from "../../../components/PortfolioLibrary/mediaDetails/MediaReport";
 
-var mediaJson = { mediaType: "Image", src: "https://images.pexels.com/photos/3331094/pexels-photo-3331094.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", certificateId: "A1B2C3", mediaId: "123456", ipfsUrl: "ipfs:conn", licenseCount: 20, mediaTitle: "Lorem Ipsum", mediaCreator: "MrPurple" }
-
-const MediaDetails = (props) => {
-    let state = {
-        stepNumber: 0,
-    };
+function MediaDetails(props) {
+    const [viewContent, setViewContent] = useState('none');
+    const [detectionReport, setDetectionReport] = useState(null);
+    const [content, setContent] = useState('share');
+    const [totalDetectionMatches, setTotalDetectionMatches] = useState(0);
+    const _isMounted = useRef(true);
     let match = useParams();
-    var divHeight = () => {
+    let divHeight = () => {
         var innerHeight = window.innerHeight;
         return innerHeight - 400
     }
     let location = useLocation();
     let history = useHistory();
+    let getDetectionReport = () => {
+        let url = process.env.REACT_APP_SERVER_API_URL + 'spider/detect/web/' + location.state.mediaId;
+        fetch(url, {
+            mode: 'cors',
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: "application/json",
+            }
+        }).then(res => res.json())
+            .then(data => {
+                if (_isMounted.current) {
+                    setDetectionReport(data);
+                    setTotalDetectionMatches(data.webDetection.fullMatchingImages.length + data.webDetection.partialMatchingImages.length + data.webDetection.pagesWithMatchingImages.length + data.webDetection.visuallySimilarImages.length);
+                }
+            })
+            .catch(err => console.log(err));
+    }
+    useEffect(() => {
+        getDetectionReport();
+        return function cleanup() {
+            _isMounted.current = false;
+        }
+    }, [])
     let backButton = () => {
         return history.goBack();
     }
-    console.log(location);
+    let toggleShareState = (state) => {
+        if (state == 'share') {
+            setViewContent('none')
+            $('.shareButton').html("<h1 style='color: white'>Share</h1>");
+            return;
+        }
+        else if (state == 'none' || state == 'mediaReport') {
+            setViewContent('share');
+            $('.shareButton').html("<i class='fas fa-times' style='color: white' aria-hidden='true'></i>");
+            return
+        }
+    }
+    let toggleMediaReport = (state) => {
+        if (state == 'mediaReport') {
+            setViewContent('none')
+            $('#viewReportButton').html("<h1 style='color: white'>View Full Report</h1>");
+            return;
+        }
+        else if (state == 'none' || state == 'share') {
+            setViewContent('mediaReport');
+            $('#viewReportButton').html("<i class='fas fa-times' style='color: white' aria-hidden='true'></i>");
+            return
+        }
+    }
+    let viewDetails = () => {
+        if (viewContent == 'share') {
+            return (
+                <Share
+                    mediaType={location.state.mediaType}
+                    mediaUrl={location.state.mediaUrl}
+                    certificateId={location.state.certificateId}
+                    mediaId={location.state.mediaId}
+                    mediaTitle={location.state.mediaTitle}
+                    mediaCreator={location.state.mediaCreator}
+                    match={match}
+                    accountId={props.account._id}
+                    licenseCount={10}
+                />
+            )
+        }
+        else if (viewContent == 'mediaReport') {
+            return (
+                <MediaReport
+                    webReport={detectionReport}
+                    socialReport={{}}
+                    location={location}
+                />
+            )
+        }
+        else {
+            return (
+                <div></div>
+            )
+        }
+    }
+    let tagList = location.state.mediaTags.map((e, i) => {
+        return <p className="tags" key={i}>{e},</p>
+    });
+    let mediaDetails = () => {
+        if (content == 'share') {
+            return (
+                <div className="mediaShare_Section section">
+                    <div id="divMediaTitle" className="mediaTitle">
+                        <h1>{location.state.mediaTitle}</h1>
+                    </div>
+                    <div id="divMediaTags">
+                        <div className="tagContainer">
+                            {tagList}
+                        </div>
+                    </div>
+                    <div id="divMediaShare">
+                        <h1 className="mediaHeader">Share Media</h1>
+                        <div className="RadioOption ResOption">
+                            <div className="RadioOption_Inner ResFilter" style={{ backgroundColor: '#ff004f' }}></div>
+                            <div className="RadioOption_Text">
+                                <h1>High Resolution</h1>
+                                <p>Download or share the highest resolution available for this media item.</p>
+                            </div>
+                        </div>
+                        <div className="RadioOption ResOption">
+                            <div className="RadioOption_Inner ResFilter"></div>
+                            <div className="RadioOption_Text">
+                                <h1>Low Resolution</h1>
+                                <p>Utilize the most optimal resolution size available for this media item.</p>
+                            </div>
+                        </div>
+                        <div id="divShareButtons" className="mediaShareButtons">
+                            <button className="shareButton" onClick={() => { toggleShareState(viewContent) }}><h1>Share</h1></button>
+                            <button className="downloadButton"><h1>Download</h1></button>
+                        </div>
+                    </div>
+                    <div id="divMediaAnnotations" className="mediaAnnotations">
+                        <div className="annotation">
+                            <h1>Certificate ID:</h1>
+                            <p>{location.state.certificateId}</p>
+                        </div>
+                        <div className="annotation">
+                            <h1>Transaction Hash:</h1>
+                            <p>{location.state.transactionHash}</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        else if (content == 'media_stats') {
+            if (detectionReport == null) {
+                return (
+                    <div style={{ height: "515px" }}>
+                        <div className="mediaDetailsLoadingDiv">
+                            <h1>Loading...</h1>
+                        </div>
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <div className="mediaStats_Section section">
+                        <div id="divMediaTitle" className="mediaTitle">
+                            <h1>{location.state.mediaTitle}</h1>
+                        </div>
+                        <div id='divMediaDetectionStats'>
+                            <div id='divMediaMetrics' className="mediaMetrics">
+                                <p>We have found </p>
+                                <p style={{ textDecoration: 'underline' }}>{totalDetectionMatches} instances</p>
+                                <p> of your media file across the web. Of which </p>
+                                <p style={{ textDecoration: 'underline' }}>{detectionReport.webDetection.fullMatchingImages.length} complete matches</p>
+                                <p>, </p>
+                                <p style={{ textDecoration: 'underline' }}>{detectionReport.webDetection.partialMatchingImages.length} partial matches</p>
+                                <p>, and </p>
+                                <p style={{ textDecoration: 'underline' }}>{detectionReport.webDetection.pagesWithMatchingImages.length} pages with matching images</p>
+                                <p>. We also found </p>
+                                <p style={{ textDecoration: 'underline' }}>{detectionReport.webDetection.visuallySimilarImages.length} visually similar images.</p>
+                            </div>
+                        </div>
+                        <button id="viewReportButton" className="reportButton" onClick={() => { toggleMediaReport(viewContent) }}><h1>View Full Report</h1></button>
+                        <MediaStats location={location} />
+                        <div id="divMediaAnnotations" className="mediaAnnotations">
+                            <div className="annotation">
+                                <h1>Certificate ID:</h1>
+                                <p>{location.state.certificateId}</p>
+                            </div>
+                            <div className="annotation">
+                                <h1>Transaction Hash:</h1>
+                                <p>{location.state.transactionHash}</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+        }
+    }
     $(function () {
         $('.ResOption').on('click', function () {
             $('.ResFilter').css('background-color', '#ffffff');
@@ -66,38 +235,20 @@ const MediaDetails = (props) => {
                                 mediaType={location.state.mediaType}
                                 mediaUrl={location.state.mediaUrl}
                                 certificateId={location.state.certificateId}
-                                mediaId={mediaJson.mediaId}
-                                licenseCount={mediaJson.licenseCount}
+                                mediaId={location.state.mediaId}
                                 mediaTitle={location.state.mediaTitle}
                                 mediaCreator={location.state.mediaCreator}
                                 format='detailed'
                                 match={match}
                                 accountId={props.account._id}
                             />
-                        </div>
-                        <div id="divMediaMetrics" className="none">
-                            <div id="divAccountBadges" className="accountBadges">
-                                <i className="fas fa-award"></i>
-                                <p>326</p>
-                                <i className="fas fa-clone"></i>
-                                <p>5,489</p>
-                                <i className="fas fa-download"></i>
-                                <p>1,289,762</p>
-                                <i className="fas fa-thumbs-up"></i>
-                                <p>570,870</p>
-                                <i className="fas fa-star"></i>
-                                <p>34,000</p>
-                                <i className="fas fa-comment"></i>
-                                <p>23,489</p>
-                                <i className="fas fa-users"></i>
-                                <p>5,600</p>
-                            </div>
+                            {viewDetails()}
                         </div>
                     </div>
                     <div id="divMediaInfo" className="mediaContent" style={{ height: { divHeight } }}>
                         <div className="menuButtons">
                             <div className="buttonsContainer">
-                                <div id={"menuButton_1_" + location.state.mediaId} className="menuButton activeButton">
+                                <div id={"menuButton_1_" + location.state.mediaId} className="menuButton activeButton" onClick={() => setContent('share')}>
                                     <p>Share</p>
                                     <i className="fas fa-star"></i>
                                 </div>
@@ -109,7 +260,7 @@ const MediaDetails = (props) => {
                                     <p>Licenses</p>
                                     <i className="fas fa-clone"></i>
                                 </div>
-                                <div id={"menuButton_4_" + location.state.mediaId} className="menuButton">
+                                <div id={"menuButton_4_" + location.state.mediaId} className="menuButton" onClick={() => setContent('media_stats')}>
                                     <p>Media Stats</p>
                                     <i className="fas fa-download"></i>
                                 </div>
@@ -120,59 +271,12 @@ const MediaDetails = (props) => {
                             </div>
                         </div>
                         <div className="mediaContentContainer">
-                            <div className="mediaShare_Section section">
-                                <div id="divMediaTitle" className="mediaTitle">
-                                    <h1>Lorem Ipsum dummy text and other stuff, and more stuff. etc. </h1>
-                                </div>
-                                <div id="divMediaTags">
-                                    <div className="tagContainer">
-                                        <p className="tags">Lightbulb,</p>
-                                        <p className="tags">Red,</p>
-                                        <p className="tags">Night Life,</p>
-                                        <p className="tags">Sunrise,</p>
-                                        <p className="tags">MrPurple,</p>
-                                        <p className="tags">Animals,</p>
-                                        <p className="tags">Bunny,</p>
-                                        <p className="tags">Something,</p>
-                                    </div>
-                                </div>
-                                <div id="divMediaShare" style={{ marginTop: "-15px" }}>
-                                    <h1 className="mediaHeader">Share Media</h1>
-                                    <div className="RadioOption ResOption">
-                                        <div className="RadioOption_Inner ResFilter" style={{ backgroundColor: '#ff004f' }}></div>
-                                        <div className="RadioOption_Text">
-                                            <h1>High Resolution</h1>
-                                            <p>Lorem Ipsum dummy text and other stuff, and more stuff. etc. </p>
-                                        </div>
-                                    </div>
-                                    <div className="RadioOption ResOption">
-                                        <div className="RadioOption_Inner ResFilter"></div>
-                                        <div className="RadioOption_Text">
-                                            <h1>Low Resolution</h1>
-                                            <p>Lorem Ipsum dummy text and other stuff, and more stuff. etc. </p>
-                                        </div>
-                                    </div>
-                                    <div id="divShareButtons" className="mediaShareButtons">
-                                        <button className="shareButton"><h1>Share</h1></button>
-                                        <button className="downloadButton"><h1>Download</h1></button>
-                                    </div>
-                                </div>
-                                <div id="divMediaAnnotations" className="mediaAnnotations">
-                                    <div className="annotation">
-                                        <h1>Certificate:</h1>
-                                        <p>Burst Some Certification</p>
-                                    </div>
-                                    <div className="annotation">
-                                        <h1>License:</h1>
-                                        <p>Burst Some Rights Reserved</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {mediaDetails()}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

@@ -31,12 +31,13 @@ function UploadInput(props) {
             e.preventDefault();
             var eventMod = e.target.files;
         }
-        let thumbnail = await FileCompress(eventMod[0])
+        let thumbnail;
+        if (e.target.files[0].type == 'image/jpeg') thumbnail = await FileCompress(eventMod[0])
         console.log(eventMod);
         history.push(
             {
                 pathname: '/Upload/' + props.accountId,
-                state: { event: eventMod, inputName: eventMod[0].name, thumbnail: thumbnail}
+                state: { event: eventMod, inputName: eventMod[0].name, thumbnail: thumbnail }
             }
         )
     }
@@ -47,12 +48,12 @@ function UploadInput(props) {
             quality: .30, // the quality of the image, max is 1,
             resize: false, // defaults to true, set false if you do not want to resize the image width and height
         })
-        .then((data) => {
-            resolve(data)
-        })
-        .catch((err) => {
-            reject(err);
-        });
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((err) => {
+                reject(err);
+            });
         // const reader = new FileReader();
         // reader.readAsArrayBuffer(file);
         // reader.onload = () => resolve(reader.result);

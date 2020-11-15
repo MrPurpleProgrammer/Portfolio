@@ -80,6 +80,12 @@ function Content(props) {
             return true;
         }
     }
+    let handleEnterKeyPress = (event) => {
+        if (event.keyCode == 13 || event.which == 13) {
+            handleLoginButton()
+            event.preventDefault();
+        }
+    }
     let handleLoginButton = () => {
         let loginForm = $("#formMainLoginInputs").serializeArray();
         if (loginForm) {
@@ -168,10 +174,10 @@ function Content(props) {
             <div className="loginInputParent">
                 <form id="formMainLoginInputs" name="authenticateUserWeb2Login" style={{ display: 'block' }}>
                     <div className="loginInputs">
-                        <input id="email" type="email" name="email" placeholder="Email" data-error="Invalid Email" data-norm="Email" data-401="Email Does Not Exist" data-402='Try Again' />
+                        <input id="email" type="email" name="email" onKeyDown={handleEnterKeyPress} placeholder="Email" data-error="Invalid Email" data-norm="Email" data-401="Email Does Not Exist" data-402='Try Again' />
                     </div>
                     <div className="loginInputs">
-                        <input id="password" type="password" name="password" placeholder="Password" data-error="Invalid Password" data-norm="Password" data-401="Try Again" data-402='Password Does Not Match the Username.' />
+                        <input id="password" type="password" name="password" onKeyDown={handleEnterKeyPress} placeholder="Password" data-error="Invalid Password" data-norm="Password" data-401="Try Again" data-402='Password Does Not Match the Username.' />
                     </div>
                 </form>
                 <div id="divAltLoginInputs" style={{ display: 'none', height: '0px' }}>

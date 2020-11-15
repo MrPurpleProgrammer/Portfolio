@@ -5,13 +5,11 @@ const { memoryStorage } = require('multer');
 const DHASH_SIZE = 8;
 const PHASH_SIZE = 32;
 const IPFSHash = require('ipfs-only-hash');
+const { Media } = require('../models/media.model');
+const { User } = require('../models/user.model');
+const { Account } = require('../models/account.model');
 
-let assetMemStorage = multer(); 
-
-async function generateIPFS_URL(data) {
-    let IPFS_URL = await IPFSHash.of(data, {hashAlg:'sha2-256' , cidVersion: 1})
-    return IPFS_URL;
-}
+let assetMemStorage = multer();
 
 function convertBinaryToHex(str) {
     let output = '';
@@ -24,10 +22,88 @@ function convertBinaryToHex(str) {
     return new Buffer.from(output, 'hex');
 }
 
+function hexToBinary(s) {
+    let lookup = {
+        '0': '0000',
+        '1': '0001',
+        '2': '0010',
+        '3': '0011',
+        '4': '0100',
+        '5': '0101',
+        '6': '0110',
+        '7': '0111',
+        '8': '1000',
+        '9': '1001',
+        'a': '1010',
+        'b': '1011',
+        'c': '1100',
+        'd': '1101',
+        'e': '1110',
+        'f': '1111',
+        'A': '1010',
+        'B': '1011',
+        'C': '1100',
+        'D': '1101',
+        'E': '1110',
+        'F': '1111'
+    };
+    if (Buffer.isBuffer(s)) s = s.toString('hex');
+    s = s.replace(/^0x/, '');
+    assert(/^[0-9a-fA-F]+$/.test(s));
+    var ret = '';
+    for (var i = 0; i < s.length; i++) ret += lookup[s[i]];
+    return ret;
+}
+
+
+function calcHammingDist(a, b) {
+    a = hexToBinary(a);
+    b = hexToBinary(b);
+    var count = 0;
+    for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) count++;
+    return count;
+}
+
+async function getSimilarMediaHash(hash) {
+    let assetHashDir = await Media.find({}, '_id assetHash mediaTitle certificateId mediaCreator mediaUrl');
+    let simHashDir = assetHashDir.filter((val, index, arr) => {
+        let hammingDist = calcHammingDist(hash, val.assetHash);
+        console.log(hammingDist, val._doc.mediaTitle, val._doc.assetHash);
+        if (hammingDist < 15) {
+            let obj = arr[index]._doc;
+            obj.HammingDistance = hammingDist
+            return obj;
+        }
+    })
+    for (i = 0; i < simHashDir.length; i++) {
+        let acc = await Account.findById(simHashDir[i].mediaCreator);
+        let user = await User.findById(acc.userId);
+        simHashDir[i]._doc.username = user.username;
+    }
+    return simHashDir;
+}
+
+async function assetOwnershipStatus(hash) {
+    let simHashDir = await getSimilarMediaHash(hash);
+    if (simHashDir.length > 0) {
+        return ({
+            status: true,
+            assetHashDir: simHashDir
+        })
+    }
+    else {
+        return ({
+            status: false,
+            assetHashDir: null,
+        })
+    }
+}
+
 class DHash {
     constructor(file) {
         this.file = file;
         this.hashSize = DHASH_SIZE;
+        this.fileType = file.mimetype;
     }
 
     px(pixels, width, x, y) {
@@ -63,9 +139,14 @@ class DHash {
     };
 
     async getDHash() {
-        let imageHash = await this.generateImageHash();
-        let dHash = { buff: imageHash, str: imageHash.toString('hex') };
-        return dHash;
+        let dHash;
+        if (this.fileType == 'image/jpeg') {
+            let imageHash = await this.generateImageHash();
+            dHash = { buff: imageHash, str: imageHash.toString('hex') };
+            return dHash;
+        }
+        return dHash = { buff: this.file.buffer, str: this.file.buffer.toString('hex').slice(0, 16)};
+
     }
 }
 
@@ -76,12 +157,13 @@ class PHash {
         this.SQRT = this.SQRT_Matrix(this.hashSize);
         this.COS = this.COS_Matrix(this.hashSize);
         this.LOW_FREQ = 8;
+        this.fileType = file.mimetype;
     }
 
     /* Initialize Scalar Matrices 
      * SQRT Matrix is a simple Coefficient Matrix  
      * COS Matrix is essentially a Lookup Table O(n^4)
-	 */
+     */
 
     SQRT_Matrix(size) {
         let arr = new Array(size);
@@ -136,7 +218,7 @@ class PHash {
             .rotate()
             .raw()
             .toBuffer();
-        
+
         /*Reduce the Image Buffer. 
         * Reduce the Image to get only its top-left 8x8 pixels. These are the lowest
         * frequency pixel data of the image. 
@@ -191,14 +273,19 @@ class PHash {
     };
 
     async getPHash() {
-        let imageHash = await this.generateImageHash();
-        let pHash = { buff: imageHash, str: imageHash.toString('hex') };
-        return pHash;
+        let pHash;
+        if (this.fileType == 'image/jpeg') {
+            let imageHash = await this.generateImageHash();
+            pHash = { buff: imageHash, str: imageHash.toString('hex') };
+            return pHash;
+        }
+        return pHash = { buff: this.file.buffer, str: this.file.buffer.toString('hex').slice(0, 16) };
     }
 }
 module.exports = {
+    assetMemStorage,
     DHash,
     PHash,
-    assetMemStorage,
-    generateIPFS_URL,
+    assetOwnershipStatus,
+    calcHammingDist,
 }

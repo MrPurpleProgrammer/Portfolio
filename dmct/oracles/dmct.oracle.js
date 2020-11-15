@@ -61,17 +61,20 @@ class DMCT {
                     console.log(txHash);
                 })
                 .on('receipt', function (receipt) {
-                    txValidation.txReceipt = receipt;
-                    txValidation.certificateId = receipt.events.ReturnCreateCertificate.returnValues.CID;
-                    txValidation.assetId = receipt.events.ReturnCreateCertificate.returnValues.AID;
-                    txValidation.status = true;
-                    resolve(txValidation);
+                    if(Object.entries(receipt.events).length !== 0) {
+                        txValidation.txReceipt = receipt;
+                        txValidation.certificateId = receipt.events.ReturnCreateCertificate.returnValues.CID;
+                        txValidation.assetId = receipt.events.ReturnCreateCertificate.returnValues.AID;
+                        txValidation.status = true;
+                        resolve(txValidation);
+                    }
+                    else reject(txValidation);
                 })
                 .on('error', function (error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
                     txValidation.txReceipt = receipt;
                     txValidation.status = false;
                     console.log(error);
-                    resolve(txValidation)
+                    reject(txValidation)
                 });
         });
     }

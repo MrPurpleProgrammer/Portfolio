@@ -25,6 +25,7 @@ import mpg from '../../../assets/SVG/FileIcons/mpg.svg'
 import flv from '../../../assets/SVG/FileIcons/flv.svg'
 import ps from '../../../assets/SVG/FileIcons/ps.svg'
 import file from '../../../assets/SVG/FileIcons/file.svg'
+import html from '../../../assets/SVG/FileIcons/html.svg'
 
 let iconset = {
     "ai": ai,
@@ -51,7 +52,8 @@ let iconset = {
     "mpg": mpg,
     "flv": flv,
     "ps": ps,
-    "file": file
+    "file": file,
+    "html": html
 }
 class IconGenerator extends Component {
     constructor(props) {
