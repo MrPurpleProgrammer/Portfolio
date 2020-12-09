@@ -2127,3 +2127,67 @@ input.inputErrorTypeTwo::-webkit-input-placeholder {
 .mediaDetailsLoadingDiv h1 {
 	font-size: 50px;
 }
+
+.menuDropdown {
+    position: absolute;
+    display: inline-flex;
+    border: 4px solid #0d2a6f;
+    text-align: center;
+    color: #ffffff;
+    font-size: 15px;
+    font-family: 'Montserrat';
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 8px;
+    background: #0c1e48;
+}
+
+.menuDropdown ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.menuDropdown li {
+	margin-bottom: 10px;
+	display: flex;
+	cursor: pointer;
+}
+
+.menuDropdown li:hover {
+	text-decoration: underline;
+}
+
+.menuDropdown li:last-child {
+	margin-bottom: 0px;
+}
+
+.menuDropdown li i {
+	align-self: center;
+	margin-right: 9px;
+}
+
+.menuDropdown li p {
+	align-self: center;
+}
+
+.accountMenuTriangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 13px solid #0d2a6f;
+    z-index: 9;
+    top: 65px;
+    right: 60px;
+}
+
+.accountMenu {
+    right: 37px;
+    top: 78px;
+}
+
+.menuItemInactive {
+	display: none;
+}

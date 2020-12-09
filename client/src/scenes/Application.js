@@ -10,6 +10,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
 } from "react-router-dom";
 import "./Application.css";
 import AccountButton from '../components/PortfolioLibrary/accountButton/AccountButton.js';
@@ -25,37 +26,35 @@ class Application extends Component {
         }
     }
 
-    componentDidMount() {
-        if (isAuthenticatedAccount.token) {
-            this.setState({ accountId: isAuthenticatedAccount().res.account });
+    componentWillMount() {
+        let accountState = isAuthenticatedAccount();
+        if (accountState.token) {
+            this.setState({ accountId: accountState.res.account._id });
             this.setState({ isLoggedIn: true });
         }
     }
     render() {
-        let accountState;
-        if (this.state.isLoggedIn == false) accountState = <Public />;
-        if (this.state.isLoggedIn == true) accountState = <Account />;
         return (
             <div>
                 <Router>
                     <Switch>
                         <Route exact path="/">
-                            {accountState}
+                            {this.state.isLoggedIn ? <Redirect from='/' to={{pathname: "/Account/Profile/" + this.state.accountId}} /> : <Redirect from='/' to={{pathname: "/Public"}}/>}
                         </Route>
                         <Route exact path="/Public">
-                            <Public />
-                        </Route>
-                        <Route path="/Login">
-                            <Login />
-                        </Route>
-                        <Route path="/Account" component={Account} />
-                        <Route path="/Signup">
-                            <Signup />
-                        </Route>
-                        <Route path={"/Upload/:id"}>
-                            <Upload/>
-                        </Route>
-                        <Route path={"/Media"} component={MediaScene}/>
+                                <Public />
+                            </Route>
+                            <Route path="/Login">
+                                <Login />
+                            </Route>
+                            <Route path="/Account" component={Account} />
+                            <Route path="/Signup">
+                                <Signup />
+                            </Route>
+                            <Route path={"/Upload/:id"}>
+                                <Upload />
+                            </Route>
+                            <Route path={"/Media"} component={MediaScene} />
                     </Switch>
                 </Router>
             </div>

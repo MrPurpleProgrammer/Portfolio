@@ -15,7 +15,13 @@ let isAuthenticatedAccount = () => {
     }
 };
 
+let signoutAccount = () => {
+    localStorage.clear('auth')
+    sessionStorage.clear('auth')
+}
+
 module.exports = {
     isAuthenticatedAccount,
-    authenticateAccount
+    authenticateAccount,
+    signoutAccount
 }

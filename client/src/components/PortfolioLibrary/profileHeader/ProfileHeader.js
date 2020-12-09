@@ -14,6 +14,7 @@ class ProfileHeader extends Component {
                 <div id="divHeader" className="headerLayout">
                     <div className="portfolioLogo"><Logo hoverActive={false} scene="account" /></div>
                     <div className="profileDiv">
+                        <LightModeButton />
                         <button id="btnViewModeButton" className="accountModuleButton">
                             <i className="fas fa-camera-retro"></i>
                         </button>
@@ -24,7 +25,6 @@ class ProfileHeader extends Component {
                             <i className="fas fa-ruble-sign"></i>
                         </button>
                         <ProfileButton />
-                        <LightModeButton />
                     </div>
                 </div>
             )
