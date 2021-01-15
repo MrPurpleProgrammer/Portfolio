@@ -9,7 +9,8 @@ var bodyParser = require('body-parser')
 const rateLimit = require("express-rate-limit");
 var cookieParser = require('cookie-parser')
 const {indexRoutes} = require('./routes/router');
-
+var fs = require('fs')
+ 
 //let renderClient = require('./renderClient');
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -20,6 +21,10 @@ const port = process.env.PORT || 5000
 server.listen(port, () => console.log(`Server started on port ${port}`));
 //renderClient(server);
 server.set('view engine', 'ejs');
+server.use(express.static(path.join(__dirname, '../../client/build')));
+server.get('/Client/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+});
 server.use(compression())
 server.use(cookieParser());
 server.use((req, res, next) => {
@@ -38,6 +43,8 @@ server.use(function (err, req, res, next) {
     res.status(430).json({apiCall: req.originalUrl, message: 'Protected Route: Invalid Web Token.', error: err});
   }
 });
+// let requestLogStream = fs.createWriteStream(path.join(__dirname, '../../logs/port-server/request.log'), { flags: 'a' })
+// server.use(morgan('combined', { stream: requestLogStream }))
 
 
 module.exports = server;

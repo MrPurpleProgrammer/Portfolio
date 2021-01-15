@@ -72,7 +72,7 @@ class LearnButton extends Component {
         return (
             <div id="divLearnButton">
                 <button id="btnLearnButton" className="headerButton">
-                    <NavLink to='/Learn' className="headerButttonLink">Learn More</NavLink>
+                    <NavLink to='/Client/Learn' className="headerButttonLink">Learn More</NavLink>
                 </button>
             </div>
         );

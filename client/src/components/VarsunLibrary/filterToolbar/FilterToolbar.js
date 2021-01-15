@@ -4,7 +4,7 @@ import UploadInput from '../../PortfolioLibrary/uploadInput/UploadInput.js'
 import $ from 'jquery';
 import * as noUiSlider from '../../../../node_modules/nouislider/distribute/nouislider.min.js';
 import '../../../../node_modules/nouislider/distribute/nouislider.min.css'
-import './filter_toolbar.css';
+import './filter_toolbar.scss';
 
 function transformScroll(event) {
     if (!event.deltaY) {
@@ -62,7 +62,6 @@ class FilterToolbar extends Component {
                 'max': 10000
             }
         });
-        if(this.props.isUserNew == true) this.toggleToolbar();
     }
     toggleToolbar = () => {
         if (this.state.toolbarExpand == false) {

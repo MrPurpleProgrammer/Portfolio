@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import IconGenerator from '../../PortfolioLibrary/iconGenerator/IconGenerator';
 
 class MediaDetailed extends Component {

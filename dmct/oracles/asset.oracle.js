@@ -1,15 +1,15 @@
 const sharp = require('sharp');
-const multer = require("multer");
+// const multer = require("multer");
 let assert = require('assert');
-const { memoryStorage } = require('multer');
+// const { memoryStorage } = require('multer');
 const DHASH_SIZE = 8;
 const PHASH_SIZE = 32;
-const IPFSHash = require('ipfs-only-hash');
-const { Media } = require('../models/media.model');
-const { User } = require('../models/user.model');
-const { Account } = require('../models/account.model');
+// const IPFSHash = require('ipfs-only-hash');
+// const { Media } = require('../models/media.model');
+// const { User } = require('../models/user.model');
+// const { Account } = require('../models/account.model');
 
-let assetMemStorage = multer();
+// let assetMemStorage = multer();
 
 function convertBinaryToHex(str) {
     let output = '';
@@ -64,24 +64,24 @@ function calcHammingDist(a, b) {
     return count;
 }
 
-async function getSimilarMediaHash(hash) {
-    let assetHashDir = await Media.find({}, '_id assetHash mediaTitle certificateId mediaCreator mediaUrl');
-    let simHashDir = assetHashDir.filter((val, index, arr) => {
-        let hammingDist = calcHammingDist(hash, val.assetHash);
-        console.log(hammingDist, val._doc.mediaTitle, val._doc.assetHash);
-        if (hammingDist < 15) {
-            let obj = arr[index]._doc;
-            obj.HammingDistance = hammingDist
-            return obj;
-        }
-    })
-    for (i = 0; i < simHashDir.length; i++) {
-        let acc = await Account.findById(simHashDir[i].mediaCreator);
-        let user = await User.findById(acc.userId);
-        simHashDir[i]._doc.username = user.username;
-    }
-    return simHashDir;
-}
+// async function getSimilarMediaHash(hash) {
+//     let assetHashDir = await Media.find({}, '_id assetHash mediaTitle certificateId mediaCreator mediaUrl');
+//     let simHashDir = assetHashDir.filter((val, index, arr) => {
+//         let hammingDist = calcHammingDist(hash, val.assetHash);
+//         console.log(hammingDist, val._doc.mediaTitle, val._doc.assetHash);
+//         if (hammingDist < 15) {
+//             let obj = arr[index]._doc;
+//             obj.HammingDistance = hammingDist
+//             return obj;
+//         }
+//     })
+//     for (i = 0; i < simHashDir.length; i++) {
+//         let acc = await Account.findById(simHashDir[i].mediaCreator);
+//         let user = await User.findById(acc.userId);
+//         simHashDir[i]._doc.username = user.username;
+//     }
+//     return simHashDir;
+// }
 
 async function assetOwnershipStatus(hash) {
     let simHashDir = await getSimilarMediaHash(hash);
@@ -283,7 +283,7 @@ class PHash {
     }
 }
 module.exports = {
-    assetMemStorage,
+    // assetMemStorage,
     DHash,
     PHash,
     assetOwnershipStatus,

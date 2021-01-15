@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import ai from '../../../assets/SVG/FileIcons/ai.svg'
 import psd from '../../../assets/SVG/FileIcons/psd.svg'
 import docx from '../../../assets/SVG/FileIcons/docx.svg'

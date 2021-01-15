@@ -1,5 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import ProfileHeader from '../../components/PortfolioLibrary/profileHeader/ProfileHeader';
 import $ from 'jquery';
@@ -10,8 +9,12 @@ import UploadFormStep3 from './containers/UploadFormStep3';
 import UploadFormStep4 from './containers/UploadFormStep4';
 import UploadFormStepLink from './containers/UploadFormStepLink';
 import UploadChart from '../../components/PortfolioLibrary/uploadChart/UploadChart.js';
-import { isAuthenticatedAccount } from '../../api/auth';
-import { getAccount } from '../../api/account';
+import { API_IsAuthenticatedAccount } from '../../api/storage/auth';
+import { API_GetAccount } from '../../api/account';
+import { API_GetAssetHash, API_UploadMediaForm } from '../../api/upload';
+import Loader from '../../api/storage/authGuard/AuthGuard';
+import AuthGuard from '../../api/storage/authGuard/AuthGuard';
+
 require('dotenv').config()
 
 function Upload(props) {
@@ -24,30 +27,12 @@ function Upload(props) {
     const [UploadFormState, setUploadFormState] = useState(0);
     const [WalletTransactionData, setTransactionData] = useState(false);
     const [AssetData, setAssetData] = useState(null);
-    const [Account, setAccount] = useState({});
-    const [User, setUser] = useState({})
-    const authToken = isAuthenticatedAccount().token;
-    let getAccountData = () => {
-        let accountId = isAuthenticatedAccount().res.account._id;
-        let token = isAuthenticatedAccount().token;
-        getAccount(token, accountId).then((resp) => {
-            setAccount(resp.account);
-            setUser(resp.user);
-        });
-    }
+
     let getAssetData = () => {
         let fileForm = new FormData();
         fileForm.append('asset', location.state.event[0]);
-        let url = process.env.REACT_APP_SERVER_API_URL + 'upload/generate/assetHash';
-        fetch(url, {
-            mode: 'cors',
-            method: 'POST',
-            headers: {
-                Authorization: 'Bearer ' + authToken
-            },
-            body: fileForm,
-        })
-            .then(res => res.json())
+        let auth = JSON.parse(localStorage.getItem('auth'));
+        API_GetAssetHash(fileForm)
             .then(data => {
                 console.log(data);
                 setAssetData(data);
@@ -136,12 +121,12 @@ function Upload(props) {
                     let elmId = elm.id;
                     if (e.name == 'mediaTags') {
                         let val;
-                        if(e.value == null) val = [];
+                        if (e.value == null) val = [];
                         else val = JSON.parse(e.value);
                         if (val.length < 3) {
                             let errMsg = $('#' + elmId).attr('data-error');
                             $('#' + obj[0].id).html(errMsg).addClass('inputError');
-                            nullCounter++    
+                            nullCounter++
                         }
                         else {
                             let normMsg = $('#' + elmId).attr('data-norm');
@@ -174,7 +159,7 @@ function Upload(props) {
             let mediaTagArr = mediaTags();
             formUpload.push(mediaTagArr);
             let thumb = { name: 'thumbnail', value: null };
-            if(location.state.thumbnail) thumb = { name: 'thumbnail', value: location.state.thumbnail[0].prefix + location.state.thumbnail[0].data }
+            if (location.state.thumbnail) thumb = { name: 'thumbnail', value: location.state.thumbnail[0].prefix + location.state.thumbnail[0].data }
             formUpload.push(thumb);
             let storageOpt = storageOption();
             formUpload.push(storageOpt);
@@ -250,15 +235,7 @@ function Upload(props) {
             updatedForm.forEach((e) => {
                 fd.append(e.name, e.value);
             });
-            let url = process.env.REACT_APP_SERVER_API_URL + 'upload/create/';
-            fetch(url, {
-                mode: 'cors',
-                method: 'post',
-                headers: {
-                    Authorization: 'Bearer ' + authToken
-                },
-                body: fd,
-            }).then(res => {
+            API_UploadMediaForm(fd).then(res => {
                 if (res.status == 201) setUploadFormState(UploadFormState + 1);
                 else {
                     $('#submitBtnText').text('Rejected')
@@ -269,14 +246,13 @@ function Upload(props) {
         }
     }
     useEffect(() => {
-        getAccountData();
         $(document).keypress(
-            function(event){
-              if (event.which == '13') {
-                $('.formMainButton').click();
-                event.preventDefault();
-              }
-          });
+            function (event) {
+                if (event.which == '13') {
+                    $('.formMainButton').click();
+                    event.preventDefault();
+                }
+            });
     }, []);
     //Load form navigation buttons based on state
     let handleButtons = function () {
@@ -308,18 +284,19 @@ function Upload(props) {
                 return (
                     <div id="divStateButtons" className="formNavButtons">
                         <button type='button' id='uploadDownloadButton' className="formMainButton" onClick={() => console.log("receipt")}><h1>Download Receipt</h1></button>
-                        <button className="formSecondaryButton" onClick={() => { history.push('/refresh'); history.replace('/Account/Profile/' + isAuthenticatedAccount().res.account._id) }}><h1>Complete</h1></button>
+                        <button className="formSecondaryButton" onClick={() => { history.push('/refresh'); history.replace('/Client/Account/Profile/' + API_IsAuthenticatedAccount.res.account._id) }}><h1>Complete</h1></button>
                     </div>
                 )
             }
         }
     }
-    return (
-        <div id="accountContent" className="accountContentContainer">
+    let Content = function(props) {
+        return (
+            <div id="accountContent" className="accountContentContainer">
             <ProfileHeader sceneState="account" />
             <div id="divAccountContentHeader" className="accountContentHeader">
                 <div id="divAccountDetails" className="accountDetails">
-                    <h1 className="accountNameLanding">{User.username}</h1>
+                    <h1 className="accountNameLanding">{props.auth.user.username}</h1>
                     <div id="divAccountMetrics" className="metricsContainer">
                         <div id="divAccountBadges" className="accountBadges">
                             <i className="fas fa-award"></i>
@@ -366,6 +343,10 @@ function Upload(props) {
                 </div>
             </div>
         </div>
+        )
+    }
+    return (
+        <AuthGuard component={Content} />
     );
 }
 export default Upload;

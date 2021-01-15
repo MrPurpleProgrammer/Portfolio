@@ -4,6 +4,7 @@
   "description": "Decentralized Digital Media Certification Token (DMCT) smart contract app. Designed to improve current digital media copyrighting standards.",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clientdir": "cd client && npm i",
     "serverdir": "cd server && npm i",
@@ -12,9 +13,12 @@
     "dmct": "cd dmct && npm run start",
     "ethereum_dev": "npm run ganache && npm run dmct",
     "client": "cd client && npm run start",
+    "dist": "cd client && npm run build",
     "server": "cd server && npm run watch",
-    "start": "concurrently \"npm run setup\" \"npm run client\" \"npm run server\"",
-    "dev": "concurrently \"npm run client\" \"npm run server\" \"npm run dmct\""
+    "on": "concurrently \"npm run client\" \"npm run server\"",
+    "start": "npm run dmct && npm run server",
+    "dev": "concurrently \"npm run setup\"  \"npm run dist\"  && npm run start",
+    "prod": "npm run dist && npm run start"
   },
   "repository": {
     "type": "git",
@@ -28,8 +32,15 @@
   "homepage": "https://github.com/MrPurpleProgrammer/Portfolio#readme",
   "dependencies": {
     "concurrently": "^5.3.0",
-    "copyfiles": "^2.3.0",
+    "copyfiles": "^2.4.1",
+    "open-cli": "^6.0.1",
     "portfolio_client": "file:client",
+    "portfolio_dmct": "file:dmct",
+    "portfolio_server": "file:server",
     "rimraf": "^3.0.2"
+  },
+  "resolutions": {
+    "base64url": "^3.0.0",
+    "node-forge": "0.10.0"
   }
 }

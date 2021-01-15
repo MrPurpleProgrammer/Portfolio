@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './media_gallery.css';
+import './media_gallery.scss';
 import $ from 'jquery';
 import Media from '../media/Media.js'
 import PortfolioIcon from '../../PortfolioLibrary/emptyPortfolioIcon/PortfolioIcon'
@@ -8,7 +8,8 @@ class MediaGallery extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sort: this.props.sort
+            sort: this.props.sort,
+            portfolio: this.props.portfolio
         };
     }
     sortGalleryDefault = () => {
@@ -63,9 +64,8 @@ class MediaGallery extends Component {
         /*window.addEventListener('load', this.sortGalleryDefault);*/
     }
     render() {
-        var portfolio = this.props.portfolio;
-        if (portfolio.length > 0) {
-            let mediaList = portfolio.map((e) =>
+        if (this.props.portfolio.length > 0) {
+            let mediaList = this.props.portfolio.map((e) =>
                 <Media
                     key={e._id}
                     mediaType={e.mediaType}
@@ -94,7 +94,7 @@ class MediaGallery extends Component {
                 </div>
             );
         }
-        else {
+        else if(this.props.isUserNew == true) {
             return (
                 <div>
                     <div id="divMediaGallery" className="emptyGalleryContainer">
@@ -112,6 +112,9 @@ class MediaGallery extends Component {
                     </div>
                 </div>
             );
+        }
+        else {
+            return (<div></div>)
         }
     }
 }

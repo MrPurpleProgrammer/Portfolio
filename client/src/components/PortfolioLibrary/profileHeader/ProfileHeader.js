@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Logo from '../logo/Logo';
 import ProfileButton from '../profileButton/ProfileButton';
 import LightModeButton from '../lightModeButton/LightModeButton';

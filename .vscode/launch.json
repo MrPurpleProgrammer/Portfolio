@@ -5,10 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Build",
+            "request": "launch",
+            "runtimeArgs": [
+                "start"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
+            "name": "PortClient_dev",
             "type": "chrome",
             "request": "launch",
-            "name": "ClientBrowser",
             "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}\\client",
+            "runtimeArgs": ["--preserve-symlinks"],
+        },
+        {
+            "name": "PortClient_prod",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:5000",
             "webRoot": "${workspaceFolder}\\client",
             "runtimeArgs": ["--preserve-symlinks"],
         },
@@ -31,10 +51,10 @@
     ],
     "compounds": [
         {
-            "name": "Launch & Debug",
+            "name": "Debug",
             "configurations": [
                 "PortServer",
-                "ClientBrowser"
+                "PortClient_dev"
             ],
             "preLaunchTask": "PortClient/DMCT"
         },
@@ -42,8 +62,16 @@
             "name": "Relaunch",
             "configurations": [
                 "PortServer",
-                "ClientBrowser"
+                "PortClient_dev"
             ],
+        },
+        {
+            "name": "Production",
+            "configurations": [
+                "Build",
+                "PortClient_prod"
+            ],
+            "preLaunchTask": "DMCT"
         }
     ],
 }

@@ -6,13 +6,14 @@ const userRouter = require('./user.router')
 const assetRouter = require('./asset.router')
 const ipfsRouter = require('./ipfs.router')
 const spiderRouter = require('./spider.router')
+const router = require('express').Router();
 
 module.exports.indexRoutes = (server) => {
-    server.use('/account', accountRouter);
-    server.use('/upload', uploadRouter);
-    server.use('/auth', authenticationRouter);
-    server.use('/user', userRouter);
-    server.use('/asset', assetRouter);
-    server.use('/ipfs', ipfsRouter);
-    server.use('/spider', spiderRouter);
+    server.use('/api/account', accountRouter);
+    server.use('/api/upload', uploadRouter);
+    server.use('/api/auth', authenticationRouter);
+    server.use('/api/user', userRouter);
+    server.use('/api/asset', assetRouter);
+    server.use('/api/ipfs', ipfsRouter);
+    server.use('/api/spider', spiderRouter);
 };

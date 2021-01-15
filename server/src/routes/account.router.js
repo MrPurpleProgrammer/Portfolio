@@ -15,7 +15,7 @@ router.get('/read/all', isAccountAllowed, (req, res, next) => {
 });
 
 router.get('/update/get', (req,res) => {
-    
+    console.log('Hello World')
 });
 
 router.post('/update/post', (req, res) => {

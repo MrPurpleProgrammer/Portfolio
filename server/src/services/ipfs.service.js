@@ -1,4 +1,4 @@
-const IPFS = require('ipfs-api')
+const IPFS = require('ipfs-http-client')
 const server = require('../server');
 const { Media } = require('../models/media.model')
 const fs = require('fs');

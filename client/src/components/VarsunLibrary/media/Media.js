@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../mediaGallery/media_gallery.css';
+import '../mediaGallery/media_gallery.scss';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import MediaDetailed from './MediaDetailed.js';
@@ -8,12 +8,9 @@ import MediaUploadTracker from './MediaUploadTracker';
 import MediaShareView from './MediaShareView';
 
 class Media extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         let media;
-        if (this.props.format == 'thumbnail') {
+        if (this.props.format === 'thumbnail') {
             media = <Link to={{
                 pathname: this.props.match.url + '/Media/MediaDetails/' + this.props.accountId + '/' + this.props.mediaId,
                 state: {
@@ -41,7 +38,7 @@ class Media extends Component {
                 />
             </Link>
         }
-        else if (this.props.format == 'detailed') {
+        else if (this.props.format === 'detailed') {
             media = <MediaDetailed
                 mediaType={this.props.mediaType}
                 certificateId={this.props.certificateId}
@@ -50,12 +47,12 @@ class Media extends Component {
                 mediaCreator={this.props.mediaCreator}
             />
         }
-        else if (this.props.format == 'upload') {
+        else if (this.props.format === 'upload') {
             media = <MediaUploadTracker
                 src={this.props.src}
             />
         }
-        else if (this.props.format == 'share') {
+        else if (this.props.format === 'share') {
             media = <MediaShareView
                 mediaType={this.props.mediaType}
                 certificateId={this.props.certificateId}

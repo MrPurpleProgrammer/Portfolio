@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "truffle compile",
     "migrate": "truffle migrate",
@@ -22,18 +23,32 @@
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^3.0.2",
+    "assert": "^2.0.0",
     "cids": "^0.8.3",
     "concurrently": "^5.2.0",
     "copyfiles": "^2.3.0",
+    "ejs": "^3.1.5",
     "eth-revert-reason": "^1.0.3",
+    "fs": "0.0.1-security",
     "gsap": "^3.3.3",
     "ipfs-api": "^26.1.2",
+    "ipfs-http-client": "^48.1.2",
+    "ipfs-only-hash": "^2.0.1",
     "multihashes": "^1.0.1",
     "multihashing-async": "^1.0.0",
     "openzeppelin-solidity": "^3.2.0",
     "portfolio-dmct": "^0.1.0",
     "rimraf": "^3.0.2",
+    "sharp": "^0.26.3",
     "solc": "^0.6.10",
+    "stream-to-array": "^2.3.0",
     "web3": "^1.2.11"
+  },
+  "devDependencies": {
+    "base64url": "^3.0.1"
+  },
+  "resolutions": {
+    "base64url": "^3.0.0",
+    "node-forge": "0.10.0"
   }
 }

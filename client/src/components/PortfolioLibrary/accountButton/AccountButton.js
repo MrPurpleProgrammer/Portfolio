@@ -72,7 +72,7 @@ class AccountButton extends Component {
         return (
             <div id="divAccountButton">
                 <button id="btnAccountButton" className="headerButton">
-                    <Link to='/Login' className="headerButttonLink">Login</Link>
+                    <Link to='/Client/Login' className="headerButttonLink">Login</Link>
                 </button>
             </div>
         )

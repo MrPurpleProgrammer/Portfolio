@@ -1,16 +1,17 @@
 import React, { useState, Component, useEffect, useRef } from "react";
 import { useLocation, useHistory } from 'react-router-dom';
 import $ from 'jquery';
-import Media from '../../../components/VarsunLibrary/media/Media.js';
 import Share from '../../share/Share'
-import '../../../components/VarsunLibrary/mediaGallery/media_gallery.css';
-import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
+import '../../../components/VarsunLibrary/mediaGallery/media_gallery.scss';
 import {
     BrowserRouter as Router,
     useParams,
 } from "react-router-dom";
 import MediaStats from "../../../components/PortfolioLibrary/mediaDetails/MediaStats.js";
 import MediaReport from "../../../components/PortfolioLibrary/mediaDetails/MediaReport";
+import { API_GetDetectionReport } from "../../../api/media";
+import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
+import Media from '../../../components/VarsunLibrary/media/Media'
 
 function MediaDetails(props) {
     const [viewContent, setViewContent] = useState('none');
@@ -25,26 +26,15 @@ function MediaDetails(props) {
     }
     let location = useLocation();
     let history = useHistory();
-    let getDetectionReport = () => {
-        let url = process.env.REACT_APP_SERVER_API_URL + 'spider/detect/web/' + location.state.mediaId;
-        fetch(url, {
-            mode: 'cors',
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: "application/json",
-            }
-        }).then(res => res.json())
-            .then(data => {
-                if (_isMounted.current) {
-                    setDetectionReport(data);
-                    setTotalDetectionMatches(data.webDetection.fullMatchingImages.length + data.webDetection.partialMatchingImages.length + data.webDetection.pagesWithMatchingImages.length + data.webDetection.visuallySimilarImages.length);
-                }
-            })
-            .catch(err => console.log(err));
-    }
+
     useEffect(() => {
-        getDetectionReport();
+        API_GetDetectionReport(location.state.mediaId).then(data => {
+            if (_isMounted.current) {
+                setDetectionReport(data);
+                setTotalDetectionMatches(data.webDetection.fullMatchingImages.length + data.webDetection.partialMatchingImages.length + data.webDetection.pagesWithMatchingImages.length + data.webDetection.visuallySimilarImages.length);
+            }
+        })
+            .catch(err => console.log(err));
         return function cleanup() {
             _isMounted.current = false;
         }
@@ -87,7 +77,7 @@ function MediaDetails(props) {
                     mediaTitle={location.state.mediaTitle}
                     mediaCreator={location.state.mediaCreator}
                     match={match}
-                    accountId={props.account._id}
+                    accountId={props.auth.account._id}
                     licenseCount={10}
                 />
             )
@@ -240,7 +230,7 @@ function MediaDetails(props) {
                                 mediaCreator={location.state.mediaCreator}
                                 format='detailed'
                                 match={match}
-                                accountId={props.account._id}
+                                accountId={props.auth.account._id}
                             />
                             {viewDetails()}
                         </div>

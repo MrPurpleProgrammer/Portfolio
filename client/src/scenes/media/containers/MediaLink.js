@@ -1,17 +1,15 @@
-import React, { useState, Component, useEffect } from "react";
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import React, { useState,  useEffect } from "react";
+import { useHistory } from 'react-router-dom';
 import $ from 'jquery';
 import Media from '../../../components/VarsunLibrary/media/Media.js';
 import Share from '../../share/Share'
-import '../../../components/VarsunLibrary/mediaGallery/media_gallery.css';
+import '../../../components/VarsunLibrary/mediaGallery/media_gallery.scss';
 import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    useRouteMatch,
     useParams,
 } from "react-router-dom";
+import {API_GetMediaByIpfs} from '../../../api/ipfs'
 
 function MediaLink(props) {
     const [isShareActive, setShareActive] = useState(false);
@@ -21,29 +19,16 @@ function MediaLink(props) {
         var innerHeight = window.innerHeight;
         return innerHeight - 400
     }
-    let location = useLocation();
     let history = useHistory();
     let backButton = () => {
         return history.goBack();
     }
-    let getMediaByIpfs = () => {
-        let url = process.env.REACT_APP_SERVER_API_URL + 'ipfs/read/media/' + match.ipfsUrl;
-        fetch(url, {
-            mode: 'cors',
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: "application/json",
-            }
-        }).then(res => res.json())
-            .then(data => {
+    useEffect(() => {
+        API_GetMediaByIpfs(match.ipfsUrl).then(data => {
                 console.log(data);
                 setMedia(data.media);
             })
             .catch(err => console.log(err));
-    }
-    useEffect(() => {
-        getMediaByIpfs();
     }, [])
     let mediaOrShare = () => {
         if (isShareActive == true) {

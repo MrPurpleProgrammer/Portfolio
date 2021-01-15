@@ -72,7 +72,7 @@ class ContactButton extends Component {
         return (
             <div id="divContactButton">
                 <button id="btnContactButton" className="headerButton">
-                    <NavLink to='/About' className="headerButttonLink">About Us</NavLink>
+                    <NavLink to='/Client/About' className="headerButttonLink">About Us</NavLink>
                 </button>
             </div>
         );

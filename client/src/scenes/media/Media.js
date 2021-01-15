@@ -15,10 +15,10 @@ class Media extends Component {
         return (
             <div>
                 <Switch>
-                    <Route path="/Media/Post/:ipfsUrl">
+                    <Route path="/Client/Media/Post/:ipfsUrl">
                         <MediaPost />
                     </Route>
-                    <Route path="/Media/Link/:ipfsUrl" component={MediaLink} />
+                    <Route path="/Client/Media/Link/:ipfsUrl" component={MediaLink} />
                 </Switch>
             </div>
 

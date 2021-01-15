@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./navigation_dots.css";
+import "./navigation_dots.scss";
 import $ from 'jquery';
 class NavigationLI extends Component {
     render() {

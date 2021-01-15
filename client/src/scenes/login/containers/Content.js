@@ -1,13 +1,12 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import Logo from '../../../components/PortfolioLibrary/logo/Logo';
 import { Link } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom';
 import $ from 'jquery';
 import is from 'is_js';
-import { authenticateAccount } from '../../../api/auth'
-
+import { API_AuthenticateAccount } from '../../../api/storage/auth';
+import { API_Web2Login } from '../../../api/account';
 function Content(props) {
-    let location = useLocation();
     let history = useHistory();
     const [Form, setForm] = useState({});
     let altLoginOptions = () => {
@@ -95,58 +94,38 @@ function Content(props) {
             }
             setForm(loginForm);
             if (isFormValid(loginForm) == true) {
-                let url = process.env.REACT_APP_SERVER_API_URL + 'auth/user/web2/login';
-                fetch(url, {
-                    mode: 'cors',
-                    method: 'post',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formJson),
-                })
-                    .then(res => res.json())
-                    .then(resp => {
-                        if (resp.res) {
-                            if (resp.res.status == 200) {
-                                authenticateAccount(resp, () => {
-                                    history.push({
-                                        pathname: '/Account/Profile/' + resp.res.account._id,
+                API_Web2Login(formJson).then(resp => {
+                    if (resp.res) {
+                        if (resp.res.status == 200) {
+                            API_AuthenticateAccount(resp, () => {
+                                history.push({
+                                    pathname: '/Client/Account/Profile/' + resp.res.account._id,
+                                });
+                            });
+                        }
+                        else if (resp.res.status == 401) {
+                            loginForm.forEach((e) => {
+                                let obj = $('#' + e.name);
+                                if (obj.length > 0) {
+                                    obj.each((i, elm) => {
+                                        let elmId = elm.id;
+                                        let errMsg = $('#' + elmId).attr('data-401');
+                                        $('#' + elmId).attr('placeholder', errMsg).val('').addClass('inputErrorTypeTwo')
                                     });
-                                });
-                            }
-                            else if (resp.res.status == 401) {
-                                loginForm.forEach((e) => {
-                                    let obj = $('#' + e.name);
-                                    if (obj.length > 0) {
-                                        obj.each((i, elm) => {
-                                            let elmId = elm.id;
-                                            let errMsg = $('#' + elmId).attr('data-401');
-                                            $('#' + elmId).attr('placeholder', errMsg).val('').addClass('inputErrorTypeTwo')
-                                        });
-                                    }
-                                });
-                            }
-                            else if (resp.res.status == 402) {
-                                loginForm.forEach((e) => {
-                                    let obj = $('#' + e.name);
-                                    if (obj.length > 0) {
-                                        obj.each((i, elm) => {
-                                            let elmId = elm.id;
-                                            let errMsg = $('#' + elmId).attr('data-402');
-                                            $('#' + elmId).attr('placeholder', errMsg).val('').addClass('inputErrorTypeTwo')
-                                        });
-                                    }
-                                });
-                            }
-                            else {
-                                loginForm.forEach((e) => {
-                                    let obj = $('#' + e.name);
-                                    if (obj.length > 0) {
-                                        obj.each((i, elm) => {
-                                            let elmId = elm.id;
-                                            $('#' + elmId).attr('placeholder', resp.res.error).val('').addClass('inputErrorTypeTwo')
-                                        });
-                                    }
-                                });
-                            }
+                                }
+                            });
+                        }
+                        else if (resp.res.status == 402) {
+                            loginForm.forEach((e) => {
+                                let obj = $('#' + e.name);
+                                if (obj.length > 0) {
+                                    obj.each((i, elm) => {
+                                        let elmId = elm.id;
+                                        let errMsg = $('#' + elmId).attr('data-402');
+                                        $('#' + elmId).attr('placeholder', errMsg).val('').addClass('inputErrorTypeTwo')
+                                    });
+                                }
+                            });
                         }
                         else {
                             loginForm.forEach((e) => {
@@ -154,13 +133,25 @@ function Content(props) {
                                 if (obj.length > 0) {
                                     obj.each((i, elm) => {
                                         let elmId = elm.id;
-                                        let errMsg = $('#' + elmId).attr('data-error');
-                                        $('#' + elmId).attr('placeholder', errMsg).val('').addClass('inputErrorTypeTwo')
+                                        $('#' + elmId).attr('placeholder', resp.res.error).val('').addClass('inputErrorTypeTwo')
                                     });
                                 }
                             });
                         }
-                    });
+                    }
+                    else {
+                        loginForm.forEach((e) => {
+                            let obj = $('#' + e.name);
+                            if (obj.length > 0) {
+                                obj.each((i, elm) => {
+                                    let elmId = elm.id;
+                                    let errMsg = $('#' + elmId).attr('data-error');
+                                    $('#' + elmId).attr('placeholder', errMsg).val('').addClass('inputErrorTypeTwo')
+                                });
+                            }
+                        });
+                    }
+                });
             }
         }
     };
@@ -207,7 +198,7 @@ function Content(props) {
                     <button id="btnBack" style={{ display: 'none' }} className="loginButton" onClick={mainLoginOptions}>
                         <i style={{ fontsize: '25px' }} className="fas fa-long-arrow-alt-left"></i>
                     </button>
-                    <Link to="/Signup" className="">
+                    <Link to="/Client/Signup" className="">
                         <button id="btnCreateAccount" className="createAccountButton">Create an Account</button>
                     </Link>
                 </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy, useEffect, useState } from 'react';
 import Public from "./public/Public.js";
 import Login from "./login/Login.js";
 import Account from "./account/Account.js";
@@ -12,53 +12,47 @@ import {
     Route,
     Redirect,
 } from "react-router-dom";
-import "./Application.css";
+import "./Application.scss";
 import AccountButton from '../components/PortfolioLibrary/accountButton/AccountButton.js';
 import Media from '../components/VarsunLibrary/media/Media.js';
-import { isAuthenticatedAccount } from '../api/auth.js';
+import { API_IsAuthenticatedAccount } from '../api/storage/auth.js';
+import { useThemeContext } from '../components/PortfolioLibrary/hooks/Hooks'
 
-class Application extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoggedIn: false,
-            accountId: null,
-        }
-    }
+function Application(props) {
+    const [isAuth, setIsAuth] = useState(false);
+    const [accountId, setAccountId] = useState(null);
 
-    componentWillMount() {
-        let accountState = isAuthenticatedAccount();
+    useEffect(() => {
+        let accountState = API_IsAuthenticatedAccount();
         if (accountState.token) {
-            this.setState({ accountId: accountState.res.account._id });
-            this.setState({ isLoggedIn: true });
+            setAccountId(accountState.res.account._id);
+            setIsAuth(true);
         }
-    }
-    render() {
-        return (
-            <div>
-                <Router>
-                    <Switch>
-                        <Route exact path="/">
-                            {this.state.isLoggedIn ? <Redirect from='/' to={{pathname: "/Account/Profile/" + this.state.accountId}} /> : <Redirect from='/' to={{pathname: "/Public"}}/>}
-                        </Route>
-                        <Route exact path="/Public">
-                                <Public />
-                            </Route>
-                            <Route path="/Login">
-                                <Login />
-                            </Route>
-                            <Route path="/Account" component={Account} />
-                            <Route path="/Signup">
-                                <Signup />
-                            </Route>
-                            <Route path={"/Upload/:id"}>
-                                <Upload />
-                            </Route>
-                            <Route path={"/Media"} component={MediaScene} />
-                    </Switch>
-                </Router>
-            </div>
-        );
-    }
+    }, [])
+
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/">
+                    {isAuth ? <Redirect from='/' to={{ pathname: "/Client/Account/Profile/" + accountId }} /> : <Redirect from='/' to={{ pathname: "/Client/Public" }} />}
+                </Route>
+                <Route exact path="/Client/Public">
+                    <Public />
+                </Route>
+                <Route path="/Client/Login">
+                    <Login />
+                </Route>
+                <Route path="/Client/Account" component={Account} />
+                <Route path="/Client/Signup">
+                    <Signup />
+                </Route>
+                <Route path={"/Client/Upload/:id"}>
+                    <Upload />
+                </Route>
+                <Route path={"/Client/Media"} component={MediaScene} />
+            </Switch>
+        </Router>
+    );
 }
+
 export default Application;

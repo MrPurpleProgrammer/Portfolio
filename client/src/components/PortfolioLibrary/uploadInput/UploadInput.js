@@ -36,7 +36,7 @@ function UploadInput(props) {
         console.log(eventMod);
         history.push(
             {
-                pathname: '/Upload/' + props.accountId,
+                pathname: '/Client/Upload/' + props.accountId,
                 state: { event: eventMod, inputName: eventMod[0].name, thumbnail: thumbnail }
             }
         )

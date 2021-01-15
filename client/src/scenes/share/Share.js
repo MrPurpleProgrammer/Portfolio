@@ -1,17 +1,11 @@
 import React, { Component, useEffect, useState } from "react";
-import { Link, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
+import { useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import $ from 'jquery';
 import { Helmet } from "react-helmet";
-import Media from '../../components/VarsunLibrary/media/Media'
+import { API_GetShareableUrl } from "../../api/ipfs";
 
 function Share(props) {
-    let location = useLocation();
-    let history = useHistory();
     let [ipfsShareUrl, setIpfsShareUrl] = useState('');
-    var divHeight = () => {
-        var innerHeight = window.innerHeight;
-        return innerHeight - 400
-    }
     let facebookSDK = (d, s, id) => {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
@@ -19,35 +13,26 @@ function Share(props) {
         js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v8.0&appId=221248411282503&autoLogAppEvents=1";
         fjs.parentNode.insertBefore(js, fjs);
     }
-    let getShareableUrl = () => {
-        let url = process.env.REACT_APP_SERVER_API_URL + 'ipfs/share/post/' + props.mediaUrl;
-        fetch(url, {
-            mode: 'cors',
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: "application/json",
-            }
-        }).then(res => res.json())
-        .then(data => {
-            console.log(data);
-            setIpfsShareUrl(data.share[0].path);
-        })
-        .catch(err => console.log(err));
-        
-    }
+
     useEffect(() => {
         facebookSDK(document, 'script', 'facebook-jssdk');
         $('#divShareModal').animate({ width: '45%' }, 200);
         $('#divShareContent').animate({ opacity: "100%" }, 150);
-        if(props.mediaType != 'image/jpeg') setIpfsShareUrl(props.mediaUrl);
-        else getShareableUrl();
+        if (props.mediaType != 'image/jpeg') setIpfsShareUrl(props.mediaUrl);
+        else {
+            API_GetShareableUrl(props.mediaUrl)
+            .then(data => {
+                console.log(data);
+                setIpfsShareUrl(data.share[0].path);
+            })
+            .catch(err => console.log(err));
+        }
         return () => {
             $('#divShareMedia').animate({ width: "100%" }, 250);
             $('#divShareModal').animate({ width: '0%' }, 200);
             $('#divShareContent').animate({ opacity: "0%" }, 150);
         }
-    },[])
+    }, [])
     return (
         <div id='divShareMedia'>
             <div id="fb-root"></div>

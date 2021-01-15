@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import InputMask from 'react-input-mask';
 import is from 'is_js';
+import { API_Signup } from '../../../api/account';
 const { Wallet } = require('portfolio_dmct');
 require('dotenv').config()
 
@@ -145,34 +146,16 @@ function Content(props) {
     let handleSignupError = (json) => {
         console.log(json);
     }
-    let handleSignupButton = () => {
+    let handleSignupButton = async () => {
         let signupForm = Form;
         var formJson = {};
         for (var i = 0; i < signupForm.length; i++) {
             formJson[signupForm[i].name] = signupForm[i].value;
         }
         setForm(signupForm);
-        let url = process.env.REACT_APP_SERVER_API_URL + 'auth/create/user';
-        fetch(url, {
-            mode: 'cors',
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formJson),
+        await API_Signup(formJson).then(() => {
+            history.push('/Client/Login');
         })
-        .then(res => { return {res: res, data: res.json()}} )
-        .then(resp => {
-            console.log(resp);
-            if (resp.res.status == 200) {
-                history.push({
-                    pathname: '/Login',
-                });
-            }
-            else {
-                return handleSignupError(resp);
-            }
-        }).catch(err => {
-            console.log(err);
-        });
     }
     return (
         <div id="divSignupBox" className="signupContainer">
@@ -237,7 +220,7 @@ function Content(props) {
                         <button id="btnSignup" className="signupButton" style={{ display: 'none' }} onClick={handleSignupButton}>
                             <p style={{ margin: '0px' }}>Signup</p>
                         </button>
-                        <Link to="/Login" className="">
+                        <Link to="/Client/Login" className="">
                             <button id="btnCancel" className="cancelButton">Cancel</button>
                         </Link>
                         <button id="btnBack" className="cancelButton" style={{ display: 'none' }} onClick={mainSignupOptions}>Back</button>

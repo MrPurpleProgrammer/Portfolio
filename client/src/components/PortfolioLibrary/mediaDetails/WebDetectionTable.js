@@ -63,17 +63,17 @@ function App() {
     []
   )
 
-  const data = React.useMemo(() => {return [1,2,3,4,5,6]})
+  const data = React.useMemo(() => { return [1, 2, 3, 4, 5, 6] })
 
   return (
-      <Table columns={columns} data={data} />
+    <Table columns={columns} data={data} />
   )
 }
 
 function WebDetectionTable(props) {
   let completeMatchingRow = props.webReport.webDetection.fullMatchingImages.map((e, i) => {
     return (
-      <tr>
+      <tr key={"complete_" + i}>
         <td>{i}</td>
         <td>Complete</td>
         <td style={{ width: '100px', wordWrap: "break-word" }}><a href={e.url} target="_blank" rel="noopener noreferrer">{e.url}</a></td>
@@ -82,7 +82,7 @@ function WebDetectionTable(props) {
   });
   let partialMatchingRow = props.webReport.webDetection.partialMatchingImages.map((e, i) => {
     return (
-      <tr>
+      <tr key={"partial_" + i}>
         <td>{i}</td>
         <td>Partial</td>
         <td style={{ width: '100px', wordWrap: "break-word" }}><a href={e.url} target="_blank" rel="noopener noreferrer">{e.url}</a></td>
@@ -91,7 +91,7 @@ function WebDetectionTable(props) {
   });
   let similarMatchingRow = props.webReport.webDetection.visuallySimilarImages.map((e, i) => {
     return (
-      <tr>
+      <tr key={"similar_" + i}>
         <td>{i}</td>
         <td>Similar</td>
         <td style={{ width: '100px', wordWrap: "break-word" }}><a href={e.url} target="_blank" rel="noopener noreferrer">{e.url}</a></td>
@@ -100,18 +100,18 @@ function WebDetectionTable(props) {
   });
   return (
     <div className="webDetectionTableContainer">
-      <div className='webDetectionTable'>
-        <div>
-          <div>#</div>
-          <div>Match Type</div>
-          <div>URL</div>
-        </div>
-        <div>
+      <table className='webDetectionTable'>
+        <tbody>
+          <tr>
+            <th>#</th>
+            <th>Match Type</th>
+            <th>URL</th>
+          </tr>
           {completeMatchingRow}
           {partialMatchingRow}
           {similarMatchingRow}
-        </div>
-      </div>
+        </tbody>
+      </table>
     </div>
   )
 }

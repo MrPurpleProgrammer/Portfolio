@@ -1,14 +1,13 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import React, { Component, lazy, Suspense, createRef } from "react";
 import UploadChart from '../../../components/PortfolioLibrary/uploadChart/UploadChart.js';
-import MediaGallery from '../../../components/VarsunLibrary/mediaGallery/MediaGallery';
-import ProfileButton from '../../../components/PortfolioLibrary/profileButton/ProfileButton.js';
-import Logo from '../../../components/PortfolioLibrary/logo/Logo.js';
 import FilterToolbar from '../../../components/VarsunLibrary/filterToolbar/FilterToolbar.js';
 import ProfileHeader from '../../../components/PortfolioLibrary/profileHeader/ProfileHeader';
-import Arrow, { DIRECTION } from 'react-arrows'
-import { isAuthenticatedAccount } from '../../../api/auth';
-import { getAccount } from "../../../api/account.js";
+import { API_IsAuthenticatedAccount } from '../../../api/storage/auth';
+import { API_GetAccount } from "../../../api/account.js";
+import MediaGallery from '../../../components/VarsunLibrary/mediaGallery/MediaGallery';
+import $ from 'jquery';
+
+const MediaGalleryLazy = lazy(() => import('../../../components/VarsunLibrary/mediaGallery/MediaGallery'));
 
 class AccountLanding extends Component {
     constructor(props) {
@@ -16,21 +15,23 @@ class AccountLanding extends Component {
         this.state = {
             account: this.props.account,
             user: this.props.user,
-            isUserNew: true,
-        }
-    }
-    componentWillMount() {
-        if (this.props.user.portfolio.length > 0) this.setState({ isUserNew: false });
-    }
-    componentDidMount() {
-        let accountId = isAuthenticatedAccount().res.account._id;
-        let token = isAuthenticatedAccount().token;
-        getAccount(token, accountId).then((resp) => {
-            this.setState({ loading: false, account: resp.account, user: resp.user })
-            this.props.onPortfolioUpdate(resp.user.portfolio);
-        });
+            isUserNew: null,
+        };
+        this.toolBar = React.createRef();
     }
 
+    componentDidMount() {
+        let accountId = API_IsAuthenticatedAccount().res.account._id;
+        let token = API_IsAuthenticatedAccount().token;
+        API_GetAccount(token, accountId).then((resp) => {
+            this.props.onPortfolioUpdate(resp.user.portfolio);
+            if (resp.user.portfolio.length > 0) this.setState({ isUserNew: false });
+            else {
+                this.setState({ isUserNew: true });
+                this.toolBar.current.toggleToolbar();
+            }
+        });
+    }
     render() {
         return (
             <div id="accountContent" className="accountContentContainer">
@@ -38,7 +39,7 @@ class AccountLanding extends Component {
                 <div id="divContent">
                     <div id="divAccountContentHeader" className="accountContentHeader">
                         <div id="divAccountDetails" className="accountDetails">
-                            <h1 className="accountNameLanding">{this.state.user.username}</h1>
+                            <h1 className="accountNameLanding">{this.props.auth.user.username}</h1>
                             <div id="divAccountMetrics" className="metricsContainer">
                                 <div id="divAccountBadges" className="accountBadges">
                                     <i className="fas fa-award"></i>
@@ -62,27 +63,22 @@ class AccountLanding extends Component {
                             </div>
                         </div>
                         <div id='divFilterToolbar'>
-                            <FilterToolbar match={this.props.match} accountId={this.state.account._id} isUserNew={this.state.isUserNew} />
+                            <FilterToolbar match={this.props.match} accountId={this.props.auth.account._id} isUserNew={this.state.isUserNew} ref={this.toolBar} />
                         </div>
                     </div>
-                    {/* <Arrow
-                        className='arrow'
-                        from={{
-                            direction: DIRECTION.LEFT,
-                            node: () => document.getElementById('divInstructions'),
-                            translation: [-1, 1],
-                        }}
-                        to={{
-                            direction: DIRECTION.BOTTOM,
-                            node: () => document.getElementById('divUploadInputBox'),
-                            translation: [1, 0.5],
-                        }}
-                    /> */}
                     <div id="divAccountMediaList" className="accountContent">
-                        <MediaGallery sort='default' portfolio={this.state.user.portfolio} match={this.props.match} account={this.props.account} isUserNew={this.state.isUserNew} username={this.state.user.username}/>
+                        {
+                            this.state.isUserNew ?
+                                <MediaGallery sort='default' portfolio={this.props.portfolio} match={this.props.match} account={this.props.auth.account} isUserNew={this.state.isUserNew} username={this.props.auth.user.username} />
+                                :
+                                <Suspense fallback={<h1>Still Loading…</h1>}>
+                                    <MediaGalleryLazy sort='default' portfolio={this.props.portfolio} match={this.props.match} account={this.props.auth.account} isUserNew={this.state.isUserNew} username={this.props.auth.user.username} />
+                                </Suspense>
+                        }
+
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }

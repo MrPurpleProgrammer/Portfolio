@@ -6,7 +6,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 function UploadFormStepLink(props) {
     let history = useHistory();
     let handleLink = () => {
-        let url = "/Media/Link/" + props.AssetData.ownershipStatus.assetHashDir[0].mediaUrl;
+        let url = "/Client/Media/Link/" + props.AssetData.ownershipStatus.assetHashDir[0].mediaUrl;
         history.push(url);
     }
     let handleLicence = () => {}
