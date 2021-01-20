@@ -30,7 +30,7 @@
     "ejs": "^3.1.5",
     "eth-revert-reason": "^1.0.3",
     "fs": "0.0.1-security",
-    "gsap": "^3.3.3",
+    "gsap": "^3.6.0",
     "ipfs-api": "^26.1.2",
     "ipfs-http-client": "^48.1.2",
     "ipfs-only-hash": "^2.0.1",
