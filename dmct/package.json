@@ -22,7 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openzeppelin/contracts": "^3.0.2",
+    "@openzeppelin/contracts": "^4.7.2",
     "assert": "^2.0.0",
     "cids": "^0.8.3",
     "concurrently": "^5.2.0",
